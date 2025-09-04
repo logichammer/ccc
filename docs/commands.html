@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands Reference - CCC System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #333;
+        }
+        .header h1 {
+            color: #4fc3f7;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #b0b0b0;
+        }
+        .nav-links {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+        .nav-links a {
+            color: #4fc3f7;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #81d4fa;
+            text-shadow: 0 0 10px rgba(129, 212, 250, 0.5);
+        }
+        .command-category {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .category-header {
+            color: #4fc3f7;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.3);
+        }
+        .category-icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .command-item {
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .command-item:hover {
+            background: #2a2a2a;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.2);
+        }
+        .command-name {
+            color: #81c784;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        .command-description {
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+        .command-usage {
+            background: #0d1117;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            color: #f8f8f2;
+            margin-bottom: 10px;
+        }
+        .command-args {
+            background: #1a1a2e;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .command-args h4 {
+            color: #ffb74d;
+            margin-bottom: 10px;
+        }
+        .arg-list {
+            list-style: none;
+            color: #b0b0b0;
+        }
+        .arg-list li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+        .arg-list li:before {
+            content: "▸";
+            color: #4fc3f7;
+            position: absolute;
+            left: 0;
+        }
+        .required {
+            color: #f48fb1;
+            font-weight: bold;
+        }
+        .optional {
+            color: #90caf9;
+        }
+        .usage-example {
+            background: #0a4d3a;
+            border: 1px solid #2e7d32;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .usage-example h4 {
+            color: #81c784;
+            margin-bottom: 10px;
+        }
+        .usage-example code {
+            color: #a5d6a7;
+            font-family: 'Courier New', monospace;
+        }
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .tag {
+            background: #1976d2;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .tag.python { background: #2e7d32; }
+        .tag.seo { background: #f57c00; }
+        .tag.wordpress { background: #7b1fa2; }
+        .tag.shared { background: #1976d2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Commands Reference</h1>
+            <p>Complete reference for all 70+ CCC system commands organized by project type</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="getting-started.html">🚀 Getting Started</a>
+            <a href="workflows.html">⚡ Workflows</a>
+            <a href="chat-interface.html">💬 Chat Interface</a>
+            <a href="agents-guide.html">🤖 Agents Guide</a>
+            <a href="installation.html">⚙️ Installation</a>
+        </div>
+
+        <div class="command-category">
+            <h2 class="category-header">
+                <span class="category-icon">🌍</span>
+                Shared Commands (Universal)
+            </h2>
+            <p>These commands work with all project types and provide universal functionality.</p>
+
+            <div class="command-item">
+                <div class="command-name">/project-summary</div>
+                <div class="command-description">Generate comprehensive project analysis and documentation</div>
+                <div class="command-usage">
+                    /project-summary include_metrics=true format=detailed output_type=markdown
+                </div>
+                <div class="command-args">
+                    <h4>Arguments:</h4>
+                    <ul class="arg-list">
+                        <li><span class="optional">include_metrics</span> - Include project metrics and statistics</li>
+                        <li><span class="optional">format</span> - Output format: brief, detailed, executive</li>
+                        <li><span class="optional">output_type</span> - Format: markdown, html, json</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag shared">shared</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/code-review</div>
+                <div class="command-description">Comprehensive code review with recommendations and quality assessment</div>
+                <div class="command-usage">
+                    /code-review target_files=src/ focus=security,performance include_suggestions=true
+                </div>
+                <div class="tags">
+                    <span class="tag shared">shared</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/dependency-audit</div>
+                <div class="command-description">Security and update analysis of project dependencies</div>
+                <div class="command-usage">
+                    /dependency-audit check_vulnerabilities=true suggest_updates=true format=detailed
+                </div>
+                <div class="tags">
+                    <span class="tag shared">shared</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/performance-baseline</div>
+                <div class="command-description">Establish performance benchmarks and monitoring</div>
+                <div class="command-usage">
+                    /performance-baseline target_metrics=response_time,memory include_profiling=true
+                </div>
+                <div class="tags">
+                    <span class="tag shared">shared</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/documentation-gen</div>
+                <div class="command-description">Auto-generate comprehensive project documentation</div>
+                <div class="command-usage">
+                    /documentation-gen include_api=true format=html output_dir=docs/
+                </div>
+                <div class="tags">
+                    <span class="tag shared">shared</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <h2 class="category-header">
+                <span class="category-icon">🐍</span>
+                Python Commands
+            </h2>
+            <p>Specialized commands for Python development, testing, and optimization.</p>
+
+            <div class="command-item">
+                <div class="command-name">/test-suite-gen</div>
+                <div class="command-description">Generate comprehensive test suites with high coverage</div>
+                <div class="command-usage">
+                    /test-suite-gen component=UserAuth coverage_target=95 include_integration=true
+                </div>
+                <div class="command-args">
+                    <h4>Arguments:</h4>
+                    <ul class="arg-list">
+                        <li><span class="required">component</span> - Component/module to test</li>
+                        <li><span class="optional">coverage_target</span> - Target test coverage percentage</li>
+                        <li><span class="optional">include_integration</span> - Include integration tests</li>
+                        <li><span class="optional">test_framework</span> - pytest, unittest, or nose</li>
+                    </ul>
+                </div>
+                <div class="usage-example">
+                    <h4>Example:</h4>
+                    <code>/test-suite-gen component=PaymentProcessor coverage_target=90 test_framework=pytest</code>
+                </div>
+                <div class="tags">
+                    <span class="tag python">python</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/performance-heatmap</div>
+                <div class="command-description">Identify performance bottlenecks with detailed analysis</div>
+                <div class="command-usage">
+                    /performance-heatmap target_file=main.py optimization_type=memory,cpu profiler=cProfile
+                </div>
+                <div class="tags">
+                    <span class="tag python">python</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <h2 class="category-header">
+                <span class="category-icon">📈</span>
+                SEO Commands
+            </h2>
+            <p>Comprehensive SEO research, analysis, and optimization tools.</p>
+
+            <div class="command-item">
+                <div class="command-name">/keyword-research</div>
+                <div class="command-description">Comprehensive keyword research and analysis using multiple data sources</div>
+                <div class="command-usage">
+                    /keyword-research seed_keywords="digital marketing,seo services" target_location=US search_volume_min=500
+                </div>
+                <div class="command-args">
+                    <h4>Arguments:</h4>
+                    <ul class="arg-list">
+                        <li><span class="required">seed_keywords</span> - Initial keywords to expand from</li>
+                        <li><span class="optional">target_location</span> - Geographic target (default: US)</li>
+                        <li><span class="optional">search_volume_min</span> - Minimum monthly searches (default: 100)</li>
+                        <li><span class="optional">difficulty_max</span> - Maximum keyword difficulty (default: 70)</li>
+                        <li><span class="optional">include_questions</span> - Include question-based keywords</li>
+                    </ul>
+                </div>
+                <div class="usage-example">
+                    <h4>Example:</h4>
+                    <code>/keyword-research seed_keywords="python development,web scraping" target_location=US search_volume_min=1000</code>
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/seo-audit</div>
+                <div class="command-description">Comprehensive SEO audit with technical and content analysis</div>
+                <div class="command-usage">
+                    /seo-audit target_url=https://example.com audit_type=comprehensive include_competitors=true
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/serp-analysis</div>
+                <div class="command-description">Search Engine Results Page analysis and competitive intelligence</div>
+                <div class="command-usage">
+                    /serp-analysis keywords="seo tools,keyword research" location=US analyze_features=true
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/competitor-analysis</div>
+                <div class="command-description">Comprehensive competitive analysis and gap identification</div>
+                <div class="command-usage">
+                    /competitor-analysis target_domain=example.com competitor_domains=comp1.com,comp2.com
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/content-strategy</div>
+                <div class="command-description">Data-driven content planning and optimization strategy</div>
+                <div class="command-usage">
+                    /content-strategy target_audience=developers content_types=blog,tutorial,video
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/backlink-analysis</div>
+                <div class="command-description">Backlink profile analysis and link building opportunities</div>
+                <div class="command-usage">
+                    /backlink-analysis target_domain=example.com include_toxic_links=true opportunity_analysis=true
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/local-seo-audit</div>
+                <div class="command-description">Local SEO optimization and Google My Business analysis</div>
+                <div class="command-usage">
+                    /local-seo-audit business_name="Local Business" location="City, State" include_citations=true
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/schema-optimizer</div>
+                <div class="command-description">Schema markup analysis and structured data optimization</div>
+                <div class="command-usage">
+                    /schema-optimizer target_url=https://example.com schema_types=Article,Product,Organization
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/core-web-vitals</div>
+                <div class="command-description">Core Web Vitals analysis and performance optimization</div>
+                <div class="command-usage">
+                    /core-web-vitals target_url=https://example.com device=mobile,desktop include_recommendations=true
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/content-gap-analysis</div>
+                <div class="command-description">Identify content gaps and opportunities</div>
+                <div class="command-usage">
+                    /content-gap-analysis target_domain=example.com competitor_domains=comp1.com,comp2.com keywords=keyword-list.csv
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/rank-tracking-setup</div>
+                <div class="command-description">Set up comprehensive rank tracking for target keywords</div>
+                <div class="command-usage">
+                    /rank-tracking-setup keywords=target-keywords.csv locations=US,UK,CA frequency=daily
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/seo-reporting</div>
+                <div class="command-description">Automated SEO reporting with KPIs and insights</div>
+                <div class="command-usage">
+                    /seo-reporting client=ClientName timeframe=monthly include_competitors=true format=pdf
+                </div>
+                <div class="tags">
+                    <span class="tag seo">seo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <h2 class="category-header">
+                <span class="category-icon">🔧</span>
+                WordPress Commands
+            </h2>
+            <p>Specialized WordPress development, optimization, and security tools.</p>
+
+            <div class="command-item">
+                <div class="command-name">/elementor-widget</div>
+                <div class="command-description">Create custom Elementor widgets with full functionality</div>
+                <div class="command-usage">
+                    /elementor-widget widget_name=TestimonialSlider widget_type=dynamic include_controls=true
+                </div>
+                <div class="command-args">
+                    <h4>Arguments:</h4>
+                    <ul class="arg-list">
+                        <li><span class="required">widget_name</span> - Name of the widget to create</li>
+                        <li><span class="optional">widget_type</span> - static, dynamic, or interactive</li>
+                        <li><span class="optional">include_controls</span> - Include Elementor controls panel</li>
+                        <li><span class="optional">css_framework</span> - CSS framework to use</li>
+                    </ul>
+                </div>
+                <div class="usage-example">
+                    <h4>Example:</h4>
+                    <code>/elementor-widget widget_name=PricingTable widget_type=dynamic include_controls=true</code>
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-security-audit</div>
+                <div class="command-description">Comprehensive WordPress security analysis and hardening</div>
+                <div class="command-usage">
+                    /wp-security-audit target_url=https://mysite.com scan_plugins=true check_permissions=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-performance</div>
+                <div class="command-description">WordPress performance optimization and speed enhancement</div>
+                <div class="command-usage">
+                    /wp-performance target_url=https://mysite.com optimization_type=full include_caching=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-theme-dev</div>
+                <div class="command-description">WordPress theme development with modern standards</div>
+                <div class="command-usage">
+                    /wp-theme-dev theme_name=MyTheme style=modern include_gutenberg=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-plugin-scaffold</div>
+                <div class="command-description">Generate WordPress plugin boilerplate with best practices</div>
+                <div class="command-usage">
+                    /wp-plugin-scaffold plugin_name=MyPlugin include_admin=true include_frontend=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-seo-integration</div>
+                <div class="command-description">WordPress SEO optimization and integration</div>
+                <div class="command-usage">
+                    /wp-seo-integration target_url=https://mysite.com include_schema=true optimize_images=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-database-optimize</div>
+                <div class="command-description">WordPress database optimization and cleanup</div>
+                <div class="command-usage">
+                    /wp-database-optimize cleanup_revisions=true optimize_tables=true backup_first=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+
+            <div class="command-item">
+                <div class="command-name">/wp-migration-tools</div>
+                <div class="command-description">WordPress site migration and deployment tools</div>
+                <div class="command-usage">
+                    /wp-migration-tools source_url=https://staging.com target_url=https://live.com include_database=true
+                </div>
+                <div class="tags">
+                    <span class="tag wordpress">wordpress</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; padding: 30px; background: #1a1a2e; border-radius: 15px; border: 2px solid #333;">
+            <h2 style="color: #4fc3f7; margin-bottom: 10px;">📚 Complete Command System</h2>
+            <p style="color: #b0b0b0; font-size: 1.1em;">70+ curated commands organized by project type for maximum efficiency</p>
+            <div style="margin-top: 20px;">
+                <a href="index.html" style="color: #81c784; text-decoration: none; font-weight: bold; margin-right: 20px;">← Back to Hub</a>
+                <a href="workflows.html" style="color: #81c784; text-decoration: none; font-weight: bold; margin-right: 20px;">⚡ View Workflows</a>
+                <a href="installation.html" style="color: #81c784; text-decoration: none; font-weight: bold;">⚙️ Installation Guide</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

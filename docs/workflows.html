@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complete Workflows Guide - Claude Code Templates v2.0</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #ecf0f1; 
+      background: #2c3e50; 
+    }
+    h1, h2, h3 { 
+      font-weight: bold; 
+      margin-top: 1.5em; 
+      color: #ecf0f1;
+    }
+    h1 { 
+      color: #3498db; 
+      border-bottom: 2px solid #3498db; 
+      padding-bottom: 10px; 
+    }
+    h2 {
+      color: #e67e22;
+      border-left: 4px solid #e67e22;
+      padding-left: 15px;
+    }
+    h3 {
+      color: #27ae60;
+    }
+    pre, code { 
+      background: #34495e; 
+      color: #ecf0f1; 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      font-family: 'Courier New', monospace; 
+      font-size: 14px;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    a { 
+      color: #3498db; 
+      text-decoration: none; 
+    }
+    a:hover { 
+      text-decoration: underline; 
+      color: #5dade2;
+    }
+    .command-example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      margin: 10px 0;
+      border-left: 4px solid #e67e22;
+    }
+    .workflow-section {
+      background: #34495e;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #3498db;
+    }
+    .nav-links {
+      background: #34495e;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .interface-toggle {
+      background: #27ae60;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin: 10px 5px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .chat-interface {
+      background: #8e44ad;
+      border-left: 4px solid #9b59b6;
+    }
+    .command-line {
+      background: #2c3e50;
+      border-left: 4px solid #e67e22;
+    }
+    .workflow-steps {
+      counter-reset: step-counter;
+    }
+    .workflow-step {
+      counter-increment: step-counter;
+      margin: 15px 0;
+      padding-left: 40px;
+      position: relative;
+    }
+    .workflow-step::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #e67e22;
+      color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="getting-started.html">Getting Started</a> |
+    <a href="agents-guide.html">Agents Guide</a>
+  </div>
+
+  <h1>🔄 Complete Workflows Guide</h1>
+  
+  <p>This guide covers all available workflows in Claude Code Templates v2.0. Each workflow supports both <strong>chat interface</strong> and <strong>command-line</strong> usage patterns.</p>
+
+  <div class="nav-links">
+    <strong>Workflow Categories:</strong><br>
+    <a href="#python-workflows">Python Development</a> |
+    <a href="#seo-workflows">SEO Research</a> |
+    <a href="#wordpress-workflows">WordPress Development</a> |
+    <a href="#external-workflows">External Project Workflows</a> |
+    <a href="#prd-workflows">PRD-Driven Development</a> |
+    <a href="#mixed-workflows">Mixed Project Workflows</a>
+  </div>
+
+  <h2 id="python-workflows">🐍 Python Development Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>Complete Python Development Lifecycle</h3>
+    <p>End-to-end Python development with testing, quality assurance, and deployment preparation.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      # Navigate to your project<br>
+      "I'm starting a new Python API project. Help me set up the complete development environment."<br><br>
+      
+      # Claude will automatically:<br>
+      # 1. 🏗️ [SystemArchitectAgent] → Plan architecture<br>
+      # 2. ⚡ [FeatureDeveloperAgent] → Implement core features<br>
+      # 3. 🧪 [QualityTesterAgent] → Generate test suite<br>
+      # 4. ⚡ [PerformanceProfilerAgent] → Optimize performance<br>
+      # 5. 🔒 [SecurityAuditorAgent] → Security audit
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create new Python project<br>
+      claude-init my-api-project --type=python<br>
+      cd /home/loki/python-projects/my-api-project<br><br>
+      
+      # Or work on existing project<br>
+      cd /path/to/existing/python/project<br>
+      claude-work . --type=python<br><br>
+      
+      # Available commands in .claude/commands/python/<br>
+      # - test-suite-gen.md<br>
+      # - performance-heatmap.md<br>
+      # - code-quality-audit.md
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <strong>Project Setup</strong>: Create project structure with proper Python conventions (src/, tests/, requirements.txt, pyproject.toml)
+      </div>
+      <div class="workflow-step">
+        <strong>Development Environment</strong>: Configure virtual environment, dependencies, and development tools
+      </div>
+      <div class="workflow-step">
+        <strong>Code Implementation</strong>: Implement features following Python best practices and type hints
+      </div>
+      <div class="workflow-step">
+        <strong>Test Suite Generation</strong>: Create comprehensive unit tests, integration tests, and UI tests using pytest
+      </div>
+      <div class="workflow-step">
+        <strong>Quality Assurance</strong>: Run black, flake8, mypy for code quality and style consistency
+      </div>
+      <div class="workflow-step">
+        <strong>Performance Analysis</strong>: Profile application performance and identify optimization opportunities
+      </div>
+      <div class="workflow-step">
+        <strong>Security Audit</strong>: Check for vulnerabilities, secure coding practices, and dependency issues
+      </div>
+      <div class="workflow-step">
+        <strong>Documentation</strong>: Generate API documentation, code comments, and usage guides
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>TDD (Test-Driven Development) Workflow</h3>
+    <p>Test-first development approach with automated test generation and continuous feedback.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "I want to implement user authentication using TDD. Generate failing tests first."<br><br>
+      
+      # Claude will:<br>
+      # 1. Generate failing tests based on requirements<br>
+      # 2. Implement minimal code to make tests pass<br>
+      # 3. Refactor for quality while keeping tests green<br>
+      # 4. Repeat cycle for additional features
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Generate test suite from requirements<br>
+      # Use /test-suite-gen command in chat or find in commands/python/<br><br>
+      
+      # Run tests continuously<br>
+      pytest --watch<br>
+      pytest --cov=src --cov-report=html
+    </div>
+  </div>
+
+  <h2 id="seo-workflows">🔍 SEO Research Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>Comprehensive SEO Audit and Strategy</h3>
+    <p>Complete SEO analysis from technical audit to content strategy development.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Perform a complete SEO audit of example.com and create a content strategy."<br><br>
+      
+      # Claude will orchestrate:<br>
+      # 1. 🔧 [TechnicalSEOAgent] → Technical site audit<br>
+      # 2. 🔑 [KeywordStrategyAgent] → Keyword research<br>
+      # 3. 🔍 [BenchmarkResearchAgent] → Competitor analysis<br>
+      # 4. 📊 [MetricsReporterAgent] → Performance reporting
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create SEO project<br>
+      claude-init client-seo-audit --type=seo<br>
+      cd /home/loki/seo-projects/client-seo-audit<br><br>
+      
+      # Available SEO commands in .claude/commands/seo/<br>
+      # - seo-audit.md<br>
+      # - keyword-research.md<br>
+      # - competitor-analysis.md
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <strong>Technical Audit</strong>: Analyze site structure, performance, mobile-friendliness, and technical SEO factors
+      </div>
+      <div class="workflow-step">
+        <strong>Keyword Research</strong>: Discover high-value keywords, analyze search intent, and map to content strategy
+      </div>
+      <div class="workflow-step">
+        <strong>Competitor Analysis</strong>: Identify competitors, analyze their strategies, and find content gaps
+      </div>
+      <div class="workflow-step">
+        <strong>Content Strategy</strong>: Develop content recommendations based on keyword opportunities
+      </div>
+      <div class="workflow-step">
+        <strong>Data Visualization</strong>: Create charts and reports for client presentation
+      </div>
+      <div class="workflow-step">
+        <strong>Action Plan</strong>: Prioritize recommendations with timeline and resource requirements
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Multi-Client SEO Management</h3>
+    <p>Manage multiple SEO clients with organized data and consistent reporting.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Set up monthly SEO reporting for three clients: walmart, target, and nike."<br><br>
+      
+      # Claude will create separate projects and configure:<br>
+      # - Individual data directories<br>
+      # - Client-specific reporting templates<br>
+      # - Automated monthly report generation
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create multiple client projects<br>
+      claude-init walmart-seo --type=seo<br>
+      claude-init target-seo --type=seo<br>
+      claude-init nike-seo --type=seo<br><br>
+      
+      # Each gets organized structure:<br>
+      # /home/loki/seo-projects/walmart-seo/<br>
+      # ├── data/ (client-specific SEO data)<br>
+      # └── reports/ (monthly deliverables)
+    </div>
+  </div>
+
+  <h2 id="wordpress-workflows">🎨 WordPress Development Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>WordPress Theme Development</h3>
+    <p>Complete WordPress theme creation with modern development practices.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Create a modern WordPress theme with custom post types and Elementor integration."<br><br>
+      
+      # Claude will orchestrate:<br>
+      # 1. 🎨 [WordPressBuilderAgent] → Theme structure<br>
+      # 2. 🧩 [ElementorSpecialistAgent] → Custom widgets<br>
+      # 3. 🔧 [TechnicalSEOAgent] → SEO optimization<br>
+      # 4. 📱 [ResponsiveAdapterAgent] → Mobile optimization
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create WordPress project<br>
+      claude-init my-theme --type=wordpress<br>
+      cd /home/loki/python-projects/my-theme<br><br>
+      
+      # Available WordPress commands in .claude/commands/wordpress/<br>
+      # - elementor-testimonial-slider.md<br>
+      # - custom-post-types.md<br>
+      # - theme-optimization.md
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <strong>Theme Structure</strong>: Create proper WordPress theme file structure with functions.php, style.css
+      </div>
+      <div class="workflow-step">
+        <strong>Custom Functionality</strong>: Implement custom post types, taxonomies, and meta fields
+      </div>
+      <div class="workflow-step">
+        <strong>Elementor Integration</strong>: Create custom Elementor widgets and page builder compatibility
+      </div>
+      <div class="workflow-step">
+        <strong>Responsive Design</strong>: Ensure mobile-first responsive design across all devices
+      </div>
+      <div class="workflow-step">
+        <strong>Performance Optimization</strong>: Optimize for Core Web Vitals and loading speed
+      </div>
+      <div class="workflow-step">
+        <strong>SEO Integration</strong>: Build in SEO best practices and schema markup
+      </div>
+      <div class="workflow-step">
+        <strong>Security Hardening</strong>: Implement WordPress security best practices
+      </div>
+    </div>
+  </div>
+
+  <h2 id="external-workflows">🔗 External Project Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>Working on Existing Projects</h3>
+    <p>Use Claude tools on any existing codebase without modifying the original project.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      # Navigate to existing project<br>
+      "I'm in an existing Django project at /var/www/client-site. Set up Claude tools for analysis."<br><br>
+      
+      # Claude will:<br>
+      # 1. Detect project type automatically<br>
+      # 2. Create .claude/ directory with appropriate tools<br>
+      # 3. Copy relevant CLAUDE.md and agents<br>
+      # 4. Make all 20+ agents available for analysis
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Navigate to existing project<br>
+      cd /path/to/existing/project<br><br>
+      
+      # Auto-detect and setup<br>
+      claude-work . --detect-only  # Just show what would be detected<br>
+      claude-work .  # Full setup with auto-detection<br><br>
+      
+      # Override detection<br>
+      claude-work . --type=python,seo<br><br>
+      
+      # Clean up when done<br>
+      claude-work . --cleanup
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <strong>Project Detection</strong>: Automatically identify project type (Python, WordPress, etc.) based on files
+      </div>
+      <div class="workflow-step">
+        <strong>Tool Setup</strong>: Create .claude/ directory with appropriate agents and commands
+      </div>
+      <div class="workflow-step">
+        <strong>Analysis</strong>: Use agents to analyze existing codebase without modifications
+      </div>
+      <div class="workflow-step">
+        <strong>Recommendations</strong>: Generate improvement suggestions and refactoring opportunities
+      </div>
+      <div class="workflow-step">
+        <strong>Clean Extraction</strong>: Remove all Claude tools when work is complete
+      </div>
+    </div>
+  </div>
+
+  <h2 id="prd-workflows">📋 PRD-Driven Development Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>Requirements-Based Development</h3>
+    <p>Implement features and projects based on Product Requirements Documents with full traceability.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Process my PRD for the new user authentication system."<br><br>
+      
+      # Claude will automatically:<br>
+      # 1. Read /prd/PRD.txt or specified PRD file<br>
+      # 2. Conduct clarification interview<br>
+      # 3. Present 2-3 solution approaches<br>
+      # 4. Switch to appropriate agents for implementation<br>
+      # 5. Track progress with TodoWrite tool
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # PRD files are automatically detected in /prd/ directory<br>
+      # From chat interface:<br>
+      "Work on the PRD in prd/authentication-system.txt"<br><br>
+      
+      # Or reference by name:<br>
+      "Process PRD authentication-system"
+    </div>
+
+    <div class="workflow-steps">
+      <div class="workflow-step">
+        <strong>PRD Analysis</strong>: Parse requirements, success criteria, and constraints from PRD document
+      </div>
+      <div class="workflow-step">
+        <strong>Clarification Interview</strong>: Ask targeted questions to clarify ambiguous requirements
+      </div>
+      <div class="workflow-step">
+        <strong>Solution Design</strong>: Present multiple implementation approaches (simple → complex)
+      </div>
+      <div class="workflow-step">
+        <strong>Implementation Planning</strong>: Break down work into trackable tasks using TodoWrite
+      </div>
+      <div class="workflow-step">
+        <strong>Agent Orchestration</strong>: Route work to appropriate specialized agents
+      </div>
+      <div class="workflow-step">
+        <strong>Progress Tracking</strong>: Monitor implementation progress against PRD success criteria
+      </div>
+      <div class="workflow-step">
+        <strong>Verification</strong>: Validate implementation meets all PRD requirements
+      </div>
+    </div>
+  </div>
+
+  <h2 id="mixed-workflows">🔄 Mixed Project Workflows</h2>
+
+  <div class="workflow-section">
+    <h3>Python + SEO Combined Projects</h3>
+    <p>Projects that combine Python development with SEO research capabilities.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Create an SEO analysis tool using Python with data visualization."<br><br>
+      
+      # Gets combined capabilities:<br>
+      # - Python development environment<br>
+      # - SEO research tools and MCPs<br>
+      # - Data visualization with chart-mcp<br>
+      # - Both Python and SEO focused agents
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create mixed project<br>
+      claude-init seo-analyzer-tool --type=python,seo<br><br>
+      
+      # Gets both command sets:<br>
+      # - Python development commands<br>
+      # - SEO research and analysis commands<br>
+      # - Shared project management tools
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>WordPress + SEO Optimization</h3>
+    <p>WordPress development with built-in SEO optimization and analysis.</p>
+
+    <div class="interface-toggle chat-interface">💬 Chat Interface Usage</div>
+    <div class="command-example">
+      "Build a WordPress theme optimized for SEO with built-in schema markup."<br><br>
+      
+      # Combines:<br>
+      # - WordPress development capabilities<br>
+      # - SEO analysis and optimization<br>
+      # - Performance optimization<br>
+      # - Content strategy integration
+    </div>
+
+    <div class="interface-toggle command-line">⌨️ Command Line Usage</div>
+    <div class="command-example">
+      # Create WordPress + SEO project<br>
+      claude-init client-wp-site --type=wordpress,seo<br><br>
+      
+      # Gets combined toolset for:<br>
+      # - Theme/plugin development<br>
+      # - SEO audit and optimization<br>
+      # - Content strategy development
+    </div>
+  </div>
+
+  <h2>🎯 Workflow Best Practices</h2>
+
+  <div class="workflow-section">
+    <h3>General Workflow Principles</h3>
+    <ul>
+      <li><strong>Agent Orchestration</strong>: Let Claude automatically choose and switch between appropriate agents</li>
+      <li><strong>Progressive Enhancement</strong>: Start with basic implementation and enhance iteratively</li>
+      <li><strong>Quality Gates</strong>: Each workflow includes built-in quality checks and validation</li>
+      <li><strong>Documentation First</strong>: All workflows generate documentation alongside implementation</li>
+      <li><strong>Reversible Changes</strong>: External project workflows are completely reversible</li>
+      <li><strong>Data Preservation</strong>: SEO and analysis data is properly organized and preserved</li>
+    </ul>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Troubleshooting Workflows</h3>
+    <p>When workflows encounter issues:</p>
+    <ul>
+      <li><strong>Check Dependencies</strong>: Ensure required tools and MCPs are available</li>
+      <li><strong>Verify Permissions</strong>: Check file and directory permissions for project setup</li>
+      <li><strong>Review Configuration</strong>: Validate config.toml settings and paths</li>
+      <li><strong>Agent Handoffs</strong>: Monitor agent transitions for stuck or failed handoffs</li>
+      <li><strong>Fallback Options</strong>: Most workflows have alternative approaches when primary methods fail</li>
+    </ul>
+  </div>
+
+  <hr style="margin: 40px 0; border: 1px solid #34495e;">
+  
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="chat-interface.html">Next: Chat Interface Usage →</a>
+  </div>
+</body>
+</html>

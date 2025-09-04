@@ -1,0 +1,540 @@
+PRODUCT REQUIREMENTS DOCUMENT
+Project: Claude Code Templates - CCC Implementation
+Version: 1.0
+Date: 2025-09-04
+Status: READY FOR IMPLEMENTATION
+
+=== EXECUTIVE SUMMARY ===
+
+Build the simplified Claude Code Templates system in a new directory (/home/loki/code/ccc/) based on KISS principles while preserving all agent capabilities and external project editing workflows. This approach allows safe parallel development with easy rollback.
+
+BUSINESS PROBLEM:
+- Need to implement simplified system without breaking current working system
+- Must preserve all agent orchestration and PRD workflows
+- Require different CLAUDE.md files for Python vs SEO project types
+- Need external projects directory management outside main codebase
+
+SUCCESS CRITERIA:
+1. Complete simplified system built in /home/loki/code/ccc/
+2. All 20+ agents preserved with enhanced capabilities
+3. External project workflow fully functional
+4. SEO project data management separated from toolkit
+5. PRD interview process maintained
+6. Different CLAUDE.md per project type
+7. Zero impact on current /home/loki/code/claude_code_templates/ system
+
+=== IMPLEMENTATION APPROACH ===
+
+## Directory Strategy
+
+SOURCE (UNTOUCHED):
+- /home/loki/code/claude_code_templates/ → remains exactly as-is for rollback
+
+TARGET (NEW BUILD):
+- /home/loki/code/ccc/ → simplified system implementation
+
+EXTERNAL PROJECTS:
+- /home/loki/seo-projects/ → SEO client projects with persistent data
+- /home/loki/python-projects/ → optional permanent Python projects
+
+## New System Architecture
+
+/home/loki/code/ccc/
+├── agents/                    # All 20+ agents (copied and enhanced)
+│   ├── SystemArchitectAgent.json
+│   ├── FeatureDeveloperAgent.json
+│   ├── TechnicalSEOAgent.json
+│   ├── ... (all existing agents)
+│   └── agents-index.json      # Unified registry
+├── templates/                 # Unified template system
+│   ├── base/                 # Common files for all projects
+│   │   ├── README.md
+│   │   ├── .gitignore
+│   │   └── config/
+│   ├── python/               # Python-specific additions
+│   │   ├── CLAUDE.md         # Python-focused agent orchestration
+│   │   ├── requirements.txt
+│   │   ├── src/
+│   │   ├── tests/
+│   │   └── pyproject.toml
+│   ├── seo/                  # SEO-specific additions
+│   │   ├── CLAUDE.md         # SEO-focused research workflows
+│   │   ├── data/
+│   │   ├── reports/
+│   │   └── tools/
+│   └── wordpress/            # WordPress-specific additions
+│       ├── CLAUDE.md         # WordPress development workflows
+│       ├── themes/
+│       └── plugins/
+├── commands/                 # Deduplicated commands (~70 unique)
+│   ├── python/
+│   │   ├── test-suite-gen.md
+│   │   └── performance-heatmap.md
+│   ├── seo/
+│   │   ├── seo-audit.md
+│   │   └── keyword-research.md
+│   ├── wordpress/
+│   │   └── elementor-widget.md
+│   └── shared/
+│       └── project-summary.md
+├── docs/                     # Comprehensive HTML documentation
+│   ├── index.html           # Main documentation hub
+│   ├── getting-started.html # Installation and first steps  
+│   ├── workflows.html       # Complete workflow documentation
+│   ├── chat-interface.html  # Using system from Claude Code chat
+│   ├── command-line.html    # Command-line usage patterns
+│   ├── agents-guide.html    # Agent system and orchestration
+│   ├── project-types.html   # Python, SEO, WordPress guides
+│   ├── external-projects.html # Working with existing codebases
+│   ├── seo-workflows.html   # Multi-client SEO management
+│   ├── troubleshooting.html # Common issues and solutions
+│   └── api-reference.html   # Complete command and config reference
+├── bin/                      # Simplified project management
+│   ├── claude-init           # Create new projects
+│   ├── claude-work           # Work on existing external projects
+│   └── install.sh            # Setup script
+├── prd/                      # PRD system (copied from current)
+│   ├── system-simplification.txt
+│   └── ccc-implementation.txt
+├── config.toml               # Single configuration file
+├── CLAUDE.md                 # Main documentation
+└── README.md                 # Quick start guide
+
+## Core Components Implementation
+
+### 1. claude-init Script
+Purpose: Create new projects with template composition
+Location: /home/loki/code/ccc/bin/claude-init
+
+Features:
+- Detects project type (python, seo, wordpress, or combinations)
+- Copies base template + type-specific additions
+- Uses appropriate CLAUDE.md for project type
+- Creates projects in configured external directories
+- Variable substitution (PROJECT_NAME, PROJECT_TYPE, DATE)
+
+Usage Examples:
+```bash
+# Creates /home/loki/seo-projects/walmart-analysis/
+claude-init walmart-analysis --type=seo
+
+# Creates /home/loki/python-projects/my-api/ 
+claude-init my-api --type=python
+
+# Mixed project
+claude-init content-tool --type=python,seo
+```
+
+### 2. claude-work Script  
+Purpose: Work on existing external projects without modifying them
+Location: /home/loki/code/ccc/bin/claude-work
+
+Features:
+- Auto-detects existing project type
+- Creates temporary .claude/ directory with agents & commands
+- Copies appropriate CLAUDE.md for detected type
+- Preserves original project structure completely
+- Easy cleanup (delete .claude/ when done)
+
+Usage Examples:
+```bash
+# Work on client Django project
+cd /path/to/client/django-app
+claude-work . --type=python
+
+# Work on client WordPress site
+cd /var/www/client-site  
+claude-work . --type=wordpress
+```
+
+### 3. Enhanced Agent System
+All 20+ agents copied from current system with enhancements:
+- External project awareness
+- Simplified handoff protocols
+- MCP integration preserved
+- PRD workflow compatibility
+
+Agent Files:
+- Copy all existing .json files from /agents/
+- Enhance with external project capabilities
+- Create agents-index.json for unified registry
+
+### 4. Template System with Multiple CLAUDE.md
+Each project type gets optimized CLAUDE.md:
+
+**Python CLAUDE.md:**
+- Current beast-mode agent orchestration
+- Development workflow automation  
+- Code quality and testing focus
+- Performance profiling integration
+
+**SEO CLAUDE.md:**
+- Research-focused agent workflows
+- MCP emphasis (DataForSEO, GSC, Firecrawl)
+- Client data management patterns
+- Report generation and visualization
+
+**WordPress CLAUDE.md:**
+- Theme/plugin development workflows
+- Elementor integration patterns
+- WordPress-specific agent routing
+
+### 5. Command Deduplication
+Process:
+1. Audit all 203+ commands in current system
+2. Identify 65+ duplicates  
+3. Keep best version of each unique command
+4. Organize by type (python/, seo/, wordpress/, shared/)
+5. Add tags for cross-type discovery
+
+Target: ~70 unique, high-quality commands
+
+### 6. Configuration Management
+Single config.toml file:
+```toml
+[project]
+name = "claude-code-templates"
+version = "2.0"
+
+[directories]
+seo_projects = "/home/loki/seo-projects"
+python_projects = "/home/loki/python-projects"
+toolkit_path = "/home/loki/code/ccc"
+
+[templates]
+available = ["python", "seo", "wordpress"]
+default_combinations = [
+    "python",
+    "seo", 
+    "python,seo",
+    "wordpress"
+]
+
+[agents]
+directory = "./agents"
+auto_selection = true
+orchestration_mode = "SystemArchitectAgent"
+
+[commands] 
+directory = "./commands"
+discovery_method = "tags"
+organization = "by_type"
+
+[claude]
+model = "claude-3-sonnet"
+max_tokens = 4000
+interview_mode = true
+```
+
+=== IMPLEMENTATION PHASES ===
+
+## Phase 1: Foundation Setup (Day 1)
+DELIVERABLES:
+- [ ] Create /home/loki/code/ccc/ directory structure
+- [ ] Copy and organize all agents from current system
+- [ ] Create config.toml with all settings
+- [ ] Build basic claude-init script (Python projects only)
+- [ ] Test: Create one Python project successfully
+
+VERIFICATION:
+- Directory structure matches specification
+- All agents copied and organized
+- claude-init creates functional Python project
+- Python CLAUDE.md copied correctly
+
+## Phase 2: Template System (Day 2)
+DELIVERABLES:
+- [ ] Create base/ template with common files
+- [ ] Build python/ template with current CLAUDE.md
+- [ ] Build seo/ template with research-focused CLAUDE.md  
+- [ ] Build wordpress/ template with development CLAUDE.md
+- [ ] Test all template combinations
+
+VERIFICATION:
+- All template types create functional projects
+- Correct CLAUDE.md copied for each type
+- Variable substitution works
+- Mixed types (python,seo) compose correctly
+
+## Phase 3: Command Migration (Day 3)
+DELIVERABLES:
+- [ ] Audit current 203+ commands
+- [ ] Identify and eliminate 65+ duplicates
+- [ ] Organize remaining ~70 commands by type
+- [ ] Add tags for discoverability
+- [ ] Test command access from projects
+
+VERIFICATION:
+- No duplicate commands remain
+- All commands accessible via tags
+- Commands work in appropriate project contexts
+- grep/find discovery works as expected
+
+## Phase 4: External Project Workflow (Day 4)
+DELIVERABLES:
+- [ ] Build claude-work script
+- [ ] Implement project type auto-detection
+- [ ] Create .claude/ directory management
+- [ ] Test with real external projects
+- [ ] Ensure no pollution of external codebases
+
+VERIFICATION:
+- claude-work creates .claude/ without touching original project
+- Correct agents and commands available in external context
+- All functionality works from external projects
+- Easy cleanup (delete .claude/)
+
+## Phase 5: SEO Project Management (Day 5)  
+DELIVERABLES:
+- [ ] Configure external /home/loki/seo-projects/ directory
+- [ ] Test SEO project creation with persistent data
+- [ ] Verify SEO-specific CLAUDE.md functionality
+- [ ] Test multi-client SEO workflow
+- [ ] Validate data separation and organization
+
+VERIFICATION:
+- SEO projects created in external directory
+- Persistent data storage working
+- Client data properly separated
+- SEO agents and MCPs functional
+
+## Phase 6: PRD Integration (Day 6)
+DELIVERABLES:
+- [ ] Copy PRD system to new location
+- [ ] Verify PRD interview process works
+- [ ] Test TodoWrite tracking in new system
+- [ ] Validate agent orchestration from PRDs
+- [ ] Ensure workflow automation preserved
+
+VERIFICATION:
+- PRD files accessible and processable
+- Interview workflows function correctly
+- Agent handoffs work from PRD context
+- TodoWrite integration functional
+
+## Phase 7: Documentation System (Day 7)
+DELIVERABLES:
+- [ ] Create comprehensive HTML documentation in /docs/
+- [ ] Document all workflows (chat interface + command line)
+- [ ] Create getting started guide with examples
+- [ ] Document agent system and orchestration
+- [ ] Create troubleshooting guide
+- [ ] Build complete API reference
+
+VERIFICATION:
+- All HTML documentation complete and properly styled
+- Chat interface workflows fully documented
+- Command-line usage patterns documented
+- All workflows include both interface methods
+- Documentation follows HTML standards from current system
+
+## Phase 8: Final Integration & Testing (Day 8)
+DELIVERABLES:
+- [ ] Complete end-to-end testing
+- [ ] Installation script (bin/install.sh)
+- [ ] Migration guide creation
+- [ ] Performance validation
+- [ ] Final documentation review
+
+VERIFICATION:
+- All workflows function end-to-end
+- Documentation complete and accurate
+- Installation process smooth
+- System ready for production use
+
+=== QUALITY GATES ===
+
+Each phase must pass verification before proceeding:
+
+**Functional Gates:**
+- All specified deliverables complete
+- Manual testing passes
+- No regressions from current system
+- Performance acceptable
+
+**Quality Gates:**  
+- Code follows existing patterns
+- Documentation updated
+- Error handling robust
+- Rollback capability preserved
+
+**User Acceptance Gates:**
+- Workflow feels natural
+- No functionality lost
+- Complexity genuinely reduced
+- Maintenance burden decreased
+
+=== SUCCESS METRICS ===
+
+## Quantitative Goals
+- [ ] Complete system in /home/loki/code/ccc/
+- [ ] All 20+ agents preserved and functional
+- [ ] Commands reduced from 203+ to ~70 unique
+- [ ] Config files reduced from 7+ to 1
+- [ ] Zero changes to original /home/loki/code/claude_code_templates/
+
+## Qualitative Goals
+- [ ] PRD interview process identical to current
+- [ ] External project workflow seamless
+- [ ] Agent orchestration preserved
+- [ ] Different CLAUDE.md per project type working
+- [ ] SEO project data management functional
+
+## User Acceptance Criteria
+- [ ] Can create Python project with current CLAUDE.md in <30 seconds
+- [ ] Can work on external project without polluting it
+- [ ] Can create SEO project with persistent data storage
+- [ ] Can process PRDs identically to current system
+- [ ] Can roll back to original system instantly if needed
+
+=== RISK MITIGATION ===
+
+## Primary Risk: Functionality Loss
+MITIGATION:
+- Build in parallel, don't modify original
+- Test each component against current system
+- Maintain feature parity checklist
+- Keep rollback option available
+
+## Risk: Agent System Breakdown
+MITIGATION:
+- Copy all agents exactly before enhancing
+- Test agent handoffs thoroughly
+- Preserve all MCP integrations
+- Validate PRD workflows early
+
+## Risk: External Project Workflow Failure
+MITIGATION:
+- Test with real external projects
+- Verify no pollution occurs
+- Test cleanup processes
+- Validate type detection accuracy
+
+=== NEXT STEPS ===
+
+DECISION POINT: Proceed with CCC implementation?
+
+IF YES:
+1. Approve this PRD
+2. Begin Phase 1: Foundation Setup
+3. Build incrementally with testing at each phase
+4. Maintain parallel systems until validation complete
+5. Switch over when ready
+
+IF NO/REVISIONS NEEDED:
+1. Specify required changes
+2. Update PRD accordingly  
+3. Re-approve before implementation
+
+TIMELINE: 7 days for complete implementation
+RESOURCES: 1 developer focused effort
+RISK LEVEL: Low (parallel development with rollback)
+ROLLBACK STRATEGY: Delete /home/loki/code/ccc/, continue with current system
+
+=== IMPLEMENTATION COMMANDS ===
+
+To begin implementation:
+```bash
+# DO NOT RUN YET - WAIT FOR APPROVAL
+mkdir -p /home/loki/code/ccc
+cd /home/loki/code/ccc
+# ... Phase 1 setup begins
+```
+
+IMPORTANT: 
+- No changes to /home/loki/code/claude_code_templates/ until explicit approval for cutover
+- Do NOT delete /home/loki/code/ccc/ without explicit user permission
+- Preserve rollback capability at all times
+
+=== DOCUMENTATION REQUIREMENTS ===
+
+## HTML Documentation Standards
+All documentation must follow current system's HTML standards:
+- Minimalist HTML structure with proper styling
+- High contrast (dark background, bright white text)
+- Save all documentation as .html files in /docs/ directory
+- Follow existing patterns from current system's HTML documentation
+
+## Required Documentation Files
+
+### 1. index.html - Documentation Hub
+- Overview of entire system
+- Quick navigation to all sections
+- Getting started links
+- Workflow summaries
+
+### 2. getting-started.html - Installation & First Steps
+- Installation instructions
+- First project creation
+- Basic workflows
+- Common first-time setup issues
+
+### 3. workflows.html - Complete Workflow Documentation
+- Python development workflows
+- SEO research workflows  
+- WordPress development workflows
+- Mixed project workflows
+- PRD-driven development patterns
+
+### 4. chat-interface.html - Using from Claude Code Chat
+- How to use system from chat interface
+- Agent invocation patterns
+- PRD processing from chat
+- Command discovery and usage
+- Chat-based project creation and management
+
+### 5. command-line.html - Command Line Usage
+- claude-init usage and examples
+- claude-work usage and examples  
+- Configuration management
+- Troubleshooting command-line issues
+
+### 6. agents-guide.html - Agent System Documentation
+- All 20+ agent capabilities
+- Agent selection and handoff patterns
+- Orchestration workflows
+- MCP integrations per agent
+- Custom agent workflows
+
+### 7. project-types.html - Python, SEO, WordPress Guides
+- Detailed guide for each project type
+- Template composition examples
+- Type-specific workflows
+- Mixed project type usage
+
+### 8. external-projects.html - Working with Existing Codebases
+- claude-work detailed usage
+- Project type detection
+- .claude/ directory management
+- Cleanup procedures
+- Best practices for external work
+
+### 9. seo-workflows.html - Multi-Client SEO Management
+- SEO project creation and management
+- Client data organization
+- Multi-client workflows
+- Report generation patterns
+- Data persistence strategies
+
+### 10. troubleshooting.html - Common Issues and Solutions
+- Installation problems
+- Permission issues  
+- Agent selection problems
+- Template composition failures
+- External project workflow issues
+
+### 11. api-reference.html - Complete Command and Config Reference  
+- All command-line options
+- Configuration file reference
+- Environment variables
+- File structure reference
+- Advanced configuration options
+
+## Documentation Content Requirements
+Each HTML file must include:
+- Complete workflows for both chat interface AND command line
+- Real examples with actual commands
+- Screenshots or code samples where helpful
+- Cross-references to related documentation
+- Troubleshooting section for that topic
+- Links back to main documentation hub

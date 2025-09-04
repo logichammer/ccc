@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - CCC System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #333;
+        }
+        .header h1 {
+            color: #4fc3f7;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #b0b0b0;
+        }
+        .nav-links {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+        .nav-links a {
+            color: #4fc3f7;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #81d4fa;
+            text-shadow: 0 0 10px rgba(129, 212, 250, 0.5);
+        }
+        .section {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #4fc3f7;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.3);
+        }
+        .section-icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .step {
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .step-number {
+            background: #4fc3f7;
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+        }
+        .step-content {
+            margin-left: 20px;
+        }
+        .step-title {
+            color: #81c784;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .code-block code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .command {
+            color: #a5d6a7;
+        }
+        .comment {
+            color: #6a994e;
+        }
+        .warning {
+            background: #2d1b14;
+            border: 1px solid #d84315;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #ff5722;
+        }
+        .warning-icon {
+            color: #ff5722;
+            margin-right: 10px;
+        }
+        .success {
+            background: #1b2d1b;
+            border: 1px solid #2e7d32;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .success-icon {
+            color: #4caf50;
+            margin-right: 10px;
+        }
+        .info {
+            background: #14232d;
+            border: 1px solid #0277bd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #03a9f4;
+        }
+        .info-icon {
+            color: #03a9f4;
+            margin-right: 10px;
+        }
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .requirement-item {
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .requirement-item:hover {
+            background: #2a2a2a;
+            border-color: #4fc3f7;
+        }
+        .requirement-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .requirement-name {
+            color: #81c784;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .requirement-desc {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+        .verification-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        .verification-list li {
+            background: #1a1a2e;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 40px;
+        }
+        .verification-list li:before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            position: absolute;
+            left: 15px;
+        }
+        .troubleshooting {
+            background: #2d1b1b;
+            border: 1px solid #d32f2f;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .troubleshooting h3 {
+            color: #f44336;
+            margin-bottom: 15px;
+        }
+        .tab-container {
+            margin: 20px 0;
+        }
+        .tabs {
+            display: flex;
+            background: #1a1a1a;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid #333;
+            border-bottom: none;
+        }
+        .tab {
+            padding: 15px 20px;
+            background: transparent;
+            border: none;
+            color: #b0b0b0;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            border-right: 1px solid #333;
+        }
+        .tab:last-child {
+            border-right: none;
+        }
+        .tab.active {
+            background: #4fc3f7;
+            color: #000;
+            font-weight: bold;
+        }
+        .tab-content {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 0 0 10px 10px;
+            padding: 20px;
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Installation Guide</h1>
+            <p>Complete installation guide for the CCC simplified template system</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="getting-started.html">🚀 Getting Started</a>
+            <a href="workflows.html">⚡ Workflows</a>
+            <a href="chat-interface.html">💬 Chat Interface</a>
+            <a href="agents-guide.html">🤖 Agents Guide</a>
+            <a href="commands.html">📋 Commands</a>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">📋</span>System Requirements</h2>
+            
+            <div class="requirements-grid">
+                <div class="requirement-item">
+                    <span class="requirement-icon">🐍</span>
+                    <div class="requirement-name">Python 3.x</div>
+                    <div class="requirement-desc">Python 3.6 or higher required</div>
+                </div>
+                <div class="requirement-item">
+                    <span class="requirement-icon">📦</span>
+                    <div class="requirement-name">pip</div>
+                    <div class="requirement-desc">Python package manager</div>
+                </div>
+                <div class="requirement-item">
+                    <span class="requirement-icon">🔧</span>
+                    <div class="requirement-name">git</div>
+                    <div class="requirement-desc">Version control system</div>
+                </div>
+                <div class="requirement-item">
+                    <span class="requirement-icon">💾</span>
+                    <div class="requirement-name">Storage</div>
+                    <div class="requirement-desc">~100MB free space</div>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab('ubuntu')">Ubuntu/Debian</button>
+                    <button class="tab" onclick="showTab('macos')">macOS</button>
+                    <button class="tab" onclick="showTab('windows')">Windows</button>
+                </div>
+                
+                <div id="ubuntu" class="tab-content active">
+                    <h3>Ubuntu/Debian Installation</h3>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># Update package list</span><br>
+<span class="command">sudo apt update</span><br><br>
+<span class="comment"># Install required packages</span><br>
+<span class="command">sudo apt install python3 python3-pip git</span><br><br>
+<span class="comment"># Verify installations</span><br>
+<span class="command">python3 --version</span><br>
+<span class="command">pip3 --version</span><br>
+<span class="command">git --version</span>
+                        </code>
+                    </div>
+                </div>
+                
+                <div id="macos" class="tab-content">
+                    <h3>macOS Installation</h3>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># Install Homebrew if not already installed</span><br>
+<span class="command">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span><br><br>
+<span class="comment"># Install required packages</span><br>
+<span class="command">brew install python3 git</span><br><br>
+<span class="comment"># Verify installations</span><br>
+<span class="command">python3 --version</span><br>
+<span class="command">pip3 --version</span><br>
+<span class="command">git --version</span>
+                        </code>
+                    </div>
+                </div>
+                
+                <div id="windows" class="tab-content">
+                    <h3>Windows Installation</h3>
+                    <p>Download and install:</p>
+                    <ul style="color: #b0b0b0; margin: 15px 0; padding-left: 20px;">
+                        <li><strong>Python 3</strong>: <a href="https://python.org/downloads/" style="color: #4fc3f7;">python.org/downloads/</a></li>
+                        <li><strong>Git for Windows</strong>: <a href="https://git-scm.com/download/win" style="color: #4fc3f7;">git-scm.com/download/win</a></li>
+                    </ul>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># Verify installations in Command Prompt</span><br>
+<span class="command">python --version</span><br>
+<span class="command">pip --version</span><br>
+<span class="command">git --version</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">🚀</span>Quick Installation</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Clone or Access CCC System</div>
+                    <p>Ensure you have access to the CCC system directory:</p>
+                    <div class="code-block">
+                        <code><span class="command">cd /home/loki/code/ccc</span></code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Run Automated Installation</div>
+                    <p>Execute the installation script which handles all dependencies and setup:</p>
+                    <div class="code-block">
+                        <code><span class="command">./install.sh</span></code>
+                    </div>
+                    <div class="info">
+                        <span class="info-icon">💡</span>
+                        <strong>What the installer does:</strong>
+                        <ul style="margin: 10px 0; padding-left: 20px; color: #b0b0b0;">
+                            <li>Checks for required dependencies</li>
+                            <li>Installs Python packages (toml)</li>
+                            <li>Creates external project directories</li>
+                            <li>Installs command-line tools globally</li>
+                            <li>Sets up shell aliases</li>
+                            <li>Verifies everything works</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Verify Installation</div>
+                    <p>Test that everything is working correctly:</p>
+                    <div class="code-block">
+                        <code>
+<span class="command">claude-init --list-types</span><br>
+<span class="command">claude-work --help</span><br>
+<span class="command">./verify.sh</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success">
+                <span class="success-icon">✅</span>
+                <strong>Installation Complete!</strong> You're ready to start using the CCC system.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">🔧</span>Manual Installation</h2>
+            <p>For custom setups or troubleshooting, follow these detailed steps:</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Install Python Dependencies</div>
+                    <div class="code-block">
+                        <code><span class="command">pip3 install --user toml</span></code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Create Project Directories</div>
+                    <div class="code-block">
+                        <code>
+<span class="command">mkdir -p /home/loki/python-projects</span><br>
+<span class="command">mkdir -p /home/loki/seo-projects</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Install Command-Line Tools</div>
+                    <div class="code-block">
+                        <code>
+<span class="command">sudo cp /home/loki/code/ccc/bin/claude-init /usr/local/bin/</span><br>
+<span class="command">sudo cp /home/loki/code/ccc/bin/claude-work /usr/local/bin/</span><br>
+<span class="command">sudo chmod +x /usr/local/bin/claude-*</span>
+                        </code>
+                    </div>
+                    <div class="warning">
+                        <span class="warning-icon">⚠️</span>
+                        <strong>Note:</strong> You may need administrator privileges for installing to /usr/local/bin/
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Set Up Shell Aliases (Optional)</div>
+                    <p>Add helpful aliases to your shell configuration:</p>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># For bash users (~/.bashrc) or zsh users (~/.zshrc)</span><br>
+<span class="command">echo 'alias ccc-new="claude-init"' >> ~/.bashrc</span><br>
+<span class="command">echo 'alias ccc-work="claude-work"' >> ~/.bashrc</span><br>
+<span class="command">source ~/.bashrc</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">✅</span>Verification</h2>
+            <p>Verify your installation is working correctly:</p>
+
+            <div class="verification-list">
+                <li>Command-line tools are accessible globally</li>
+                <li>Python dependencies are installed</li>
+                <li>Project directories are created</li>
+                <li>Configuration file is valid</li>
+                <li>All templates and agents are available</li>
+            </div>
+
+            <div class="code-block">
+                <code>
+<span class="comment"># Test basic functionality</span><br>
+<span class="command">claude-init --list-types</span><br><br>
+<span class="comment"># Expected output:</span><br>
+Available project types:<br>
+  - python<br>
+  - seo<br>
+  - wordpress<br><br>
+Common combinations:<br>
+  - python<br>
+  - seo<br>
+  - python,seo<br>
+  - wordpress<br>
+  - wordpress,seo
+                </code>
+            </div>
+
+            <div class="code-block">
+                <code>
+<span class="comment"># Run comprehensive verification</span><br>
+<span class="command">cd /home/loki/code/ccc</span><br>
+<span class="command">./verify.sh</span>
+                </code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">🔄</span>First Steps</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Create Your First Project</div>
+                    <div class="code-block">
+                        <code>
+<span class="command">claude-init my-first-app python</span><br>
+<span class="command">cd /home/loki/python-projects/my-first-app</span><br>
+<span class="command">ls -la</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Try External Project Workflow</div>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># Work on any existing project</span><br>
+<span class="command">claude-work /path/to/existing/project</span><br><br>
+<span class="comment"># Clean up when done</span><br>
+<span class="command">claude-work /path/to/existing/project --cleanup</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Explore the Documentation</div>
+                    <div class="code-block">
+                        <code>
+<span class="comment"># Open the documentation system</span><br>
+<span class="command">open /home/loki/code/ccc/docs/index.html</span><br><br>
+<span class="comment"># Or use alias if installed</span><br>
+<span class="command">ccc-docs</span>
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="troubleshooting">
+            <h3>🚨 Troubleshooting</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #ff9800; margin-bottom: 10px;">Permission Denied Error</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment"># If you get permission errors:</span><br>
+<span class="command">sudo chmod +x /home/loki/code/ccc/bin/claude-*</span><br>
+<span class="command">sudo chmod +x /home/loki/code/ccc/install.sh</span>
+                    </code>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #ff9800; margin-bottom: 10px;">Python Module Not Found</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment"># Install missing Python packages:</span><br>
+<span class="command">pip3 install --user toml</span><br><br>
+<span class="comment"># Or use system-wide installation:</span><br>
+<span class="command">sudo pip3 install toml</span>
+                    </code>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #ff9800; margin-bottom: 10px;">Command Not Found</h4>
+                <p style="color: #b0b0b0; margin-bottom: 10px;">If claude-init or claude-work commands are not found:</p>
+                <div class="code-block">
+                    <code>
+<span class="comment"># Check if /usr/local/bin is in your PATH:</span><br>
+<span class="command">echo $PATH</span><br><br>
+<span class="comment"># Add to PATH if needed (add to ~/.bashrc):</span><br>
+<span class="command">export PATH="/usr/local/bin:$PATH"</span><br><br>
+<span class="comment"># Or run directly:</span><br>
+<span class="command">/home/loki/code/ccc/bin/claude-init --help</span>
+                    </code>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h4 style="color: #ff9800; margin-bottom: 10px;">Windows Line Ending Issues</h4>
+                <div class="code-block">
+                    <code>
+<span class="comment"># Fix line endings on Linux/Mac:</span><br>
+<span class="command">sed -i 's/\r$//' /home/loki/code/ccc/bin/claude-*</span><br>
+<span class="command">sed -i 's/\r$//' /home/loki/code/ccc/install.sh</span>
+                    </code>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; padding: 30px; background: #1a1a2e; border-radius: 15px; border: 2px solid #333;">
+            <h2 style="color: #4fc3f7; margin-bottom: 10px;">🎉 Ready to Go!</h2>
+            <p style="color: #b0b0b0; font-size: 1.1em;">Your CCC system is now installed and ready for beast-mode development</p>
+            <div style="margin-top: 20px;">
+                <a href="getting-started.html" style="color: #81c784; text-decoration: none; font-weight: bold; margin-right: 20px;">🚀 Getting Started</a>
+                <a href="workflows.html" style="color: #81c784; text-decoration: none; font-weight: bold; margin-right: 20px;">⚡ View Workflows</a>
+                <a href="agents-guide.html" style="color: #81c784; text-decoration: none; font-weight: bold;">🤖 Agents Guide</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

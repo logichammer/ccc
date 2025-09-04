@@ -1,0 +1,5 @@
+test/
+temp/
+verify.sh
+fix-line-endings.sh
+install.sh

@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""
+claude-init: Create new projects with template composition
+Part of the simplified Claude Code Templates system
+"""
+
+import os
+import sys
+import shutil
+import argparse
+from datetime import datetime
+from pathlib import Path
+import toml
+import json
+
+def load_config():
+    """Load configuration from config.toml"""
+    # First try relative to script location (development)
+    config_path = Path(__file__).parent.parent / "config.toml"
+    if not config_path.exists():
+        # Fallback to fixed CCC location (after installation)
+        config_path = Path("/home/loki/code/ccc/config.toml")
+    
+    if not config_path.exists():
+        print(f"❌ Config file not found: {config_path}")
+        print("❌ Please ensure CCC system is properly installed at /home/loki/code/ccc/")
+        sys.exit(1)
+    
+    return toml.load(config_path)
+
+def copy_template(template_name, target_dir, config):
+    """Copy template files to target directory"""
+    toolkit_path = Path(config["directories"]["toolkit_path"])
+    template_path = toolkit_path / "templates" / template_name
+    
+    if not template_path.exists():
+        print(f"❌ Template not found: {template_path}")
+        return False
+    
+    print(f"📁 Copying {template_name} template...")
+    
+    # Copy all files and directories from template
+    for item in template_path.iterdir():
+        if item.is_dir():
+            shutil.copytree(item, target_dir / item.name, dirs_exist_ok=True)
+        else:
+            shutil.copy2(item, target_dir / item.name)
+    
+    return True
+
+def substitute_variables(project_dir, variables):
+    """Perform variable substitution in text files"""
+    print("🔄 Substituting variables...")
+    
+    for root, dirs, files in os.walk(project_dir):
+        for file in files:
+            file_path = Path(root) / file
+            
+            # Skip binary files
+            if file_path.suffix in ['.png', '.jpg', '.jpeg', '.gif', '.pdf', '.zip']:
+                continue
+            
+            try:
+                content = file_path.read_text(encoding='utf-8')
+                modified = False
+                
+                for var, value in variables.items():
+                    placeholder = f"{{{{{var}}}}}"
+                    if placeholder in content:
+                        content = content.replace(placeholder, str(value))
+                        modified = True
+                
+                if modified:
+                    file_path.write_text(content, encoding='utf-8')
+                    print(f"   ✓ Updated {file_path.relative_to(project_dir)}")
+                    
+            except (UnicodeDecodeError, PermissionError):
+                # Skip files that can't be read as text
+                continue
+
+def create_external_directories(config):
+    """Create external project directories if they don't exist"""
+    directories = [
+        config["directories"]["seo_projects"],
+        config["directories"]["python_projects"]
+    ]
+    
+    for dir_path in directories:
+        Path(dir_path).mkdir(parents=True, exist_ok=True)
+
+def create_project(name, types, config):
+    """Create a new project with specified types"""
+    
+    # Determine target directory based on project types
+    if "seo" in types:
+        project_dir = Path(config["directories"]["seo_projects"]) / name
+    elif "wordpress" in types and "python" not in types:
+        # WordPress-only projects can go to python-projects (they're still code projects)
+        project_dir = Path(config["directories"]["python_projects"]) / name
+    else:
+        project_dir = Path(config["directories"]["python_projects"]) / name
+    
+    if project_dir.exists():
+        print(f"❌ Project directory already exists: {project_dir}")
+        return False
+    
+    print(f"🚀 Creating project: {name}")
+    print(f"📍 Location: {project_dir}")
+    print(f"📋 Types: {', '.join(types)}")
+    
+    # Create project directory
+    project_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Always start with base template
+    if not copy_template("base", project_dir, config):
+        return False
+    
+    # Layer on type-specific templates
+    for project_type in types:
+        if project_type == "base":
+            continue
+        if not copy_template(project_type, project_dir, config):
+            return False
+    
+    # Prepare variables for substitution
+    variables = {
+        "PROJECT_NAME": name,
+        "PROJECT_TYPE": ",".join(types),
+        "DATE": datetime.now().isoformat(),
+        "YEAR": str(datetime.now().year)
+    }
+    
+    # Perform variable substitution
+    substitute_variables(project_dir, variables)
+    
+    print(f"✅ Created {name} successfully!")
+    print(f"📂 Project directory: {project_dir}")
+    print(f"🎯 Next steps:")
+    print(f"   cd {project_dir}")
+    print(f"   # Your project is ready to use with all agents and commands available")
+    
+    return True
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Create new projects with template composition"
+    )
+    parser.add_argument("name", nargs="?", help="Project name")
+    parser.add_argument(
+        "--type", 
+        dest="types",
+        default="python",
+        help="Project types (comma-separated): python,seo,wordpress"
+    )
+    parser.add_argument(
+        "--list-types",
+        action="store_true",
+        help="List available project types"
+    )
+    
+    args = parser.parse_args()
+    
+    # Load configuration
+    config = load_config()
+    
+    if args.list_types:
+        print("Available project types:")
+        for ptype in config["templates"]["available"]:
+            print(f"  - {ptype}")
+        print("\nCommon combinations:")
+        for combo in config["templates"]["default_combinations"]:
+            print(f"  - {combo}")
+        return
+    
+    if not args.name:
+        print("❌ Project name is required")
+        parser.print_help()
+        sys.exit(1)
+    
+    # Parse project types
+    types = [t.strip() for t in args.types.split(",")]
+    
+    # Validate types
+    available_types = config["templates"]["available"]
+    for ptype in types:
+        if ptype not in available_types:
+            print(f"❌ Unknown project type: {ptype}")
+            print(f"Available types: {', '.join(available_types)}")
+            sys.exit(1)
+    
+    # Create external directories
+    create_external_directories(config)
+    
+    # Create project
+    if create_project(args.name, types, config):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

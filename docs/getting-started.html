@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Getting Started - Claude Code Templates v2.0</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #ecf0f1; 
+      background: #2c3e50; 
+    }
+    h1, h2, h3 { 
+      font-weight: bold; 
+      margin-top: 1.5em; 
+      color: #ecf0f1;
+    }
+    h1 { 
+      color: #3498db; 
+      border-bottom: 2px solid #3498db; 
+      padding-bottom: 10px; 
+    }
+    h2 {
+      color: #e67e22;
+      border-left: 4px solid #e67e22;
+      padding-left: 15px;
+    }
+    pre, code { 
+      background: #34495e; 
+      color: #ecf0f1; 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      font-family: 'Courier New', monospace; 
+      font-size: 14px;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    a { 
+      color: #3498db; 
+      text-decoration: none; 
+    }
+    a:hover { 
+      text-decoration: underline; 
+      color: #5dade2;
+    }
+    .command-example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      margin: 10px 0;
+      border-left: 4px solid #e67e22;
+    }
+    .success-box {
+      background: #27ae60;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+    }
+    .warning-box {
+      background: #e74c3c;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+    }
+    .info-box {
+      background: #3498db;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+    }
+    .nav-links {
+      background: #34495e;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .step-number {
+      background: #e67e22;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      margin: 25px 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a>
+  </div>
+
+  <h1>🎯 Getting Started with Claude Code Templates v2.0</h1>
+  
+  <p>Welcome! This guide will get you up and running with Claude Code Templates in under 5 minutes. The system is designed to be immediately productive while providing powerful agent orchestration capabilities.</p>
+
+  <div class="info-box">
+    <strong>🔥 Key Feature:</strong> CCC can work with ANY existing project without modifying it! Add the full 23-agent toolkit to projects like Linky in /mnt/c/python/dvl/Linky instantly.<br><br>
+    <strong>What You'll Learn:</strong> How to install, configure, create new projects, and add CCC to existing projects anywhere on your system.
+  </div>
+
+  <h2>📋 Prerequisites</h2>
+  
+  <ul>
+    <li><strong>Python 3.8+</strong> - Required for project management scripts</li>
+    <li><strong>Claude Code CLI</strong> - For chat interface integration</li>
+    <li><strong>Git</strong> - For version control (recommended)</li>
+    <li><strong>10 minutes</strong> - For complete setup and first project</li>
+  </ul>
+
+  <h2>🚀 Installation Steps</h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h3>Install CCC System Globally</h3>
+      <p>Run the automated installer to set up everything:</p>
+      <div class="command-example">
+        cd /home/loki/code/ccc<br>
+        ./install.sh
+      </div>
+      <div class="success-box">
+        <strong>What this does:</strong><br>
+        ✅ Installs command-line tools globally<br>
+        ✅ Creates project directories<br>  
+        ✅ Sets up helpful aliases<br>
+        ✅ Verifies everything works
+      </div>
+      <p><strong>Aliases created:</strong> <code>ccc-work</code> and <code>ccc-new</code> commands available anywhere</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h3>Restart Your Terminal</h3>
+      <p>After installation, restart your terminal or run:</p>
+      <div class="command-example">
+        source ~/.bashrc  # or ~/.zshrc
+      </div>
+      <p>Now you can use these commands from any directory:</p>
+      <div class="success-box">
+        <strong>🚀 Available Aliases:</strong><br>
+        • <strong>ccc-work</strong> - Add CCC to any project<br>
+        • <strong>ccc-new</strong> - Create new projects<br>
+        • <strong>ccc-clean</strong> - Quick cleanup<br>
+        • <strong>ccc-help</strong> - Show usage examples<br>
+        • <strong>ccc-docs</strong> - Open documentation
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h3>Test the Installation</h3>
+      <div class="command-example">
+        ccc-new --list-types  # Now works from anywhere!
+      </div>
+      <p>You should see available project types:</p>
+      <div class="success-box">
+        Available project types:<br>
+        &nbsp;&nbsp;- python<br>
+        &nbsp;&nbsp;- seo<br>
+        &nbsp;&nbsp;- wordpress<br><br>
+        Common combinations:<br>
+        &nbsp;&nbsp;- python,seo<br>
+        &nbsp;&nbsp;- wordpress,seo
+      </div>
+    </div>
+  </div>
+
+  <h2>🎯 Two Ways to Use CCC</h2>
+
+  <div class="info-box">
+    <strong>Choose Your Path:</strong><br>
+    <strong>A)</strong> Create a new project with CCC templates<br>
+    <strong>B)</strong> Add CCC to an existing project (like Linky in /mnt/c/python/dvl/Linky)
+  </div>
+
+  <h3>Option A: Create New Project (30 Seconds)</h3>
+  <div class="command-example">
+    cd /home/loki/code/ccc<br><br>
+    
+    # Create a Python project<br>
+    python bin/claude-init my-first-app --type=python<br><br>
+    
+    # Navigate to your new project<br>
+    cd /home/loki/python-projects/my-first-app<br><br>
+    
+    # Your project is ready!<br>
+    ls -la  # See the complete project structure
+  </div>
+
+  <h3>Option B: Add CCC to Existing Project (30 Seconds)</h3>
+  <div class="command-example">
+    cd /home/loki/code/ccc<br><br>
+    
+    # Add CCC to your existing project (anywhere on system)<br>
+    ./bin/claude-work /mnt/c/python/dvl/Linky<br>
+    ./bin/claude-work /var/www/my-wordpress-site<br>
+    ./bin/claude-work /path/to/any/existing/project<br><br>
+    
+    # Auto-detects project type and adds full toolkit!<br>
+    # Creates .claude/ directory with all agents and CLAUDE.md
+  </div>
+
+  <h3>Option C: Chat Interface</h3>
+  <div class="command-example">
+    # From Claude Code chat:<br>
+    "Create a new Python project called my-first-app"<br><br>
+    
+    # Or for existing projects:<br>
+    "Add CCC toolkit to my existing project at /mnt/c/python/dvl/Linky"<br><br>
+    
+    # Or more specifically:<br>
+    "Use claude-work to add Python development tools to /path/to/my/project"
+  </div>
+
+  <div class="success-box">
+    <strong>🎉 Success!</strong> Your project includes:<br>
+    • Complete Python development setup<br>
+    • 20+ specialized agents available<br>
+    • Python-focused CLAUDE.md with full orchestration<br>
+    • Testing framework (pytest)<br>
+    • Code formatting (black, flake8)<br>
+    • Rich console interface<br>
+    • Proper project structure following best practices
+  </div>
+
+  <h2>🔧 Working with Existing Projects (The Killer Feature!)</h2>
+  
+  <div class="info-box">
+    <strong>Most Important Feature:</strong> CCC can work on ANY existing project without modifying it! This is perfect for projects like Linky that are in completely different directories like <code>/mnt/c/python/dvl/Linky</code> or <code>/var/www/wordpress-site</code>.
+  </div>
+
+  <h3>Example: Working with an Existing Project</h3>
+  <p>Let's say you have an existing Python project called Linky in <code>/mnt/c/python/dvl/Linky</code> (like we just tested!). Here's how to add CCC functionality:</p>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h4>Auto-Detect Project Type</h4>
+      <div class="command-example">
+        cd /home/loki/code/ccc<br>
+        ./bin/claude-work /mnt/c/python/dvl/Linky --detect-only
+      </div>
+      <div class="success-box">
+        🔍 Auto-detected project type(s): python<br>
+        📋 Project analysis complete<br>
+        📍 Directory: /mnt/c/python/dvl/Linky<br>
+        🏷️ Detected types: python<br>
+        💡 To set up external workflow: claude-work /mnt/c/python/dvl/Linky
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h4>Add Full CCC Toolkit</h4>
+      <div class="command-example">
+        ./bin/claude-work /mnt/c/python/dvl/Linky
+      </div>
+      <p>This creates a <code>.claude/</code> directory with:</p>
+      <ul>
+        <li>✅ All 23 specialized agents</li>
+        <li>✅ Python-focused CLAUDE.md file</li>
+        <li>✅ Python development commands</li>
+        <li>✅ Session summary</li>
+        <li>✅ Automatic .gitignore update</li>
+      </ul>
+      <div class="success-box">
+        <strong>🎯 Your existing project now has beast-mode development capabilities!</strong><br>
+        Navigate to /mnt/c/python/dvl/Linky and use Claude with full agent orchestration.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h4>Work on Your Project</h4>
+      <div class="command-example">
+        cd /mnt/c/python/dvl/Linky<br>
+        # Your project now has CLAUDE.md and full agent system<br>
+        # Use Claude Code chat interface with full orchestration<br>
+        # All 23 agents available for development tasks
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div class="step-content">
+      <h4>Clean Up When Done</h4>
+      <div class="command-example">
+        cd /home/loki/code/ccc<br>
+        ./bin/claude-work /mnt/c/python/dvl/Linky --cleanup --force
+      </div>
+      <div class="success-box">
+        🧹 Cleaning up external project workflow<br>
+        📍 Project: /mnt/c/python/dvl/Linky<br>
+        ✓ Removed .claude/ directory<br>
+        ✓ Cleaned up .gitignore<br>
+        ✅ Cleanup complete!<br>
+        📂 <strong>Original project preserved and unmodified</strong>
+      </div>
+    </div>
+  </div>
+
+  <h3>Force Different Project Type</h3>
+  <p>Sometimes you might want to treat a project as a different type:</p>
+  <div class="command-example">
+    # Force WordPress toolkit on any project<br>
+    ./bin/claude-work /path/to/any/project --type wordpress<br><br>
+    
+    # Force SEO research tools on any project<br>
+    ./bin/claude-work /path/to/any/project --type seo
+  </div>
+
+  <h3>Why This Is Powerful</h3>
+  <ul>
+    <li><strong>Zero Modification:</strong> Your original project stays completely untouched</li>
+    <li><strong>Any Location:</strong> Works with projects anywhere on your system</li>
+    <li><strong>Complete Toolkit:</strong> Full 23-agent system available instantly</li>
+    <li><strong>Clean Removal:</strong> Delete .claude/ to remove all traces</li>
+    <li><strong>Type Flexibility:</strong> Override detection if needed</li>
+    <li><strong>GitIgnore Integration:</strong> Automatically excludes .claude/ from version control</li>
+  </ul>
+
+  <div class="warning-box">
+    <strong>Real-World Tested:</strong> This workflow has been tested on the actual Linky project at /mnt/c/python/dvl/Linky and works perfectly!
+  </div>
+
+  <h2>📋 Understanding the CCC Commands</h2>
+
+  <div class="info-box">
+    <strong>Important:</strong> CCC commands set up your project for Claude development - they don't start Claude automatically. You still need to open Claude Code and navigate to your project directory.
+  </div>
+
+  <h3>🔧 ccc-work Command (claude-work)</h3>
+  
+  <div class="step">
+    <div class="step-number">📁</div>
+    <div class="step-content">
+      <h4>What it DOES:</h4>
+      <ul>
+        <li>✅ <strong>Auto-detects project type</strong> (Python, WordPress, SEO)</li>
+        <li>✅ <strong>Creates .claude/ directory</strong> with full toolkit</li>
+        <li>✅ <strong>Copies all 23 agents</strong> to your project</li>
+        <li>✅ <strong>Adds appropriate CLAUDE.md</strong> (Python/SEO/WordPress focused)</li>
+        <li>✅ <strong>Updates .gitignore</strong> to exclude .claude/ directory</li>
+        <li>✅ <strong>Works from current directory</strong> if you use <code>ccc-work .</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">❌</div>
+    <div class="step-content">
+      <h4>What it DOESN'T do:</h4>
+      <ul>
+        <li>❌ <strong>Does NOT start Claude</strong> - you still need to open Claude Code</li>
+        <li>❌ <strong>Does NOT turn on bypass permissions</strong> - that's a Claude Code setting</li>
+        <li>❌ <strong>Does NOT remember project type</strong> - it auto-detects each time</li>
+        <li>❌ <strong>Does NOT automatically navigate</strong> - you still cd to your project</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Usage Examples:</h3>
+  <div class="command-example">
+    # Super simple - just run in any project directory:<br>
+    cd /mnt/c/python/dvl/Linky<br>
+    ccc-work                      # Auto-detects type, uses current dir<br><br>
+    
+    # Force specific type on current directory:<br>
+    ccc-work --type python        # Forces Python toolkit on current dir<br><br>
+    
+    # Work with any directory anywhere:<br>
+    ccc-work /path/to/any/project  # Works with projects anywhere<br><br>
+    
+    # Get help and examples:<br>
+    ccc-work --help               # Full help with examples<br>
+    ccc-work --list-examples      # Detailed usage examples<br>
+    ccc-help                      # Alias for examples<br><br>
+    
+    # Quick cleanup:<br>
+    ccc-work --cleanup            # Remove .claude/ from current dir<br>
+    ccc-clean                     # Alias for force cleanup
+  </div>
+
+  <h3>🆕 ccc-new Command (claude-init)</h3>
+  
+  <div class="step">
+    <div class="step-number">🏗️</div>
+    <div class="step-content">
+      <h4>What it DOES:</h4>
+      <ul>
+        <li>✅ <strong>Creates new project</strong> in appropriate directory</li>
+        <li>✅ <strong>Uses template composition</strong> (base + type-specific)</li>
+        <li>✅ <strong>Includes full project structure</strong> with best practices</li>
+        <li>✅ <strong>Adds CLAUDE.md automatically</strong> based on project type</li>
+        <li>✅ <strong>Sets up testing framework</strong> (pytest for Python)</li>
+        <li>✅ <strong>Includes all development tools</strong> (linting, formatting, etc.)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Usage Examples:</h3>
+  <div class="command-example">
+    # Create new projects (from anywhere)<br>
+    ccc-new my-python-app --type python     # → /home/loki/python-projects/my-python-app<br>
+    ccc-new client-audit --type seo         # → /home/loki/seo-projects/client-audit<br>
+    ccc-new my-theme --type wordpress       # → /home/loki/python-projects/my-theme<br>
+    ccc-new mixed-project --type python,seo # Mixed-type project<br><br>
+    
+    # List available types<br>
+    ccc-new --list-types
+  </div>
+
+  <h3>🔑 The Complete Workflow</h3>
+  
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h4>Set up your project (choose one):</h4>
+      <div class="command-example">
+        # For existing project (SUPER SIMPLE!):<br>
+        cd /mnt/c/python/dvl/Linky<br>
+        ccc-work                       # That's it! Auto-detects and sets up<br><br>
+        
+        # For new project:<br>
+        ccc-new my-app --type python   # Creates new project with CCC
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h4>Open Claude Code and navigate to your project:</h4>
+      <div class="command-example">
+        # In Claude Code chat interface:<br>
+        cd /mnt/c/python/dvl/Linky      # Navigate to your project<br>
+        # or<br>
+        cd /home/loki/python-projects/my-app<br><br>
+        
+        # Now you have full agent orchestration available!<br>
+        # Read CLAUDE.md for agent system documentation
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h4>Enable Claude Code settings manually:</h4>
+      <div class="info-box">
+        <strong>Claude Code Settings:</strong><br>
+        • <strong>Bypass permissions:</strong> Enable in Claude Code settings<br>
+        • <strong>Auto-run commands:</strong> Configure in Claude Code preferences<br>
+        • <strong>MCP integration:</strong> Set up MCPs as needed<br><br>
+        
+        <em>CCC provides the toolkit - you configure Claude Code behavior separately</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div class="step-content">
+      <h4>Start development with full agent system:</h4>
+      <div class="command-example">
+        # In Claude Code chat:<br>
+        "I want to add a new feature to this Python project"<br>
+        "Use SystemArchitectAgent to analyze the codebase"<br>
+        "Generate tests with QualityTesterAgent"<br><br>
+        
+        # All 23 agents are now available for orchestration!
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div class="step-content">
+      <h4>Clean up when done (for external projects):</h4>
+      <div class="command-example">
+        ccc-work --cleanup    # Removes .claude/ from current directory<br>
+        ccc-clean             # Even simpler alias<br>
+        # Original project is preserved and unmodified
+      </div>
+    </div>
+  </div>
+
+  <h2>🔍 Project Structure Overview</h2>
+
+  <h3>Python Project Structure</h3>
+  <div class="command-example">
+    my-first-app/<br>
+    ├── CLAUDE.md          # Python-focused agent orchestration<br>
+    ├── README.md          # Project documentation<br>
+    ├── requirements.txt   # Python dependencies<br>
+    ├── pyproject.toml     # Modern Python project config<br>
+    ├── pytest.ini        # Testing configuration<br>
+    ├── src/              # Source code<br>
+    │   └── main.py       # Main application entry point<br>
+    └── tests/            # Test suite<br>
+        └── test_main.py  # Example tests
+  </div>
+
+  <h3>SEO Project Structure</h3>
+  <div class="command-example">
+    # Create an SEO project<br>
+    python bin/claude-init walmart-audit --type=seo<br><br>
+    
+    walmart-audit/<br>
+    ├── CLAUDE.md          # SEO-focused research workflows<br>
+    ├── README.md          # Project documentation<br>
+    ├── data/             # Research data<br>
+    │   ├── keywords/<br>
+    │   ├── competitors/<br>
+    │   ├── technical-audit/<br>
+    │   └── analytics/<br>
+    └── reports/          # Client deliverables<br>
+        ├── monthly/<br>
+        ├── audits/<br>
+        └── competitive/
+  </div>
+
+  <h2>💡 Next Steps</h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <h3>Explore Your Project</h3>
+      <p>Open your project's <code>CLAUDE.md</code> to understand the agent system and available workflows.</p>
+      <div class="command-example">
+        cd /home/loki/python-projects/my-first-app<br>
+        cat CLAUDE.md  # Or open in your editor
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <h3>Test the Agent System</h3>
+      <p>From Claude Code chat, navigate to your project and test agent orchestration:</p>
+      <div class="command-example">
+        # In Claude Code chat:<br>
+        "I'm in my-first-app. Help me understand the project structure"<br><br>
+        
+        # The SystemArchitectAgent will automatically engage<br>
+        # and provide project analysis and recommendations
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <h3>Learn External Project Workflow</h3>
+      <p>Practice working on existing projects without modifying them:</p>
+      <div class="command-example">
+        # Navigate to any existing Python project<br>
+        cd /path/to/existing/project<br><br>
+        
+        # Use claude-work to set up development environment<br>
+        /home/loki/code/ccc/bin/claude-work . --type=python<br><br>
+        
+        # Now all agents and tools are available<br>
+        # without modifying the original project
+      </div>
+    </div>
+  </div>
+
+  <h2>🔧 Troubleshooting Common Issues</h2>
+
+  <h3>Permission Denied</h3>
+  <div class="warning-box">
+    <strong>Problem:</strong> <code>permission denied: claude-init</code><br>
+    <strong>Solution:</strong> Make the script executable:<br>
+    <code>chmod +x /home/loki/code/ccc/bin/claude-init</code>
+  </div>
+
+  <h3>Module Not Found: toml</h3>
+  <div class="warning-box">
+    <strong>Problem:</strong> <code>ModuleNotFoundError: No module named 'toml'</code><br>
+    <strong>Solution:</strong> Install the dependency:<br>
+    <code>pip install toml</code>
+  </div>
+
+  <h3>Directory Not Found</h3>
+  <div class="warning-box">
+    <strong>Problem:</strong> Project directories don't exist<br>
+    <strong>Solution:</strong> The system creates them automatically, but you can create manually:<br>
+    <code>mkdir -p /home/loki/{seo-projects,python-projects}</code>
+  </div>
+
+  <h2>📚 What's Next?</h2>
+
+  <div class="nav-links">
+    <strong>Continue Learning:</strong><br>
+    • <a href="workflows.html">Complete Workflows Guide</a> - Learn all available workflows<br>
+    • <a href="agents-guide.html">Agent System Guide</a> - Master the 20+ agent system<br>
+    • <a href="chat-interface.html">Chat Interface Usage</a> - Learn chat-based development<br>
+    • <a href="external-projects.html">External Project Workflow</a> - Work on existing codebases<br>
+    • <a href="project-types.html">Project Types Guide</a> - Python, SEO, and WordPress specifics
+  </div>
+
+  <div class="success-box">
+    <strong>🎉 You're Ready!</strong><br>
+    You now have a powerful development toolkit with agent orchestration, multiple project types, and the ability to work on any existing codebase. The system is designed to be immediately productive while scaling to complex workflows.
+  </div>
+
+  <hr style="margin: 40px 0; border: 1px solid #34495e;">
+  
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="workflows.html">Next: Complete Workflows →</a>
+  </div>
+</body>
+</html>

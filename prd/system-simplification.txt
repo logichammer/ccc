@@ -1,0 +1,442 @@
+PRODUCT REQUIREMENTS DOCUMENT
+Project: Claude Code Templates - KISS Simplification
+Version: 1.0
+Date: 2025-09-03
+Status: PROPOSAL
+
+=== EXECUTIVE SUMMARY ===
+
+Transform the Claude Code Templates project from a complex multi-system architecture to an elegant, maintainable solution following KISS principles. The current system has 203+ files with massive duplication, complex template management, and over-engineered workflows. This PRD proposes a radical simplification that maintains all useful functionality while reducing complexity by 90%.
+
+BUSINESS PROBLEM:
+- Maintenance burden is exponentially higher than value delivered
+- New users can't understand the system quickly
+- Updates require synchronizing changes across multiple locations
+- Debugging issues requires navigating complex directory hierarchies
+
+SUCCESS CRITERIA:
+1. Reduce total files by 60%+ (from 203+ command files to <80)
+2. Eliminate all duplicate files (currently 65+ duplicates)
+3. Reduce time to create new project from 5+ minutes to <30 seconds
+4. Make entire system understandable by new user in <5 minutes
+5. Reduce update/maintenance time by 90%
+
+=== CURRENT STATE ANALYSIS ===
+
+PAIN POINTS:
+- 203 command files with 65 duplicates across 2-4 locations each
+- 3 separate template systems (python-dev, wordpress-dev, seo-research) with overlapping functionality
+- Complex template_manager.py (293 lines) for what should be simple file copying
+- 7+ configuration files with overlapping purposes
+- Deep directory hierarchies (6+ levels) making navigation difficult
+- Agent management system that's over-engineered for simple prompt management
+- No clear entry point or "getting started" path
+
+COMPLEXITY METRICS:
+- Time to understand system: 2-4 hours
+- Time to add new command: 15-30 minutes (must update multiple locations)
+- Time to create new project: 5+ minutes
+- Lines of code for core functionality: ~1,000+ lines
+- Directory depth: 6+ levels
+
+=== PROPOSED SOLUTION ===
+
+## New Architecture Overview
+
+SIMPLIFIED STRUCTURE:
+```
+claude-templates/
+├── agents/            # All 20+ agents (preserved and enhanced)
+├── templates/         # Unified template system
+│   ├── base/         # Common files for all project types
+│   ├── python/       # Python-specific additions  
+│   ├── wordpress/    # WordPress-specific additions
+│   └── seo/          # SEO-specific additions
+├── commands/         # Deduplicated commands (~70 unique)
+├── bin/
+│   ├── claude-init   # Create new projects
+│   └── claude-work   # Work on existing external projects
+├── config.toml       # Single configuration file
+├── CLAUDE.md        # Main documentation
+└── README.md        # Quick start guide
+```
+
+## Core Components
+
+### 1. Unified Template System with Agent Orchestration
+BEFORE: 3 separate template managers with complex JSON configs
+AFTER: Simple composition system + portable agent environment
+
+**Two Usage Patterns:**
+
+```bash
+# Pattern 1: Create new projects
+claude-init my-python-project --type=python
+claude-init my-wordpress-site --type=wordpress  
+claude-init my-seo-research --type=seo
+claude-init my-custom-project --type=python,seo  # Mix and match
+
+# Pattern 2: Work on existing external projects
+claude-work /path/to/existing/project --type=python
+# This copies agents & commands WITHOUT touching the existing project structure
+```
+
+**Key Insight: External Project Workflow**
+The critical capability you want to preserve is using your template as a **portable development environment** that can work on ANY external project without modifying that project's structure.
+
+HOW IT WORKS:
+1. Start with base template (common files: CLAUDE.md, agents/, commands/)
+2. Layer on type-specific additions (python-specific agents, wordpress commands, etc.)
+3. For external projects: create temporary `.claude/` directory with agents & commands
+4. Agents can now analyze and work on external project while keeping their tools organized
+5. Simple variable substitution ({{PROJECT_NAME}}, {{PROJECT_TYPE}})
+
+**Agent Integration:**
+- All 20+ agents preserved and enhanced
+- Agents automatically available in any project (new or external)
+- Agent handoff protocols maintained
+- MCP integrations work seamlessly
+
+### 2. Single Commands Directory
+BEFORE: Commands scattered across templates with duplicates
+AFTER: One `/commands/` directory with tags for organization
+
+```
+commands/
+├── seo-audit.md                    # tags: [seo, audit]
+├── python-test-suite.md           # tags: [python, testing]
+├── wordpress-elementor-widget.md  # tags: [wordpress, elementor]
+├── data-analysis.md               # tags: [python, data, seo]
+└── ... (70 unique commands)
+```
+
+BENEFITS:
+- No duplicates to sync
+- Easy to discover with grep/find
+- Clear single source of truth
+- Natural organization by tags
+
+### 3. Simple Project Creation
+BEFORE: 293-line TemplateManager class
+AFTER: 50-line claude-init script
+
+```python
+#!/usr/bin/env python3
+def create_project(name, types=['base']):
+    """Create project by copying and composing templates."""
+    project_dir = Path(name)
+    
+    # Copy base template
+    copy_template('base', project_dir)
+    
+    # Layer on type-specific additions
+    for type in types:
+        copy_template(type, project_dir, merge=True)
+    
+    # Simple variable substitution
+    substitute_variables(project_dir, {
+        'PROJECT_NAME': name,
+        'PROJECT_TYPE': ','.join(types),
+        'DATE': datetime.now().isoformat()
+    })
+    
+    print(f"✅ Created {name} with types: {', '.join(types)}")
+```
+
+### 4. Enhanced Agent System (Preserved & Improved)
+BEFORE: 20+ agents scattered with complex JSON configs
+AFTER: Streamlined agent directory with clear capabilities
+
+**Agent Organization:**
+```
+agents/
+├── SystemArchitectAgent.json     # System design & orchestration
+├── FeatureDeveloperAgent.json    # Code implementation
+├── BenchmarkResearchAgent.json   # Research & analysis
+├── TechnicalSEOAgent.json        # SEO-specific expertise
+├── ... (all 20+ agents preserved)
+└── agents-index.json             # Unified agent registry
+```
+
+**Key Improvements:**
+- Single source of truth for agent capabilities
+- Automatic agent selection based on task type
+- Preserved handoff protocols and orchestration patterns
+- Enhanced with external project awareness
+
+**Agent Workflows Preserved:**
+- Multi-agent orchestration (SystemArchitectAgent → FeatureDeveloperAgent → QualityTesterAgent)
+- Parallel execution for research tasks
+- Domain-specific expertise routing (SEO, development, testing)
+- MCP integration maintained for all agents
+
+### 5. Configuration Simplification
+BEFORE: 7+ config files (agent_preferences.yaml, mcp_requirements.json, project-config.json, etc.)
+AFTER: Single config.toml
+
+```toml
+[project]
+name = "claude-templates"
+version = "2.0"
+
+[templates]
+default = "python"
+available = ["python", "wordpress", "seo"]
+
+[commands]
+directory = "./commands"
+discovery_method = "tags"  # Use tags in markdown files
+
+[claude]
+model = "claude-3-sonnet"
+max_tokens = 4000
+```
+
+## External Project Editing Workflow (Key Capability)
+
+**The Problem We're Solving:**
+You want to use your powerful agent system and commands on existing projects without polluting those projects with template files.
+
+**The Solution:**
+```bash
+# Work on any external project
+cd /path/to/existing/python/project
+claude-work . --type=python
+
+# What happens:
+# 1. Creates temporary .claude/ directory
+# 2. Copies relevant agents & commands  
+# 3. Detects project type automatically
+# 4. All your tools available without touching original project
+```
+
+**External Project Flow:**
+```bash
+# Example: Working on a Django project you didn't create
+cd ~/clients/big-corp/django-app
+claude-work . --type=python,seo
+
+# Now available in this context:
+# - All Python development agents
+# - SEO analysis tools  
+# - Performance profiling
+# - Code quality tools
+# - Your entire command library
+
+# Work normally with Claude Code
+# Everything writes to .claude/ not the original project
+# Original project structure completely preserved
+```
+
+**Benefits:**
+- Your development environment travels with you
+- No pollution of client/external codebases
+- All agent capabilities available anywhere
+- Seamless workflow across projects
+- Easy cleanup (just delete .claude/ directory)
+
+## User Experience Flow
+
+### Getting Started (New User)
+```bash
+# 1. Clone repo
+git clone <repo>
+cd claude-templates
+
+# 2. Create project (30 seconds)
+./bin/claude-init my-app --type=python
+
+# 3. Start working
+cd my-app
+# All commands available, CLAUDE.md explains everything
+```
+
+### Daily Usage (Existing User)  
+```bash
+# Add command to existing project
+cp ../commands/data-analysis.md ./commands/
+
+# Find relevant commands
+grep -r "tags: .*seo" ../commands/
+
+# Update template (simple file editing)
+edit ../templates/python/requirements.txt
+```
+
+### Maintenance (Developer)
+```bash
+# Add new command - just create one file
+echo "tags: [python, api]" > commands/fastapi-setup.md
+
+# Update template - just edit files
+edit templates/python/pyproject.toml
+
+# No synchronization needed - single source of truth
+```
+
+=== BENEFITS ANALYSIS ===
+
+## Functionality Preserved vs Lost
+
+### ✅ PRESERVED (All Key Capabilities)
+- **All 20+ agents** - SystemArchitectAgent, FeatureDeveloperAgent, TechnicalSEOAgent, etc.
+- **External project editing** - Use templates on existing projects without modifying them
+- **Agent orchestration** - Multi-agent workflows and handoff protocols
+- **MCP integrations** - All existing MCP connections maintained
+- **Template flexibility** - Mix and match types (python+seo, wordpress+seo, etc.)
+- **Command library** - All useful commands (deduplicated from 203 → ~70 unique)
+- **Project workflows** - Full development lifecycle support
+- **SEO capabilities** - Technical SEO, keyword research, competitor analysis
+- **WordPress development** - Elementor widgets, theme development
+- **Python development** - Django, Flask, CLI tools, testing
+
+### ❌ LOST (Complexity, Not Functionality)  
+- **File duplication** - 65 duplicate files eliminated
+- **Complex template manager** - 293-line TemplateManager class → 50-line script
+- **Multiple config files** - 7 config files → 1 config.toml
+- **Deep directory hierarchies** - 6+ levels → 3 levels
+- **Template system complexity** - 3 separate systems → 1 unified system
+- **Maintenance overhead** - 90% reduction in update/sync work
+
+**KEY INSIGHT**: You lose only the complexity, not the capabilities. Every useful feature is preserved in a simpler, more maintainable form.
+
+## Complexity Reduction
+- **Files**: 203+ → ~80 (60% reduction)
+- **Duplicates**: 65 → 0 (100% elimination)  
+- **Config files**: 7 → 1 (85% reduction)  
+- **Core code**: 1000+ lines → ~100 lines (90% reduction)
+- **Directory depth**: 6+ levels → 3 levels (50% reduction)
+
+## Time Savings
+- **Learning curve**: 2-4 hours → 15 minutes
+- **Project creation**: 5+ minutes → 30 seconds
+- **Adding new command**: 15-30 minutes → 2 minutes
+- **System updates**: 30+ minutes → 5 minutes
+
+## Maintenance Benefits
+- **Single source of truth** - no synchronization issues
+- **Self-documenting** - structure matches usage
+- **Git-friendly** - no complex merge conflicts
+- **Testable** - simple to validate and test
+- **Debuggable** - clear flow, minimal abstractions
+
+=== MIGRATION STRATEGY ===
+
+## Phase 1: Foundation (Day 1)
+1. Create new simplified structure alongside current system
+2. Implement claude-init script with basic functionality
+3. Migrate 10 core commands to new structure
+4. Test project creation with python type
+
+## Phase 2: Command Migration (Day 2-3)  
+1. Identify unique commands from current 203 files
+2. Consolidate duplicates - keep best version
+3. Add tags to command files for discovery
+4. Migrate all WordPress and SEO commands
+
+## Phase 3: Template Unification (Day 4-5)
+1. Extract common files to base template
+2. Create type-specific overlays (python, wordpress, seo)
+3. Test all combinations work correctly
+4. Update documentation
+
+## Phase 4: Cleanup (Day 6-7)
+1. Remove old complex system
+2. Update all documentation  
+3. Add comprehensive README
+4. Final testing and validation
+
+## Phase 5: Polish (Day 8-10)
+1. Add advanced features (mixing types, custom templates)
+2. Improve error messages and validation
+3. Create video walkthrough
+4. Performance optimization
+
+=== RISKS AND MITIGATIONS ===
+
+## Risk: Loss of Current Functionality
+MITIGATION: 
+- Maintain feature parity list
+- Test all current workflows work in new system
+- Keep old system until full validation complete
+
+## Risk: User Confusion During Transition  
+MITIGATION:
+- Clear migration guide
+- Both systems work in parallel initially
+- Gradual transition with user feedback
+
+## Risk: Unforeseen Dependencies
+MITIGATION:
+- Thorough audit of current system usage
+- Staged rollout with rollback capability
+- Extensive testing phase
+
+=== SUCCESS METRICS ===
+
+## Quantitative Goals
+- [ ] Reduce total files by 60%+ (203+ → <80)
+- [ ] Eliminate 100% of duplicate files (65 → 0)
+- [ ] Project creation time <30 seconds
+- [ ] New user onboarding time <5 minutes
+- [ ] Maintenance time reduction 90%
+
+## Qualitative Goals  
+- [ ] System immediately understandable to new users
+- [ ] No documentation needed for basic usage
+- [ ] Debugging issues takes minutes not hours
+- [ ] Adding features is trivial
+- [ ] Maintenance becomes enjoyable rather than burdensome
+
+## User Acceptance Criteria
+- [ ] Can create python project in <30 seconds
+- [ ] Can find relevant commands with simple grep
+- [ ] Can understand entire system architecture in <5 minutes
+- [ ] Can add new command without any documentation
+- [ ] System "just works" without configuration
+
+=== QUESTIONS FOR STAKEHOLDER ===
+
+1. **Feature Priorities**: Which current features are actually essential vs nice-to-have?
+
+2. **Migration Approach**: Prefer big-bang replacement or gradual transition?
+
+3. **Backward Compatibility**: How important is it to maintain old workflows during transition?
+
+4. **Customization Level**: Do you need the current level of configuration flexibility, or would sensible defaults work?
+
+5. **Command Set**: Are all 203+ commands needed, or could we start with a curated set of 20-30 most useful ones?
+
+6. **Template Types**: Do you actually use all 3 template types, or could we start with one flexible template?
+
+=== NEXT STEPS ===
+
+DECISION POINT: Should we proceed with this simplification approach?
+
+IF YES:
+1. Stakeholder review and approval of this PRD
+2. Create Phase 1 prototype for validation
+3. User testing with simplified system
+4. Iterative refinement based on feedback  
+5. Full implementation of migration plan
+
+IF NO:
+1. Identify specific concerns or requirements
+2. Revise approach to address concerns
+3. Create alternative proposals
+4. Re-evaluate with stakeholder
+
+TIMELINE: 10 days for complete transformation
+RESOURCES: 1 developer (80% effort)
+RISK LEVEL: Medium (high reward, manageable risks)
+
+=== APPENDIX ===
+
+## Current System Complexity Audit
+[Detailed file counts and complexity metrics - available on request]
+
+## Proposed File Structure  
+[Complete directory tree - available on request]
+
+## Command Migration Mapping
+[Mapping of current commands to simplified structure - available on request]

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Interface Usage - Claude Code Templates v2.0</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #ecf0f1; 
+      background: #2c3e50; 
+    }
+    h1, h2, h3 { 
+      font-weight: bold; 
+      margin-top: 1.5em; 
+      color: #ecf0f1;
+    }
+    h1 { 
+      color: #3498db; 
+      border-bottom: 2px solid #3498db; 
+      padding-bottom: 10px; 
+    }
+    h2 {
+      color: #e67e22;
+      border-left: 4px solid #e67e22;
+      padding-left: 15px;
+    }
+    h3 {
+      color: #27ae60;
+    }
+    pre, code { 
+      background: #34495e; 
+      color: #ecf0f1; 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      font-family: 'Courier New', monospace; 
+      font-size: 14px;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    a { 
+      color: #3498db; 
+      text-decoration: none; 
+    }
+    a:hover { 
+      text-decoration: underline; 
+      color: #5dade2;
+    }
+    .command-example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      margin: 10px 0;
+      border-left: 4px solid #e67e22;
+    }
+    .chat-example {
+      background: #8e44ad;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #9b59b6;
+    }
+    .agent-indicator {
+      background: #27ae60;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .nav-links {
+      background: #34495e;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .workflow-section {
+      background: #34495e;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #3498db;
+    }
+    .pro-tip {
+      background: #f39c12;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+      border-left: 4px solid #e67e22;
+    }
+    .conversation-flow {
+      background: #2c3e50;
+      border: 1px solid #34495e;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="workflows.html">Complete Workflows</a> |
+    <a href="agents-guide.html">Agents Guide</a>
+  </div>
+
+  <h1>💬 Chat Interface Usage Guide</h1>
+  
+  <p>This guide covers how to effectively use Claude Code Templates from the Claude Code chat interface. The system is designed to work seamlessly with natural language interactions while providing powerful agent orchestration.</p>
+
+  <h2>🚀 Quick Start with Chat Interface</h2>
+
+  <div class="workflow-section">
+    <h3>Basic Project Creation</h3>
+    
+    <div class="chat-example">
+      <strong>You:</strong> "Create a new Python project called my-api"<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll create a Python project for you with complete development setup.<br><br>
+      
+      <em>[Automatically runs: claude-init my-api --type=python]</em><br><br>
+      
+      ✅ Created Python project with:<br>
+      • Complete project structure (src/, tests/, requirements.txt)<br>
+      • Python-focused CLAUDE.md with agent orchestration<br>
+      • Testing framework and quality tools<br>
+      • All 20+ agents available for development
+    </div>
+    
+    <div class="pro-tip">
+      <strong>💡 Pro Tip:</strong> Claude automatically detects your intent and chooses appropriate project types. You can be specific: "Create a Python project with SEO analysis capabilities" will create a mixed python,seo project.
+    </div>
+  </div>
+
+  <h2>🤖 Agent Orchestration in Chat</h2>
+
+  <div class="workflow-section">
+    <h3>How Agent Selection Works</h3>
+    <p>Claude automatically selects and switches between specialized agents based on your requests and project context.</p>
+
+    <div class="conversation-flow">
+      <strong>Typical Agent Flow:</strong><br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Default:</strong> Plans overall approach and orchestrates other agents<br><br>
+      
+      <div class="agent-indicator">⚡ FeatureDeveloperAgent</div>  
+      <strong>Implementation:</strong> Writes code and builds features<br><br>
+      
+      <div class="agent-indicator">🧪 QualityTesterAgent</div>
+      <strong>Testing:</strong> Generates tests and validates quality<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Integration:</strong> Returns to coordinate final steps
+    </div>
+
+    <div class="chat-example">
+      <strong>You:</strong> "Help me implement user authentication with tests"<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll implement a complete authentication system with testing.<br><br>
+      
+      🔄 <strong>AGENT HANDOFF:</strong> SystemArchitectAgent → FeatureDeveloperAgent<br>
+      <em>Reason: Code implementation required</em><br><br>
+      
+      <div class="agent-indicator">⚡ FeatureDeveloperAgent</div>
+      <strong>Claude:</strong> Implementing authentication models and endpoints...<br>
+      <em>[Writes authentication code]</em><br><br>
+      
+      🔄 <strong>AGENT HANDOFF:</strong> FeatureDeveloperAgent → QualityTesterAgent<br>
+      <em>Reason: Test generation required</em><br><br>
+      
+      <div class="agent-indicator">🧪 QualityTesterAgent</div>
+      <strong>Claude:</strong> Generating comprehensive test suite...<br>
+      <em>[Creates authentication tests]</em>
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Triggering Specific Agents</h3>
+    <p>You can influence agent selection with specific keywords and phrases:</p>
+
+    <div class="command-example">
+      # Architecture and Planning<br>
+      "Design the system architecture for..."<br>
+      "Plan the overall approach for..."<br>
+      → 🏗️ SystemArchitectAgent<br><br>
+      
+      # Code Implementation<br>
+      "Implement the feature..."<br>
+      "Build the functionality for..."<br>
+      → ⚡ FeatureDeveloperAgent<br><br>
+      
+      # SEO Analysis<br>
+      "Audit the SEO of this site..."<br>
+      "Research keywords for..."<br>
+      → 🔧 TechnicalSEOAgent<br><br>
+      
+      # Performance Optimization<br>
+      "Optimize the performance of..."<br>
+      "Profile the application..."<br>
+      → ⚡ PerformanceProfilerAgent<br><br>
+      
+      # Security Analysis<br>
+      "Check security vulnerabilities..."<br>
+      "Audit the security of..."<br>
+      → 🔒 SecurityAuditorAgent
+    </div>
+  </div>
+
+  <h2>📋 Command Discovery and Usage</h2>
+
+  <div class="workflow-section">
+    <h3>Finding Available Commands</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "What commands are available for SEO analysis?"<br><br>
+      
+      <div class="agent-indicator">🔧 TechnicalSEOAgent</div>
+      <strong>Claude:</strong> Available SEO commands in your project:<br><br>
+      
+      📁 <strong>SEO Commands:</strong><br>
+      • <strong>seo-audit</strong> - Complete technical SEO audit<br>
+      • <strong>keyword-research</strong> - Comprehensive keyword analysis<br>
+      • <strong>competitor-analysis</strong> - Competitor research and gaps<br><br>
+      
+      📁 <strong>Shared Commands:</strong><br>
+      • <strong>project-summary</strong> - Project analysis and recommendations<br><br>
+      
+      You can use these by saying: "Run an SEO audit on example.com" or "Do keyword research for digital marketing"
+    </div>
+
+    <div class="chat-example">
+      <strong>You:</strong> "Show me Python development commands"<br><br>
+      
+      <div class="agent-indicator">⚡ FeatureDeveloperAgent</div>
+      <strong>Claude:</strong> Python development commands available:<br><br>
+      
+      📁 <strong>Python Commands:</strong><br>
+      • <strong>test-suite-gen</strong> - Generate comprehensive test suite<br>
+      • <strong>performance-heatmap</strong> - Performance analysis and optimization<br>
+      • <strong>code-quality-audit</strong> - Code quality and style analysis<br><br>
+      
+      Just describe what you want: "Generate tests for my authentication system" or "Analyze performance bottlenecks"
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Using Commands Naturally</h3>
+    <p>You don't need to remember exact command names. Claude understands natural language requests:</p>
+
+    <div class="command-example">
+      # Instead of memorizing "/seo-audit website_url=example.com"<br>
+      # Just say:<br>
+      "Audit the SEO of example.com"<br>
+      "Check example.com for SEO issues"<br>
+      "Do a technical SEO analysis of example.com"<br><br>
+      
+      # Instead of "/test-suite-gen test_types=unit,ui"<br>
+      # Just say:<br>
+      "Generate tests for this feature"<br>
+      "Create unit tests and UI tests"<br>
+      "I need comprehensive test coverage"<br><br>
+      
+      # Instead of "/performance-heatmap profile_type=cpu,memory"<br>
+      # Just say:<br>
+      "Profile the application performance"<br>
+      "Find performance bottlenecks"<br>
+      "Analyze CPU and memory usage"
+    </div>
+  </div>
+
+  <h2>🔗 External Project Management</h2>
+
+  <div class="workflow-section">
+    <h3>Working on Existing Projects</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "I'm in an existing Django project at /var/www/mysite. Help me analyze and improve it."<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll set up Claude tools for your existing Django project without modifying it.<br><br>
+      
+      🔍 <strong>Detecting project type...</strong><br>
+      ✅ <strong>Detected:</strong> Python (Django framework)<br><br>
+      
+      🛠️ <strong>Setting up external project workflow...</strong><br>
+      <em>[Runs: claude-work /var/www/mysite --type=python]</em><br><br>
+      
+      ✅ <strong>Ready!</strong> All Claude tools are now available in .claude/ directory<br>
+      📋 Your original project structure is completely preserved<br>
+      🤖 All 20+ agents available for analysis and development
+    </div>
+
+    <div class="pro-tip">
+      <strong>💡 Pro Tip:</strong> Claude automatically detects project types, but you can override: "Set up tools for this WordPress site" or "Treat this as a Python + SEO project"
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Cleaning Up External Projects</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "I'm done working on this external project. Clean up the Claude tools."<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll remove all Claude tools from this external project.<br><br>
+      
+      🧹 <strong>Cleaning up external project workflow...</strong><br>
+      <em>[Runs: claude-work . --cleanup]</em><br><br>
+      
+      ✅ <strong>Cleanup complete!</strong><br>
+      🗑️ Removed .claude/ directory and all toolkit files<br>
+      📂 Original project preserved and unmodified<br>
+      🎯 No traces of Claude tools remaining
+    </div>
+  </div>
+
+  <h2>📄 PRD-Driven Development</h2>
+
+  <div class="workflow-section">
+    <h3>Processing PRDs from Chat</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "Process my PRD for the new user dashboard feature"<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll process your PRD and implement the user dashboard feature.<br><br>
+      
+      📋 <strong>Reading PRD...</strong><br>
+      <em>Found: /prd/user-dashboard.txt</em><br><br>
+      
+      🎯 <strong>Requirements Analysis:</strong><br>
+      • User profile display<br>
+      • Activity timeline<br>
+      • Settings management<br>
+      • Responsive design<br><br>
+      
+      ❓ <strong>Clarification needed:</strong><br>
+      1. Should the dashboard support multiple user roles?<br>
+      2. Do you need real-time activity updates?<br>
+      3. What authentication method should we use?<br><br>
+      
+      <em>[After clarification, begins implementation with appropriate agents]</em>
+    </div>
+
+    <div class="chat-example">
+      <strong>You:</strong> "Work on PRD system-simplification"<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> Processing the system simplification PRD...<br><br>
+      
+      📋 <strong>PRD Analysis:</strong><br>
+      • Reduce complexity by 90%<br>
+      • Eliminate duplicate files<br>
+      • Preserve all functionality<br>
+      • Improve maintainability<br><br>
+      
+      📝 <strong>Creating implementation plan...</strong><br>
+      <em>[Uses TodoWrite to track progress]</em><br>
+      <em>[Orchestrates multiple agents for implementation]</em>
+    </div>
+  </div>
+
+  <h2>🎯 Advanced Chat Techniques</h2>
+
+  <div class="workflow-section">
+    <h3>Multi-Step Workflows</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "Create a complete SEO-optimized WordPress site with custom analytics tracking"<br><br>
+      
+      <div class="agent-indicator">🏗️ SystemArchitectAgent</div>
+      <strong>Claude:</strong> I'll create a comprehensive WordPress site with SEO optimization and analytics.<br><br>
+      
+      📋 <strong>Project Plan:</strong><br>
+      1. WordPress theme development<br>
+      2. SEO optimization integration<br>
+      3. Custom analytics implementation<br>
+      4. Performance optimization<br>
+      5. Security hardening<br><br>
+      
+      🔄 <strong>Beginning multi-agent workflow...</strong><br><br>
+      
+      <div class="agent-indicator">🎨 WordPressBuilderAgent</div>
+      <strong>Phase 1:</strong> Building WordPress theme structure...<br><br>
+      
+      <div class="agent-indicator">🔧 TechnicalSEOAgent</div>
+      <strong>Phase 2:</strong> Implementing SEO best practices...<br><br>
+      
+      <div class="agent-indicator">📊 MetricsReporterAgent</div>
+      <strong>Phase 3:</strong> Setting up analytics tracking...<br><br>
+      
+      <em>[Continues with automatic agent handoffs]</em>
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Context Awareness and Memory</h3>
+
+    <div class="chat-example">
+      <strong>Conversation Context:</strong><br><br>
+      
+      <strong>You:</strong> "Create a Python API for blog management"<br>
+      <em>[Claude creates the project]</em><br><br>
+      
+      <strong>You:</strong> "Now add authentication to it"<br>
+      <em>[Claude knows "it" refers to the blog API project]</em><br><br>
+      
+      <strong>You:</strong> "Generate tests for the auth system"<br>
+      <em>[Claude generates tests specifically for the authentication system just added]</em><br><br>
+      
+      <strong>You:</strong> "How's the project looking overall?"<br>
+      <em>[Claude provides status report on the entire blog management API project]</em>
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Error Handling and Troubleshooting</h3>
+
+    <div class="chat-example">
+      <strong>You:</strong> "The test suite generation failed"<br><br>
+      
+      <div class="agent-indicator">🧪 QualityTesterAgent</div>
+      <strong>Claude:</strong> Let me diagnose the test suite generation issue.<br><br>
+      
+      🔍 <strong>Checking common issues:</strong><br>
+      • Project structure validation<br>
+      • Dependency availability<br>
+      • File permissions<br>
+      • Configuration validity<br><br>
+      
+      ❌ <strong>Issue found:</strong> Missing pytest dependency<br><br>
+      🔧 <strong>Solution:</strong> Installing pytest and regenerating tests...<br>
+      <em>[Fixes the issue and retries]</em><br><br>
+      
+      ✅ <strong>Resolved:</strong> Test suite generated successfully
+    </div>
+  </div>
+
+  <h2>💡 Chat Interface Best Practices</h2>
+
+  <div class="workflow-section">
+    <h3>Effective Communication Tips</h3>
+    
+    <div class="pro-tip">
+      <strong>🎯 Be Specific About Intent:</strong><br>
+      Instead of: "Help with my website"<br>
+      Say: "Audit the SEO of my e-commerce site" or "Optimize my WordPress theme for performance"
+    </div>
+
+    <div class="pro-tip">
+      <strong>🔄 Leverage Agent Orchestration:</strong><br>
+      Let Claude manage agent handoffs automatically. Say: "Build a complete user system" rather than trying to manage individual agents yourself.
+    </div>
+
+    <div class="pro-tip">
+      <strong>📋 Reference Project Context:</strong><br>
+      Claude remembers your project context. Use pronouns like "it", "this project", "the dashboard" to refer to ongoing work.
+    </div>
+
+    <div class="pro-tip">
+      <strong>🎨 Combine Multiple Needs:</strong><br>
+      Say: "Create a Python tool for SEO analysis with data visualization" to get combined capabilities automatically.
+    </div>
+  </div>
+
+  <div class="workflow-section">
+    <h3>Common Interaction Patterns</h3>
+
+    <div class="command-example">
+      # Project Creation Patterns<br>
+      "Create a [type] project called [name]"<br>
+      "Set up a [description] with [requirements]"<br>
+      "I need a [type] project for [purpose]"<br><br>
+      
+      # Analysis Patterns<br>
+      "Analyze this [component/site/code]"<br>
+      "What issues do you see with [target]?"<br>
+      "How can I improve [specific aspect]?"<br><br>
+      
+      # Implementation Patterns<br>
+      "Implement [feature] with [requirements]"<br>
+      "Add [functionality] to this project"<br>
+      "Build [component] that [description]"<br><br>
+      
+      # Optimization Patterns<br>
+      "Optimize [target] for [goal]"<br>
+      "Find performance bottlenecks in [system]"<br>
+      "Improve the [aspect] of [target]"
+    </div>
+  </div>
+
+  <hr style="margin: 40px 0; border: 1px solid #34495e;">
+  
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="command-line.html">Next: Command Line Usage →</a>
+  </div>
+</body>
+</html>

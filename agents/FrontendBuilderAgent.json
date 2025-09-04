@@ -1,0 +1,14 @@
+{
+  "name": "FrontendBuilderAgent",
+  "description": "Implements pixel-accurate UI and runs screenshot diff loop.",
+  "system_prompt": "You are UIAgent. Implement UI templates/assets to match Figma or /designs/baseline. Start server on :5173. Use Playwright MCP to capture screenshots and compare to baseline. Iterate until visual diffs < 2px and WCAG AA pass.",
+  "tools": [
+    "PLAYWRIGHT_MCP_OR_PUPPETEER_MCP",
+    "REF_MCP",
+    "SHELL"
+  ],
+  "permissions": {
+    "filesystem_write": true,
+    "shell": true
+  }
+}

@@ -1,0 +1,45 @@
+# Core Python packages for {{PROJECT_NAME}}
+# Generated on {{DATE}}
+
+# Development and testing
+pytest>=8.0.0
+pytest-cov>=4.0.0
+black>=24.0.0
+flake8>=7.0.0
+mypy>=1.0.0
+
+# Console output and progress
+rich>=13.0.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Web development (optional, uncomment if needed)
+# flask>=3.0.0
+# fastapi>=0.104.0
+# uvicorn>=0.24.0
+
+# Database (optional, uncomment if needed)  
+# sqlalchemy>=2.0.0
+# alembic>=1.13.0
+
+# HTTP requests
+requests>=2.31.0
+
+# Configuration management
+pydantic>=2.5.0
+python-dotenv>=1.0.0
+
+# File processing
+openpyxl>=3.1.0
+pyyaml>=6.0.0
+toml>=0.10.2
+
+# Utilities
+pathlib2>=2.3.0
+click>=8.1.0
+
+# Development tools
+pre-commit>=3.6.0
+isort>=5.13.0

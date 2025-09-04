@@ -1,0 +1,69 @@
+[project]
+name = "claude-code-templates"
+version = "2.0.0"
+description = "Simplified KISS-based Claude development toolkit"
+
+[directories]
+seo_projects = "/home/loki/seo-projects"
+python_projects = "/home/loki/python-projects"
+toolkit_path = "/home/loki/code/ccc"
+
+[templates]
+available = ["python", "seo", "wordpress"]
+default_combinations = [
+    "python",
+    "seo", 
+    "python,seo",
+    "wordpress",
+    "wordpress,seo"
+]
+base_template = "base"
+
+[agents]
+directory = "./agents"
+index_file = "agents-index.json"
+auto_selection = true
+orchestration_mode = "SystemArchitectAgent"
+
+[agents.default_agents]
+python = "SystemArchitectAgent"
+seo = "TechnicalSEOAgent"
+wordpress = "WordPressBuilderAgent"
+
+[commands] 
+directory = "./commands"
+discovery_method = "tags"
+organization = "by_type"
+deduplication = true
+
+[external_projects]
+temp_directory = ".claude"
+preserve_structure = true
+auto_detect_type = true
+cleanup_on_exit = true
+
+[claude]
+model = "claude-3-sonnet"
+max_tokens = 4000
+interview_mode = true
+prd_directory = "./prd"
+autonomous_mode = true
+
+[mcps]
+required = []
+optional = [
+    "dataforseo",
+    "gsc", 
+    "chart-mcp",
+    "google-analytics",
+    "perplexity-ask",
+    "screenshot-website-fast",
+    "sequential_thinking",
+    "firecrawl"
+]
+
+[workflows]
+prd_driven = true
+todo_tracking = true
+agent_handoffs = true
+parallel_execution = true

@@ -1,0 +1,283 @@
+# PRD: Python Template Synchronization System
+
+**Version**: 1.0  
+**Date**: September 3, 2025  
+**Status**: Draft - Ready for Implementation
+
+---
+
+## 🎯 Project Overview
+
+**Problem**  
+The Python development template is severely outdated and missing critical functionality developed in the main project. Currently, new Python projects only get 5 agents (should be 14) and 3 commands (vs 131 in main project), missing most of our advanced development capabilities.
+
+**Objective**  
+Create a comprehensive synchronization system that ensures Python templates contain all relevant agents, configurations, and tooling, with an easy process for adding new agents and maintaining templates.
+
+**Principles**
+- Maintain functionality - all current capabilities preserved
+- Selective sync - only Python-relevant content goes to Python templates
+- Easy maintenance - simple process to add agents and keep templates current
+- Expandable design - system works for SEO/WordPress templates later
+
+---
+
+## ✅ Goals & Non-Goals
+
+**Goals**
+1. Sync 14 specified agents from main project to Python template
+2. Create intelligent agent management tool for complex YAML configurations
+3. Implement CLAUDE.md symlink-to-copy strategy during template setup
+4. Build automated sync system with version tracking
+5. Generate comprehensive HTML documentation for the entire system
+6. Establish easy workflow for adding new agents to templates
+7. Sync all relevant configuration files (pyproject.toml, pytest.ini, .coveragerc, etc.)
+
+**Non-Goals**
+- Syncing all 131 commands (commands handled in separate PRD)
+- Updating SEO/WordPress templates (Python-only for now, but leave expansion hooks)
+- Changing existing template setup process (enhance, don't replace)
+- Modifying core agent definitions (sync existing agents as-is)
+
+---
+
+## 👥 Personas & Primary Use Cases
+
+- **Python Developer (Primary)**: Gets full agent ecosystem in new projects immediately
+- **Template Maintainer**: Easy process to keep templates current and add new agents
+- **Project Manager**: Can see what capabilities are available in each template type
+
+**Use Cases**
+1. Developer runs `st-safe python MyProject` and gets all 14 agents ready to use
+2. Maintainer adds new agent: `bin/manage-template-agents.py python add NewAgent --workflow "SystemArchitectAgent -> NewAgent"`
+3. System automatically syncs configurations when templates are updated
+4. HTML documentation shows complete agent ecosystem and how to use it
+
+---
+
+## 🧩 Functional Requirements & Acceptance Criteria
+
+### FR-1: Agent Synchronization
+- **Req**: Sync 14 specified agents from main project to Python template
+- **Agent List**:
+  - Core: SystemArchitectAgent, FeatureDeveloperAgent, QualityTesterAgent, PerformanceProfilerAgent, DataPipelineAgent
+  - Workflow: CodebaseAnalyzerAgent, SecurityAuditorAgent, InterfaceDesignerAgent, InsightsAnalystAgent  
+  - Extended: BenchmarkResearchAgent, FrontendBuilderAgent, FrontendImplementerAgent, InteractionEnhancerAgent, DeliveryVerifierAgent, WorkflowOrchestratorAgent
+- **Acceptance**:
+  - [ ] All 14 agents copied to `templates/python-dev-template/agents/`
+  - [ ] Agent preferences YAML updated with correct agent list
+  - [ ] All agent workflows and triggers preserved
+  - [ ] New Python projects have access to all 14 agents
+
+### FR-2: Intelligent Agent Management Tool
+- **Req**: Create sophisticated tool for managing agent_preferences_python.yaml (beyond simple echo)
+- **Tool**: `/bin/manage-template-agents.py`
+- **Capabilities**:
+  - Add/remove agents with proper YAML structure
+  - Update workflows and triggers
+  - Validate agent configurations
+  - Show current template agent status
+- **Acceptance**:
+  - [ ] Can add agent: `manage-template-agents.py python add NewAgent --triggers "api,rest" --workflow "SystemArchitectAgent -> NewAgent -> QualityTesterAgent"`
+  - [ ] Can remove agent: `manage-template-agents.py python remove OldAgent`
+  - [ ] Can list agents: `manage-template-agents.py python list`
+  - [ ] Validates YAML syntax and agent existence
+  - [ ] Preserves comments and formatting
+
+### FR-3: CLAUDE.md Symlink-to-Copy Strategy
+- **Req**: Template contains symlink to root CLAUDE.md, but setup copies real file for editing
+- **Implementation**:
+  - Template has: `CLAUDE.md -> ../../CLAUDE.md` (symlink)
+  - Setup process detects symlinks and copies actual content
+  - Projects get editable copy, not symlink
+- **Acceptance**:
+  - [ ] Template contains symlink to root CLAUDE.md
+  - [ ] `st-safe python MyProject` creates real CLAUDE.md file in project
+  - [ ] Project CLAUDE.md is editable without affecting main project
+  - [ ] Projects start with current CLAUDE.md content
+
+### FR-4: Automated Sync System
+- **Req**: Automated tools to keep templates synchronized with main project
+- **Tool**: `/bin/sync-python-template.py`
+- **Capabilities**:
+  - Sync agents based on preferences configuration
+  - Update configuration files (pyproject.toml, pytest.ini, .coveragerc)
+  - Version tracking to detect when templates are outdated
+  - Dry-run mode to preview changes
+- **Acceptance**:
+  - [ ] `sync-python-template.py --dry-run` shows what would be updated
+  - [ ] `sync-python-template.py --sync` performs actual synchronization
+  - [ ] Version tracking shows template freshness: `sync-python-template.py --status`
+  - [ ] Preserves template-specific customizations
+  - [ ] Logs all sync operations
+
+### FR-5: Configuration File Synchronization
+- **Req**: Sync all Python development configuration files to template
+- **Files to Sync**:
+  - `pyproject.toml` - Black, flake8, other tool configs
+  - `pytest.ini` - Test runner configuration  
+  - `.coveragerc` - Coverage reporting settings
+  - `requirements.txt` - Base Python dependencies (already done)
+- **Acceptance**:
+  - [ ] All config files present in template
+  - [ ] New Python projects get consistent tool configurations
+  - [ ] Configs updated when main project configs change
+  - [ ] Template-specific overrides preserved
+
+### FR-6: Comprehensive HTML Documentation
+- **Req**: Generate detailed HTML documentation explaining the entire system
+- **Tool**: `/bin/generate-template-docs.py`
+- **Content**:
+  - Complete agent ecosystem overview
+  - How to add/remove agents from templates
+  - Template sync process explanation
+  - Configuration file purposes and settings
+  - Workflow examples and best practices
+- **Acceptance**:
+  - [ ] HTML documentation generated: `docs/python-template-system.html`
+  - [ ] Includes all 14 agents with descriptions and use cases
+  - [ ] Step-by-step guides for common operations
+  - [ ] Visual workflows and architecture diagrams
+  - [ ] Easy navigation and searchable content
+
+### FR-7: Easy Agent Addition Workflow
+- **Req**: Simple, documented process for adding new agents to templates
+- **Process**:
+  1. Add agent to main `/agents/` if needed
+  2. Use management tool: `manage-template-agents.py python add NewAgent`
+  3. Configure workflows and triggers
+  4. Sync template: `sync-python-template.py --sync`
+  5. Update documentation: `generate-template-docs.py`
+- **Acceptance**:
+  - [ ] Complete workflow documented in HTML docs
+  - [ ] Process takes <5 minutes for experienced user
+  - [ ] All steps validated and error-handled
+  - [ ] New agent immediately available in fresh projects
+
+---
+
+## 📈 Success Metrics & Measurement Plan
+
+**Primary**
+- Agent Count: Python template has all 14 specified agents (up from 5)
+- Configuration Completeness: All 4 config files synchronized
+- Documentation Quality: Complete HTML guide with examples and workflows
+- Ease of Use: Adding new agent takes <5 minutes with tools
+
+**Secondary**  
+- Template Freshness: Sync status tool shows current synchronization state
+- Developer Experience: New Python projects have immediate access to full toolchain
+- Maintainability: Template updates automated and documented
+
+**Instrumentation**
+- Before/after agent and config file counts
+- Documentation coverage metrics (all agents documented)
+- User workflow timing (agent addition process)
+
+---
+
+## 🔒 Guardrails & Safety Measures
+
+- Validate agent existence before adding to templates
+- Preserve template-specific customizations during sync
+- Create backup before major sync operations  
+- Dry-run mode for all sync operations
+- Version tracking to prevent regression
+
+---
+
+## 🧪 Testing Strategy
+
+- **Pre-sync**: Document current template state and functionality
+- **During development**: Test each tool with dry-run modes first
+- **Post-sync**: Verify template creates working Python projects with all 14 agents
+- **Integration**: Test complete workflow from agent addition to project creation
+- **Documentation**: Verify HTML docs are complete and accurate
+
+---
+
+## 📊 Implementation Plan
+
+**Phase 1**: Agent Analysis and Management Tool
+1. Audit current vs required agents in Python template
+2. Create `manage-template-agents.py` tool with add/remove/list capabilities
+3. Test agent management with complex YAML configurations
+
+**Phase 2**: Sync System Development
+1. Create `sync-python-template.py` with dry-run and sync modes
+2. Implement version tracking and status reporting
+3. Test configuration file synchronization
+
+**Phase 3**: CLAUDE.md Strategy Implementation
+1. Create symlink in template pointing to root CLAUDE.md
+2. Update template setup to detect and copy symlinked files
+3. Test that projects get editable CLAUDE.md copies
+
+**Phase 4**: Documentation Generation
+1. Create `generate-template-docs.py` tool
+2. Generate comprehensive HTML documentation
+3. Include all agents, workflows, and management processes
+
+**Phase 5**: Integration and Testing
+1. Test complete agent addition workflow
+2. Verify new Python projects have all 14 agents and configs
+3. Validate documentation accuracy and completeness
+
+**Phase 6**: Expansion Preparation
+1. Document how to extend system to SEO/WordPress templates
+2. Create template-agnostic sync framework
+3. Establish maintenance procedures
+
+---
+
+## ⚠️ Risks & Mitigations
+
+- **Complex YAML Management**: Mitigate with robust parsing and validation in management tool
+- **Template Drift**: Mitigate with version tracking and regular sync processes
+- **Documentation Maintenance**: Mitigate with automated doc generation
+- **Agent Compatibility**: Mitigate with agent validation before template inclusion
+
+---
+
+## 🔗 Dependencies
+
+- Existing agent definitions in `/agents/` directory
+- Current template setup system (`st-safe`, `setup-template.py`)
+- YAML parsing libraries for configuration management
+- HTML generation tools for documentation
+
+---
+
+## 📜 Assumptions
+
+- Agent definitions are stable and ready for template inclusion
+- Current template setup process can be enhanced without breaking changes
+- Python developers want access to full agent ecosystem
+- HTML documentation preferred over markdown for this system
+
+---
+
+## 🚫 Out of Scope
+
+- Command synchronization (separate PRD)
+- SEO/WordPress template updates (future PRD)
+- Agent definition modifications (use existing agents as-is)
+- Template setup process redesign (enhance existing system)
+
+---
+
+## 📋 Future Expansion Notes
+
+**For SEO Template Sync (Future PRD):**
+- Reuse sync framework with SEO-specific agent list
+- Different configuration files (SEO tools, analytics configs)
+- SEO-specific documentation generation
+
+**Architecture designed for easy expansion:**
+- Template-agnostic sync scripts
+- Configurable agent lists per template type
+- Modular documentation generation system
+
+---
+
+**Exit Criteria**: Python template synchronized with 14 agents, automated management tools working, comprehensive HTML documentation complete, and easy agent addition workflow established.

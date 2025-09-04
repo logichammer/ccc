@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent System Guide - Claude Code Templates v2.0</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #ecf0f1; 
+      background: #2c3e50; 
+    }
+    h1, h2, h3 { 
+      font-weight: bold; 
+      margin-top: 1.5em; 
+      color: #ecf0f1;
+    }
+    h1 { 
+      color: #3498db; 
+      border-bottom: 2px solid #3498db; 
+      padding-bottom: 10px; 
+    }
+    h2 {
+      color: #e67e22;
+      border-left: 4px solid #e67e22;
+      padding-left: 15px;
+    }
+    h3 {
+      color: #27ae60;
+    }
+    pre, code { 
+      background: #34495e; 
+      color: #ecf0f1; 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      font-family: 'Courier New', monospace; 
+      font-size: 14px;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 15px 0;
+    }
+    a { 
+      color: #3498db; 
+      text-decoration: none; 
+    }
+    a:hover { 
+      text-decoration: underline; 
+      color: #5dade2;
+    }
+    .agent-card {
+      background: #34495e;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #3498db;
+    }
+    .agent-icon {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+    .agent-title {
+      color: #3498db;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .agent-triggers {
+      background: #2c3e50;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+      border-left: 3px solid #27ae60;
+    }
+    .agent-handoffs {
+      background: #8e44ad;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    .workflow-diagram {
+      background: #2c3e50;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: monospace;
+      border: 1px solid #34495e;
+    }
+    .nav-links {
+      background: #34495e;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .orchestration-example {
+      background: #27ae60;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+    }
+    .pro-tip {
+      background: #f39c12;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 15px 0;
+      border-left: 4px solid #e67e22;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="workflows.html">Complete Workflows</a> |
+    <a href="chat-interface.html">Chat Interface</a>
+  </div>
+
+  <h1>🤖 Agent System Guide</h1>
+  
+  <p>Claude Code Templates includes 20+ specialized agents that work together to provide comprehensive development, analysis, and optimization capabilities. This guide covers how agents work, when they're triggered, and how to leverage the orchestration system.</p>
+
+  <h2>🎯 Agent Orchestration Overview</h2>
+
+  <div class="orchestration-example">
+    <strong>🏗️ SystemArchitectAgent (Default Orchestrator)</strong><br><br>
+    
+    <strong>Orchestration Pattern:</strong> Lead-SubAgent with Fan-out/Fan-in<br>
+    <strong>Primary Objective:</strong> Plan → Delegate → Integrate<br><br>
+    
+    <strong>Typical Flow:</strong><br>
+    1. 🏗️ Analyzes requirements and plans approach<br>
+    2. 🔄 Hands off to specialized agents for execution<br>
+    3. 🏗️ Integrates results and coordinates next steps<br>
+    4. 🔄 Continues until task completion
+  </div>
+
+  <div class="workflow-diagram">
+    Agent Handoff Example:<br><br>
+    
+    User Request: "Build user authentication with tests"<br>
+    ↓<br>
+    🏗️ [SystemArchitectAgent] → Plan overall approach<br>
+    ↓<br>
+    🔄 HANDOFF: SystemArchitectAgent → FeatureDeveloperAgent<br>
+    ↓<br>
+    ⚡ [FeatureDeveloperAgent] → Implement authentication code<br>
+    ↓<br>
+    🔄 HANDOFF: FeatureDeveloperAgent → QualityTesterAgent<br>
+    ↓<br>
+    🧪 [QualityTesterAgent] → Generate test suite<br>
+    ↓<br>
+    🔄 HANDOFF: QualityTesterAgent → SystemArchitectAgent<br>
+    ↓<br>
+    🏗️ [SystemArchitectAgent] → Final integration and summary
+  </div>
+
+  <h2>🔧 Core Development Agents</h2>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🏗️</span>SystemArchitectAgent
+    </div>
+    <p><strong>Role:</strong> Primary orchestrator for system design and architecture decisions</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> architecture, system, design, performance, scalability, technical debt, orchestrate
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> FeatureDeveloperAgent, QualityTesterAgent, PerformanceProfilerAgent, SecurityAuditorAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Overall system architecture planning</li>
+      <li>Agent orchestration and workflow coordination</li>
+      <li>Technical decision making and trade-off analysis</li>
+      <li>Integration of multiple agent outputs</li>
+      <li>Performance optimization strategy</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">⚡</span>FeatureDeveloperAgent
+    </div>
+    <p><strong>Role:</strong> Code implementation and feature development</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> implement, build, create feature, develop, code this, write code
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> QualityTesterAgent, SecurityAuditorAgent, SystemArchitectAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Feature implementation following best practices</li>
+      <li>Code generation with proper structure and patterns</li>
+      <li>API development and database integration</li>
+      <li>Framework-specific development (Django, Flask, etc.)</li>
+      <li>Integration with existing codebases</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🧪</span>QualityTesterAgent
+    </div>
+    <p><strong>Role:</strong> Testing and quality assurance</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> test, QA, quality, testing strategy, validation, coverage
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> FeatureDeveloperAgent, DeliveryVerifierAgent, SystemArchitectAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Comprehensive test suite generation</li>
+      <li>Unit, integration, and UI testing</li>
+      <li>Test-driven development (TDD) workflows</li>
+      <li>Code coverage analysis and reporting</li>
+      <li>Quality metrics and improvement suggestions</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">💻</span>CodebaseAnalyzerAgent
+    </div>
+    <p><strong>Role:</strong> Code review, analysis, and understanding existing code</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> analyze code, review codebase, understand implementation, code review
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> FeatureDeveloperAgent, SecurityAuditorAgent, PerformanceProfilerAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Codebase structure analysis and documentation</li>
+      <li>Code quality assessment and recommendations</li>
+      <li>Technical debt identification</li>
+      <li>Design pattern recognition and suggestions</li>
+      <li>Refactoring opportunities and planning</li>
+    </ul>
+  </div>
+
+  <h2>🔍 SEO and Research Agents</h2>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🔧</span>TechnicalSEOAgent
+    </div>
+    <p><strong>Role:</strong> Technical SEO analysis and site optimization (Default for SEO projects)</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> technical SEO, site speed, crawling, indexing, SEO audit
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> KeywordStrategyAgent, PerformanceProfilerAgent, BenchmarkResearchAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Comprehensive technical SEO audits</li>
+      <li>Site performance and Core Web Vitals analysis</li>
+      <li>Crawlability and indexation assessment</li>
+      <li>Schema markup implementation and validation</li>
+      <li>Mobile-first optimization strategies</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🔑</span>KeywordStrategyAgent
+    </div>
+    <p><strong>Role:</strong> SEO keyword research and content strategy</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> keywords, SEO strategy, content optimization, keyword research
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> TechnicalSEOAgent, BenchmarkResearchAgent, MetricsReporterAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Comprehensive keyword research and analysis</li>
+      <li>Search intent classification and mapping</li>
+      <li>Content gap identification and strategy</li>
+      <li>SERP analysis and feature opportunities</li>
+      <li>Long-tail keyword discovery and prioritization</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🔍</span>BenchmarkResearchAgent
+    </div>
+    <p><strong>Role:</strong> Competitive analysis, market research, and benchmarking</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> research, benchmark, compare, analyze competitors, competitive analysis
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> TechnicalSEOAgent, KeywordStrategyAgent, MetricsReporterAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Competitor identification and analysis</li>
+      <li>Market positioning and opportunity assessment</li>
+      <li>Competitive keyword and content gap analysis</li>
+      <li>Industry benchmarking and best practices</li>
+      <li>Strategic recommendations based on competitive intelligence</li>
+    </ul>
+  </div>
+
+  <h2>🎨 WordPress and Frontend Agents</h2>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🎨</span>WordPressBuilderAgent
+    </div>
+    <p><strong>Role:</strong> WordPress development and customization (Default for WordPress projects)</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> wordpress, wp, theme, plugin, custom post type
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> ElementorSpecialistAgent, TechnicalSEOAgent, SecurityAuditorAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Custom theme and plugin development</li>
+      <li>WordPress security best practices implementation</li>
+      <li>Performance optimization for WordPress</li>
+      <li>Custom post types and taxonomy creation</li>
+      <li>WordPress API integration and customization</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🧩</span>ElementorSpecialistAgent
+    </div>
+    <p><strong>Role:</strong> Elementor widget development and page builder customization</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> elementor, widget, page builder, elementor pro
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> WordPressBuilderAgent, ResponsiveAdapterAgent, FrontendImplementerAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Custom Elementor widget development</li>
+      <li>Advanced Elementor functionality integration</li>
+      <li>Dynamic content and template creation</li>
+      <li>Elementor Pro features utilization</li>
+      <li>Performance optimization for page builders</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🖼️</span>FrontendImplementerAgent
+    </div>
+    <p><strong>Role:</strong> Frontend implementation and UI coding</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> implement UI, frontend code, interface implementation, CSS, JavaScript
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> ResponsiveAdapterAgent, InteractionEnhancerAgent, PerformanceProfilerAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Modern frontend development (HTML5, CSS3, JavaScript)</li>
+      <li>Framework integration (React, Vue, vanilla JS)</li>
+      <li>Responsive design implementation</li>
+      <li>Accessibility compliance (WCAG guidelines)</li>
+      <li>Frontend performance optimization</li>
+    </ul>
+  </div>
+
+  <h2>⚡ Performance and Security Agents</h2>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">⚡</span>PerformanceProfilerAgent
+    </div>
+    <p><strong>Role:</strong> Performance analysis, optimization, and profiling</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> performance, optimize speed, profiling, bottlenecks, Core Web Vitals
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> DatabaseOptimizerAgent, TechnicalSEOAgent, FeatureDeveloperAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Application performance profiling and analysis</li>
+      <li>Database query optimization</li>
+      <li>Frontend performance optimization</li>
+      <li>Core Web Vitals improvement strategies</li>
+      <li>Caching and CDN optimization recommendations</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">🔒</span>SecurityAuditorAgent
+    </div>
+    <p><strong>Role:</strong> Security analysis, vulnerability assessment, and hardening</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> security, vulnerability, audit, penetration test, secure
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> CodebaseAnalyzerAgent, DeliveryVerifierAgent, FeatureDeveloperAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Security vulnerability assessment</li>
+      <li>Code security review and recommendations</li>
+      <li>Authentication and authorization auditing</li>
+      <li>Data protection and privacy compliance</li>
+      <li>Security best practices implementation</li>
+    </ul>
+  </div>
+
+  <h2>📊 Analysis and Reporting Agents</h2>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">📊</span>MetricsReporterAgent
+    </div>
+    <p><strong>Role:</strong> Analytics, reporting, and metrics analysis</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> metrics, analytics, report, dashboard, KPI, reporting
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> TechnicalSEOAgent, PerformanceProfilerAgent, ConversionOptimizerAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Comprehensive analytics and metrics reporting</li>
+      <li>Data visualization and dashboard creation</li>
+      <li>KPI tracking and performance monitoring</li>
+      <li>Custom report generation and automation</li>
+      <li>Cross-platform analytics integration</li>
+    </ul>
+  </div>
+
+  <div class="agent-card">
+    <div class="agent-title">
+      <span class="agent-icon">✅</span>DeliveryVerifierAgent
+    </div>
+    <p><strong>Role:</strong> Verification, validation, and delivery confirmation</p>
+    
+    <div class="agent-triggers">
+      <strong>Triggers:</strong> verify, validate, confirm, check delivery, quality assurance
+    </div>
+    
+    <div class="agent-handoffs">
+      <strong>Common Handoffs To:</strong> QualityTesterAgent, SystemArchitectAgent, MetricsReporterAgent
+    </div>
+    
+    <p><strong>Capabilities:</strong></p>
+    <ul>
+      <li>Project deliverable verification and validation</li>
+      <li>Quality gate enforcement and compliance checking</li>
+      <li>Acceptance criteria validation</li>
+      <li>Final delivery confirmation and sign-off</li>
+      <li>Post-delivery monitoring and support</li>
+    </ul>
+  </div>
+
+  <h2>🔄 Agent Orchestration Patterns</h2>
+
+  <div class="pro-tip">
+    <strong>🎯 Common Orchestration Flows:</strong><br><br>
+    
+    <strong>Development Flow:</strong><br>
+    SystemArchitectAgent → FeatureDeveloperAgent → QualityTesterAgent → DeliveryVerifierAgent<br><br>
+    
+    <strong>SEO Research Flow:</strong><br>
+    TechnicalSEOAgent → KeywordStrategyAgent → BenchmarkResearchAgent → MetricsReporterAgent<br><br>
+    
+    <strong>WordPress Development Flow:</strong><br>
+    WordPressBuilderAgent → ElementorSpecialistAgent → TechnicalSEOAgent → SecurityAuditorAgent<br><br>
+    
+    <strong>Performance Optimization Flow:</strong><br>
+    PerformanceProfilerAgent → DatabaseOptimizerAgent → TechnicalSEOAgent → DeliveryVerifierAgent
+  </div>
+
+  <h2>🎮 Advanced Agent Usage</h2>
+
+  <div class="orchestration-example">
+    <strong>🔄 Parallel Agent Execution</strong><br><br>
+    
+    For complex tasks, multiple agents can work in parallel:<br><br>
+    
+    <strong>Example:</strong> "Optimize this application for performance and security"<br><br>
+    
+    🏗️ SystemArchitectAgent plans the approach<br>
+    ↓<br>
+    ⚡ PerformanceProfilerAgent ║ 🔒 SecurityAuditorAgent<br>
+    (Running in parallel)<br>
+    ↓<br>
+    🏗️ SystemArchitectAgent integrates findings<br>
+    ↓<br>
+    ⚡ FeatureDeveloperAgent implements optimizations<br>
+    ↓<br>
+    ✅ DeliveryVerifierAgent validates improvements
+  </div>
+
+  <div class="pro-tip">
+    <strong>💡 Pro Tips for Agent Orchestration:</strong><br><br>
+    
+    • <strong>Trust the System:</strong> Let SystemArchitectAgent handle orchestration automatically<br>
+    • <strong>Be Specific:</strong> Use trigger keywords to influence agent selection<br>
+    • <strong>Context Matters:</strong> Agents consider project type and current context<br>
+    • <strong>Quality Gates:</strong> Agents enforce quality checks before handoffs<br>
+    • <strong>Rollback Capability:</strong> Agents can revert changes if issues arise
+  </div>
+
+  <hr style="margin: 40px 0; border: 1px solid #34495e;">
+  
+  <div class="nav-links">
+    <a href="index.html">← Back to Documentation Hub</a> | 
+    <a href="commands.html">Next: Commands Reference →</a>
+  </div>
+</body>
+</html>

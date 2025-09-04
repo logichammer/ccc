@@ -1,0 +1,230 @@
+# PRD: Root Directory Cleanup Project
+
+**Version**: 1.0  
+**Date**: September 3, 2025  
+**Status**: Draft - Ready for Implementation
+
+---
+
+## 🎯 Project Overview
+
+**Problem**  
+The root directory of the claude_code_templates project has accumulated cruft over time, with documentation files, temporary artifacts, and configuration files scattered at the root level, making the project structure messy and hard to navigate.
+
+**Objective**  
+Clean up the root directory by removing unused files, relocating configuration files to appropriate directories, and establishing clear rules to prevent future root directory pollution.
+
+**Principles**
+- Maintain functionality - ensure no code breaks
+- Organize by purpose - configs in config/, docs in docs/
+- Prevent future cruft - establish and enforce root directory rules
+
+---
+
+## ✅ Goals & Non-Goals
+
+**Goals**
+1. Remove all unused documentation and artifact files from root directory
+2. Relocate configuration files to `/config/` directory 
+3. Update code references to use new configuration file locations
+4. Delete empty and temporary directories safely
+5. Add root directory cleanliness rule to CLAUDE.md
+6. Verify all functionality remains intact after cleanup
+
+**Non-Goals**
+- Moving essential root files like CLAUDE.md, README.md, requirements.txt, pytest.ini
+- Reorganizing subdirectory structures (only root level cleanup)
+- Changing the fundamental project architecture
+
+---
+
+## 👥 Personas & Primary Use Cases
+
+- **Developer (Primary)**: Easier project navigation with clean root directory
+- **New Contributors**: Clear project structure without distracting cruft  
+- **System Maintenance**: Automated tools can better understand project structure
+
+**Use Cases**
+1. Developer opens project and immediately sees clean, organized structure
+2. New contributor understands project layout without confusion from old files
+3. Build tools and scripts find configuration in predictable locations
+
+---
+
+## 🧩 Functional Requirements & Acceptance Criteria
+
+### FR-1: Remove Unused Documentation Files
+- **Req**: Delete all unused .md files and documentation artifacts from root
+- **Files to Remove**: AGENT_OPTIMIZATION.md, AGENT_RENAME_MAPPING.md, AGENT_RENAME_REPORT.md, WORKFLOW_IMPLEMENTATION_SUMMARY.md, PROMPT_TEMPLATES.md, PRD-Template-System-Agent-Integration.md, claude_code_templates_usage_guide.html
+- **Acceptance**:
+  - [ ] All listed files removed from root directory
+  - [ ] No broken references in codebase
+  - [ ] Git history preserved
+
+### FR-2: Create Temp Directory and Configure Tools
+- **Req**: Create `/temp/` directory and configure tools to generate temporary files there instead of root
+- **Actions**:
+  - Create `/temp/` directory structure
+  - Move existing temp files: .coverage, .pytest_cache/, htmlcov/, .agent_learning/, .benchmarks/, .agent_optimization/
+  - Update pytest.ini to use --cov-report=html:temp/htmlcov and --cache-dir=temp/.pytest_cache
+  - Update .coveragerc or create one to store .coverage file in temp/
+  - Configure any other tools to use temp/ directory
+- **Acceptance**:
+  - [ ] /temp/ directory created with appropriate structure
+  - [ ] All temporary files moved to /temp/
+  - [ ] Tools configured to generate files in /temp/
+  - [ ] Test functionality unaffected
+  - [ ] Coverage reports still accessible in /temp/htmlcov/
+
+### FR-3: Relocate Configuration Files
+- **Req**: Move configuration files to `/config/` directory and update references
+- **Files to Move**: 
+  - mcp_requirements.json → config/mcp_requirements.json
+  - agent_preferences.yaml → config/agent_preferences.yaml
+  - agent_preferences_python.yaml → config/agent_preferences_python.yaml
+  - project-config.json → config/project-config.json
+- **Acceptance**:
+  - [ ] All config files moved to /config/ directory
+  - [ ] All code references updated to new paths
+  - [ ] No functionality broken by path changes
+
+### FR-4: Preserve Essential Root Files
+- **Req**: Keep necessary root files in place
+- **Files to Keep**: CLAUDE.md, README.md, requirements.txt, pytest.ini, mcp_validator.py, st (symlink), st-safe
+- **Acceptance**:
+  - [ ] Essential files remain at root level
+  - [ ] All functionality preserved
+  - [ ] Links and references still work
+
+### FR-5: Establish Root Directory Rules
+- **Req**: Add rule to CLAUDE.md preventing future root directory pollution
+- **Acceptance**:
+  - [ ] Clear rule added to CLAUDE.md
+  - [ ] Rule specifies what belongs at root vs subdirectories
+  - [ ] Rule is easily findable and enforceable
+
+### FR-6: Verify System Integrity  
+- **Req**: Ensure all systems continue to function after cleanup
+- **Acceptance**:
+  - [ ] All tests pass (16/16 test suite)
+  - [ ] Template setup works correctly
+  - [ ] Agent system functions properly
+  - [ ] MCP validation works with relocated files
+
+---
+
+## 📈 Success Metrics & Measurement Plan
+
+**Primary**
+- Root Directory Cleanliness: ≤10 files at root level (currently ~25 files/folders)
+- Temp Directory Organization: All temporary files contained in /temp/ directory
+- System Functionality: 100% of existing functionality preserved
+- Test Coverage: All 16 tests continue to pass, coverage reports in /temp/htmlcov/
+- Configuration Access: All config files accessible in new locations
+
+**Secondary**  
+- Developer Experience: Faster project navigation and understanding
+- Maintenance: Easier identification of actual vs temporary files
+
+**Instrumentation**
+- Before/after file count comparison
+- Automated test suite validation
+- Manual functionality verification
+
+---
+
+## 🔒 Guardrails & Safety Measures
+
+- Create backup before any deletions
+- Test all functionality after each major change
+- Update code references before moving config files  
+- Verify git operations still work correctly
+- Ensure symlinks remain functional
+
+---
+
+## 🧪 Testing Strategy
+
+- **Pre-cleanup**: Run full test suite and document current state
+- **During cleanup**: Test after each major change (file moves, deletions)
+- **Post-cleanup**: Full system verification including:
+  - Template setup functionality
+  - Agent system operations
+  - MCP validator with relocated configs
+  - All 16 unit tests passing
+
+---
+
+## 📊 Implementation Plan
+
+**Phase 1**: Analysis and Backup
+1. Create backup of current state
+2. Verify file usage analysis is correct
+3. Document all code references to files being moved
+
+**Phase 2**: Create and Configure Temp Directory
+1. Create `/temp/` directory structure
+2. Move temporary files: .coverage, .pytest_cache/, htmlcov/, .agent_learning/, .benchmarks/, .agent_optimization/
+3. Update pytest.ini with new temp paths (--cov-report=html:temp/htmlcov, --cache-dir=temp/.pytest_cache)
+4. Create .coveragerc to store coverage data in temp/
+5. Test that tools generate files in temp/ correctly
+
+**Phase 3**: Configuration File Relocation
+1. Move config files to `/config/` directory  
+2. Update all code references to new paths
+3. Test functionality with new paths
+
+**Phase 4**: File Cleanup
+1. Remove unused documentation files
+2. Verify no broken references
+
+**Phase 5**: Rule Establishment  
+1. Add root directory cleanliness rule to CLAUDE.md
+2. Add temp directory usage guidelines
+3. Document what belongs at root vs config/ vs temp/
+
+**Phase 6**: Final Verification
+1. Run complete test suite
+2. Verify coverage reports appear in /temp/htmlcov/
+3. Verify all major functionality
+4. Document final root directory structure
+
+---
+
+## ⚠️ Risks & Mitigations
+
+- **Broken References**: Mitigate by thorough code search and gradual updates
+- **Lost Functionality**: Mitigate by comprehensive testing after each phase
+- **Accidental Deletion**: Mitigate by creating backup first
+- **Git History Issues**: Mitigate by using git mv for file moves when possible
+
+---
+
+## 🔗 Dependencies
+
+- Git for version control operations
+- Python environment for testing
+- Access to all codebase files for reference updates
+- Ability to run test suite for verification
+
+---
+
+## 📜 Assumptions
+
+- Current file usage analysis is accurate
+- No hidden dependencies on files marked for deletion
+- Configuration file paths can be updated without breaking external integrations
+- Root directory rules will be followed going forward
+
+---
+
+## 🚫 Out of Scope
+
+- Reorganizing subdirectory structures  
+- Changing project architecture
+- Moving template or agent definitions
+- Modifying essential root files (README.md, requirements.txt, etc.)
+
+---
+
+**Exit Criteria**: Clean root directory with ≤10 files, all functionality preserved, tests passing, and rules established to prevent future pollution.

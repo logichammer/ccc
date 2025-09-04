@@ -1,0 +1,477 @@
+#!/usr/bin/env python3
+"""
+claude-work: Work on existing external projects without modifying them
+Part of the simplified Claude Code Templates system
+
+This script creates a temporary .claude/ directory with agents and commands
+for working on external projects while preserving their structure.
+"""
+
+import os
+import sys
+import shutil
+import argparse
+from pathlib import Path
+import toml
+import json
+
+def load_config():
+    """Load configuration from config.toml"""
+    config_path = Path(__file__).parent.parent / "config.toml"
+    if not config_path.exists():
+        print(f"❌ Config file not found: {config_path}")
+        sys.exit(1)
+    
+    return toml.load(config_path)
+
+def detect_project_type(project_dir):
+    """Auto-detect project type based on files present"""
+    project_path = Path(project_dir)
+    
+    # Check for Python project indicators
+    python_indicators = [
+        'requirements.txt', 'pyproject.toml', 'setup.py', 
+        'Pipfile', 'setup.cfg', 'poetry.lock'
+    ]
+    
+    # Check for WordPress indicators  
+    wordpress_indicators = [
+        'wp-config.php', 'wp-content', 'wp-admin', 
+        'wp-includes', 'style.css', 'functions.php'
+    ]
+    
+    # Check for general web indicators
+    web_indicators = [
+        'package.json', 'webpack.config.js', 'gulpfile.js',
+        'composer.json', '.htaccess'
+    ]
+    
+    detected_types = []
+    
+    # Check Python indicators
+    if any((project_path / indicator).exists() for indicator in python_indicators):
+        detected_types.append('python')
+    
+    # Check WordPress indicators (check for wp-config.php or themes directory structure)
+    if any((project_path / indicator).exists() for indicator in wordpress_indicators):
+        detected_types.append('wordpress')
+    elif (project_path / 'wp-content' / 'themes').exists():
+        detected_types.append('wordpress')
+    
+    # Default to python if we can't detect anything specific
+    if not detected_types:
+        detected_types = ['python']
+    
+    return detected_types
+
+def copy_agents_and_commands(claude_dir, project_types, config):
+    """Copy agents and commands to .claude directory"""
+    toolkit_path = Path(config["directories"]["toolkit_path"])
+    
+    print("🤖 Setting up agents...")
+    
+    # Copy all agents
+    agents_source = toolkit_path / "agents"
+    agents_target = claude_dir / "agents"
+    if agents_source.exists():
+        shutil.copytree(agents_source, agents_target)
+        print(f"   ✓ Copied {len(list(agents_source.glob('*.json')))} agents")
+    
+    # Copy relevant commands based on project types
+    commands_source = toolkit_path / "commands"
+    commands_target = claude_dir / "commands"
+    commands_target.mkdir(exist_ok=True)
+    
+    print("📋 Setting up commands...")
+    
+    # Copy base/shared commands
+    shared_commands = commands_source / "shared"
+    if shared_commands.exists():
+        target_shared = commands_target / "shared"
+        shutil.copytree(shared_commands, target_shared, dirs_exist_ok=True)
+        print(f"   ✓ Copied shared commands")
+    
+    # Copy type-specific commands
+    for project_type in project_types:
+        type_commands = commands_source / project_type
+        if type_commands.exists():
+            target_type = commands_target / project_type
+            shutil.copytree(type_commands, target_type, dirs_exist_ok=True)
+            command_count = len(list(type_commands.glob('*.md')))
+            print(f"   ✓ Copied {command_count} {project_type} commands")
+
+def copy_appropriate_claude_md(claude_dir, project_types, config):
+    """Copy the appropriate CLAUDE.md based on project types"""
+    toolkit_path = Path(config["directories"]["toolkit_path"])
+    
+    # Determine which CLAUDE.md to use
+    # Priority: mixed types use python, single types use their specific version
+    if len(project_types) > 1:
+        primary_type = 'python'  # Use python CLAUDE.md for mixed projects
+        print(f"📋 Mixed project detected - using Python-focused CLAUDE.md")
+    else:
+        primary_type = project_types[0]
+        print(f"📋 {primary_type.title()} project detected - using {primary_type}-focused CLAUDE.md")
+    
+    # Copy CLAUDE.md from appropriate template
+    claude_md_source = toolkit_path / "templates" / primary_type / "CLAUDE.md"
+    claude_md_target = claude_dir / "CLAUDE.md"
+    
+    if claude_md_source.exists():
+        shutil.copy2(claude_md_source, claude_md_target)
+        print(f"   ✓ Copied {primary_type}-focused CLAUDE.md")
+        
+        # Add project context to CLAUDE.md
+        add_external_project_context(claude_md_target, project_types)
+    else:
+        print(f"   ⚠️  Warning: {primary_type} CLAUDE.md not found")
+
+def add_external_project_context(claude_md_path, project_types):
+    """Add external project context to CLAUDE.md"""
+    context_addition = f"""
+
+---
+
+## 🔗 EXTERNAL PROJECT CONTEXT
+
+**Project Type(s) Detected:** {', '.join(project_types)}
+**Working Mode:** External Project (Temporary .claude/ directory)
+**Original Project:** Preserved and unmodified
+
+### External Project Guidelines:
+1. **Preserve Original Structure** - Never modify the original project files unless explicitly requested
+2. **Use .claude/ Directory** - All toolkit files are in the temporary .claude/ directory
+3. **Cleanup Available** - Delete .claude/ directory when done to remove all traces
+4. **Portable Agents** - All 20+ agents are available for analysis and development
+5. **Type-Specific Tools** - Commands and workflows optimized for detected project type(s)
+
+### Quick Cleanup:
+```bash
+# Remove all Claude toolkit files when done
+rm -rf .claude/
+```
+
+---
+"""
+    
+    with open(claude_md_path, 'a') as f:
+        f.write(context_addition)
+
+def create_project_summary(claude_dir, project_dir, project_types):
+    """Create a summary of the project setup"""
+    summary_content = f"""# Claude Work Session Summary
+
+**Project Directory:** {project_dir}
+**Detected Types:** {', '.join(project_types)}
+**Session Started:** {Path(__file__).stat().st_mtime}
+
+## Available Tools
+
+### Agents
+- 20+ specialized agents for development, analysis, and optimization
+- Agent orchestration with handoff protocols
+- Automatic agent selection based on task type
+
+### Commands  
+- Type-specific command library
+- Shared utilities and tools
+- Organized by functionality and project type
+
+### Workflows
+- Complete development workflows
+- Testing and quality assurance
+- Performance optimization
+- Security analysis
+
+## Usage
+
+1. **Navigate to project:** `cd {project_dir}`
+2. **Access toolkit:** All files are in `.claude/` directory
+3. **Use agents:** Refer to `CLAUDE.md` for agent system documentation
+4. **Find commands:** Browse `.claude/commands/` for available tools
+5. **Clean up:** Delete `.claude/` directory when done
+
+## Important Notes
+
+- Original project files are never modified unless explicitly requested
+- All toolkit files are contained in the `.claude/` directory
+- The `.claude/` directory can be safely deleted to remove all traces
+- Project type detection is automatic but can be overridden with --type flag
+
+---
+*Generated by claude-work - Claude Code Templates v2.0*
+"""
+    
+    summary_path = claude_dir / "SESSION_SUMMARY.md"
+    summary_path.write_text(summary_content)
+
+def setup_external_project(project_dir, project_types, config):
+    """Set up external project workflow"""
+    project_path = Path(project_dir).resolve()
+    claude_dir = project_path / ".claude"
+    
+    # Check if .claude already exists
+    if claude_dir.exists():
+        print("⚠️  .claude/ directory already exists")
+        response = input("Remove existing .claude/ directory? (y/N): ")
+        if response.lower() in ['y', 'yes']:
+            shutil.rmtree(claude_dir)
+            print("   ✓ Removed existing .claude/ directory")
+        else:
+            print("❌ Aborted - keeping existing .claude/ directory")
+            return False
+    
+    print(f"🚀 Setting up external project workflow")
+    print(f"📍 Project: {project_path}")
+    print(f"🏷️  Types: {', '.join(project_types)}")
+    
+    # Create .claude directory
+    claude_dir.mkdir(exist_ok=True)
+    
+    # Copy agents and commands
+    copy_agents_and_commands(claude_dir, project_types, config)
+    
+    # Copy appropriate CLAUDE.md
+    copy_appropriate_claude_md(claude_dir, project_types, config)
+    
+    # Create project summary
+    create_project_summary(claude_dir, project_path, project_types)
+    
+    # Create .gitignore for .claude directory
+    gitignore_content = "# Claude Code Templates temporary files\n.claude/\n"
+    gitignore_path = project_path / ".gitignore"
+    
+    if gitignore_path.exists():
+        # Append to existing .gitignore if .claude/ not already there
+        existing_content = gitignore_path.read_text()
+        if '.claude/' not in existing_content:
+            with open(gitignore_path, 'a') as f:
+                f.write("\n# Claude Code Templates temporary files\n.claude/\n")
+            print("   ✓ Added .claude/ to existing .gitignore")
+    else:
+        gitignore_path.write_text(gitignore_content)
+        print("   ✓ Created .gitignore with .claude/ exclusion")
+    
+    print(f"✅ External project setup complete!")
+    print(f"📂 Toolkit available in: {claude_dir}")
+    print(f"📋 Read CLAUDE.md for agent system documentation")
+    print(f"🎯 Next steps:")
+    print(f"   cd {project_path}")
+    print(f"   # All agents and commands now available")
+    print(f"   # Use 'rm -rf .claude/' to clean up when done")
+    
+    return True
+
+def cleanup_external_project(project_dir, force=False):
+    """Clean up external project by removing .claude directory"""
+    project_path = Path(project_dir).resolve()
+    claude_dir = project_path / ".claude"
+    
+    if not claude_dir.exists():
+        print(f"❌ No .claude/ directory found in {project_path}")
+        return False
+    
+    print(f"🧹 Cleaning up external project workflow")
+    print(f"📍 Project: {project_path}")
+    
+    # Confirm cleanup unless forced
+    if not force:
+        try:
+            response = input("Remove .claude/ directory and all toolkit files? (y/N): ")
+            if response.lower() not in ['y', 'yes']:
+                print("❌ Cleanup aborted")
+                return False
+        except EOFError:
+            print("❌ Cannot get user confirmation in non-interactive mode. Use --force flag.")
+            return False
+    
+    # Remove .claude directory
+    shutil.rmtree(claude_dir)
+    print(f"   ✓ Removed .claude/ directory")
+    
+    # Optionally clean up .gitignore entry
+    gitignore_path = project_path / ".gitignore"
+    if gitignore_path.exists():
+        content = gitignore_path.read_text()
+        if '.claude/' in content:
+            if force:
+                # Auto-clean in force mode
+                lines = content.split('\n')
+                cleaned_lines = [line for line in lines if '.claude' not in line and 'Claude Code Templates' not in line]
+                gitignore_path.write_text('\n'.join(cleaned_lines))
+                print("   ✓ Cleaned up .gitignore")
+            else:
+                try:
+                    response = input("Remove .claude/ entry from .gitignore? (y/N): ")
+                    if response.lower() in ['y', 'yes']:
+                        lines = content.split('\n')
+                        cleaned_lines = [line for line in lines if '.claude' not in line and 'Claude Code Templates' not in line]
+                        gitignore_path.write_text('\n'.join(cleaned_lines))
+                        print("   ✓ Cleaned up .gitignore")
+                except EOFError:
+                    print("   ⚠️ Skipped .gitignore cleanup (non-interactive mode)")
+    
+    print(f"✅ Cleanup complete!")
+    print(f"📂 Original project preserved and unmodified")
+    
+    return True
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Work on existing external projects without modifying them",
+        epilog="""
+Examples:
+  claude-work                       # Use current directory, auto-detect type
+  claude-work .                     # Same as above
+  claude-work /path/to/project      # Use specific directory
+  claude-work --type python         # Force Python toolkit on current dir
+  claude-work . --cleanup           # Remove .claude/ from current dir
+  claude-work /path/project --type seo  # Force SEO toolkit
+  
+Common workflow:
+  1. cd /your/existing/project
+  2. claude-work                    # Sets up CCC toolkit
+  3. # Use Claude Code with full agent orchestration
+  4. claude-work --cleanup          # Clean up when done
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "project_dir", 
+        nargs="?", 
+        default=".", 
+        help="Path to existing project directory (default: current directory)"
+    )
+    parser.add_argument(
+        "--type", 
+        dest="types",
+        help="Override project types (comma-separated): python,seo,wordpress"
+    )
+    parser.add_argument(
+        "--cleanup",
+        action="store_true",
+        help="Clean up .claude/ directory from project"
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true", 
+        help="Force cleanup without confirmation prompts"
+    )
+    parser.add_argument(
+        "--detect-only",
+        action="store_true", 
+        help="Only detect and display project type, don't set up"
+    )
+    parser.add_argument(
+        "--list-examples",
+        action="store_true",
+        help="Show usage examples and exit"
+    )
+    
+    args = parser.parse_args()
+    
+    # Handle list-examples flag first
+    if args.list_examples:
+        print("""
+🔧 Claude-Work Usage Examples
+
+Basic Usage:
+  claude-work                       # Use current directory, auto-detect type
+  claude-work .                     # Same as above (explicit current dir)
+  
+External Projects:
+  claude-work /mnt/c/python/dvl/Linky           # Python project (tested!)
+  claude-work /var/www/wordpress-site           # WordPress project
+  claude-work /home/user/seo-project            # SEO project
+
+Force Project Type:
+  claude-work --type python         # Force Python toolkit on current dir
+  claude-work . --type wordpress    # Force WordPress toolkit  
+  claude-work /path --type seo      # Force SEO toolkit
+
+Detection Only:
+  claude-work --detect-only         # Just show what type it detects
+  claude-work /path --detect-only   # Detect type for specific path
+
+Cleanup:
+  claude-work --cleanup             # Remove .claude/ from current dir
+  claude-work . --cleanup --force   # Force cleanup (no prompts)
+  claude-work /path --cleanup       # Cleanup specific directory
+
+Common Workflow:
+  1. cd /your/existing/project      # Navigate to your project
+  2. claude-work                    # Auto-detect and setup CCC toolkit
+  3. # Open Claude Code and use full agent orchestration
+  4. claude-work --cleanup          # Clean up when done
+
+Real Examples:
+  cd /mnt/c/python/dvl/Linky && claude-work     # Tested working example
+  claude-work /var/www/html --type wordpress    # WordPress site
+  claude-work ~/my-seo-client --type seo        # SEO project
+
+What it does:
+  ✅ Auto-detects project type (Python/WordPress/SEO)
+  ✅ Creates .claude/ directory with 23 agents
+  ✅ Adds appropriate CLAUDE.md for your project type
+  ✅ Updates .gitignore to exclude .claude/
+  ✅ Preserves original project completely
+
+What it doesn't do:
+  ❌ Does NOT start Claude (you open Claude Code manually)
+  ❌ Does NOT change Claude Code settings
+  ❌ Does NOT modify your original project files
+        """)
+        return
+    
+    # Load configuration
+    config = load_config()
+    
+    # Resolve project directory
+    project_dir = Path(args.project_dir).resolve()
+    
+    if not project_dir.exists():
+        print(f"❌ Project directory does not exist: {project_dir}")
+        sys.exit(1)
+    
+    if not project_dir.is_dir():
+        print(f"❌ Path is not a directory: {project_dir}")
+        sys.exit(1)
+    
+    # Handle cleanup mode
+    if args.cleanup:
+        success = cleanup_external_project(project_dir, force=args.force)
+        sys.exit(0 if success else 1)
+    
+    # Determine project types
+    if args.types:
+        # User specified types
+        types = [t.strip() for t in args.types.split(",")]
+        
+        # Validate types
+        available_types = config["templates"]["available"]
+        for ptype in types:
+            if ptype not in available_types:
+                print(f"❌ Unknown project type: {ptype}")
+                print(f"Available types: {', '.join(available_types)}")
+                sys.exit(1)
+        
+        print(f"🏷️  Using specified types: {', '.join(types)}")
+    else:
+        # Auto-detect project type
+        types = detect_project_type(project_dir)
+        print(f"🔍 Auto-detected project type(s): {', '.join(types)}")
+    
+    # Handle detect-only mode
+    if args.detect_only:
+        print(f"📋 Project analysis complete")
+        print(f"📍 Directory: {project_dir}")
+        print(f"🏷️  Detected types: {', '.join(types)}")
+        print(f"💡 To set up external workflow: claude-work {project_dir}")
+        return
+    
+    # Set up external project
+    success = setup_external_project(project_dir, types, config)
+    sys.exit(0 if success else 1)
+
+if __name__ == "__main__":
+    main()

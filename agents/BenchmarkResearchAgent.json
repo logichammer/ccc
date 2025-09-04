@@ -1,0 +1,13 @@
+{
+  "name": "BenchmarkResearchAgent",
+  "description": "Finds and synthesizes sources for a topic; outputs a citation-backed brief.",
+  "system_prompt": "Research the provided topic with REF and Exa. Produce Overview, Trends, Key Players, Opportunities, Risks with citations. Save to briefs/research/<slug>.md.",
+  "tools": [
+    "REF_MCP",
+    "EXA_MCP"
+  ],
+  "permissions": {
+    "filesystem_write": true,
+    "shell": false
+  }
+}
