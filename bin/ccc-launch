@@ -127,6 +127,21 @@ create_launch_message() {
     local project_type="$1"
     local current_dir=$(basename "$(pwd)")
     
+    # Detect which CLAUDE.md is being used
+    local claude_md_info=""
+    if [ -f "CLAUDE.md" ]; then
+        # Check if it's a CCC-enhanced version
+        if grep -q "LINE ENDINGS RULE.*TOP PRIORITY" "CLAUDE.md" 2>/dev/null; then
+            claude_md_info="🎯 **CCC Enhanced CLAUDE.md** (Beast Mode Active)"
+        else
+            claude_md_info="📄 **Standard CLAUDE.md** (Basic Version)"
+        fi
+    elif [ -f ".claude/CLAUDE.md" ]; then
+        claude_md_info="📁 **CCC Toolkit CLAUDE.md** (.claude/ directory)"
+    else
+        claude_md_info="❓ **No CLAUDE.md detected**"
+    fi
+    
     cat > /tmp/ccc_launch_message.md << EOF
 # 🚀 CCC Launch Complete
 
@@ -134,6 +149,7 @@ create_launch_message() {
 - **Directory**: \`$(pwd)\`
 - **Project Type**: \`${project_type}\`
 - **CCC Status**: ✅ Active (toolkit in .claude/ directory)
+- **CLAUDE.md**: ${claude_md_info}
 
 ## 🤖 Available Agents
 You now have access to 23 specialized agents. Key agents for this project:
@@ -235,6 +251,20 @@ main() {
     # Detect project type
     local project_type=$(detect_project_type)
     print_success "Project type detected: $project_type"
+    
+    # Show CLAUDE.md status
+    print_step "Checking CLAUDE.md configuration..."
+    if [ -f "CLAUDE.md" ]; then
+        if grep -q "LINE ENDINGS RULE.*TOP PRIORITY" "CLAUDE.md" 2>/dev/null; then
+            print_success "CCC Enhanced CLAUDE.md detected (Beast Mode)"
+        else
+            print_warning "Standard CLAUDE.md detected (consider upgrading)"
+        fi
+    elif [ -f ".claude/CLAUDE.md" ]; then
+        print_success "CCC Toolkit CLAUDE.md available"
+    else
+        print_warning "No CLAUDE.md detected - limited agent capabilities"
+    fi
     
     # Check virtual environment (informational)
     check_virtual_environment

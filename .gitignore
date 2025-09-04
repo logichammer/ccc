@@ -1,5 +1,7 @@
 test/
 temp/
 verify.sh
-fix-line-endings.sh
 install.sh
+
+# Claude Code Templates temporary files
+.claude/
