@@ -157,6 +157,68 @@ rm -rf .claude/
     with open(claude_md_path, 'a') as f:
         f.write(context_addition)
 
+def update_existing_claude_dir(claude_dir, config, project_types):
+    """Update existing .claude directory while preserving customizations"""
+    toolkit_path = Path(config["directories"]["toolkit_path"])
+    
+    print("   🔄 Updating agents...")
+    # Always update agents (these shouldn't be customized by users)
+    agents_source = toolkit_path / "agents"
+    agents_dest = claude_dir / "agents"
+    if agents_dest.exists():
+        shutil.rmtree(agents_dest)
+    shutil.copytree(agents_source, agents_dest)
+    print(f"   ✓ Updated {len(list(agents_dest.glob('*.json')))} agents")
+    
+    print("   🔄 Updating commands...")
+    # Update commands but preserve any custom ones
+    commands_dest = claude_dir / "commands"
+    if commands_dest.exists():
+        # Backup custom commands (any not in original CCC)
+        custom_commands = {}
+        for cmd_file in commands_dest.rglob("*.md"):
+            # Check if this command exists in CCC source
+            relative_path = cmd_file.relative_to(commands_dest)
+            source_cmd = toolkit_path / "commands" / relative_path
+            if not source_cmd.exists():
+                # Read and store custom command content
+                with open(cmd_file, 'r') as f:
+                    custom_commands[relative_path] = f.read()
+        
+        # Remove and recreate commands
+        shutil.rmtree(commands_dest)
+        
+        # Copy shared commands
+        shared_source = toolkit_path / "commands" / "shared"
+        shared_dest = commands_dest / "shared"
+        if shared_source.exists():
+            shutil.copytree(shared_source, shared_dest)
+        
+        # Copy type-specific commands
+        for ptype in project_types:
+            type_source = toolkit_path / "commands" / ptype
+            type_dest = commands_dest / ptype
+            if type_source.exists():
+                shutil.copytree(type_source, type_dest)
+        
+        # Restore custom commands
+        for relative_path, content in custom_commands.items():
+            restore_dest = commands_dest / relative_path
+            restore_dest.parent.mkdir(parents=True, exist_ok=True)
+            with open(restore_dest, 'w') as f:
+                f.write(content)
+                
+        print(f"   ✓ Updated commands, preserved {len(custom_commands)} custom commands")
+    
+    print("   ⚠️ CLAUDE.md preservation:")
+    claude_md_dest = claude_dir / "CLAUDE.md"
+    if claude_md_dest.exists():
+        print("   • Keeping existing CLAUDE.md (your customizations preserved)")
+    else:
+        print("   • No existing CLAUDE.md found - this shouldn't happen")
+    
+    print("   ✓ Update complete - customizations preserved")
+
 def create_project_summary(claude_dir, project_dir, project_types):
     """Create a summary of the project setup"""
     summary_content = f"""# Claude Work Session Summary
@@ -210,16 +272,34 @@ def setup_external_project(project_dir, project_types, config):
     project_path = Path(project_dir).resolve()
     claude_dir = project_path / ".claude"
     
-    # Check if .claude already exists
+    # Check if .claude already exists and handle updates
     if claude_dir.exists():
         print("⚠️  .claude/ directory already exists")
-        response = input("Remove existing .claude/ directory? (y/N): ")
-        if response.lower() in ['y', 'yes']:
-            shutil.rmtree(claude_dir)
-            print("   ✓ Removed existing .claude/ directory")
-        else:
-            print("❌ Aborted - keeping existing .claude/ directory")
-            return False
+        print("   Options:")
+        print("   1) Update agents and commands (preserves your customizations)")  
+        print("   2) Complete replacement (destroys customizations)")
+        print("   3) Keep existing (no changes)")
+        
+        while True:
+            response = input("Choose option (1/2/3): ").strip()
+            if response == '1':
+                print("🔄 Updating CCC toolkit (preserving customizations)...")
+                update_existing_claude_dir(claude_dir, config, project_types)
+                return True
+            elif response == '2':
+                confirm = input("⚠️  This will destroy any customizations. Continue? (y/N): ")
+                if confirm.lower() in ['y', 'yes']:
+                    shutil.rmtree(claude_dir)
+                    print("   ✓ Removed existing .claude/ directory")
+                    break
+                else:
+                    print("❌ Aborted - keeping existing .claude/ directory")
+                    return False
+            elif response == '3':
+                print("✓ Keeping existing .claude/ directory unchanged")
+                return False
+            else:
+                print("Please choose 1, 2, or 3")
     
     print(f"🚀 Setting up external project workflow")
     print(f"📍 Project: {project_path}")

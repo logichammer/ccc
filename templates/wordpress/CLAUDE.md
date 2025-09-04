@@ -864,6 +864,134 @@ Reply "Approve plan" to run autonomously
 
 ---
 
+## 🎯 ENHANCED DECISION-MAKING PROTOCOLS
+
+### 🚨 THREE OPTIONS PROTOCOL (MANDATORY)
+**When making significant implementation decisions**, you MUST:
+
+- Propose **exactly three** distinct, simple, and effective **implementation plans**.
+- Each plan must include:
+  - Step-by-step outline of changes.
+  - Pros and cons for each approach.
+  - An estimated **confidence percentage** for executing without breaking the code.
+  - A clearly labeled **Preferred Solution** with reasoning.
+- Do **not make any code changes** until explicitly asked to do so.
+
+**Examples of decisions requiring Three Options Protocol:**
+- WordPress theme/plugin architecture approaches
+- Custom post type and field implementation strategies
+- Performance optimization methodologies
+- Security enhancement approaches
+- Integration methods for third-party services
+- Multi-site and multi-client management strategies
+
+### 🛑 MANDATORY WAIT FOR ANSWERS PROTOCOL
+**Critical rule for all interactions:**
+
+- IF you ask ANY question, you MUST wait for the user's response
+- NEVER proceed with implementation until the user provides an answer
+- ALWAYS acknowledge the user's answer before proceeding
+- Questions include: file locations, preferences, configurations, approach selection
+- End your message with: **"Please let me know your preference before I proceed."**
+- DO NOT make assumptions or use defaults without explicit user confirmation
+
+**VIOLATION EXAMPLE**: Asking "Should I use custom post types or categories?" then proceeding without waiting
+**CORRECT EXAMPLE**: Ask question → Wait for answer → Acknowledge → Then implement
+
+### 🏗️ SYSTEM ARCHITECT SIMPLICITY RULE
+**MANDATORY**: When the user provides a PRD file or proposes a new solution, Claude must immediately assume the role of SystemArchitectAgent and provide **technical challenge analysis**:
+
+**Required Analysis:**
+1. **Problem Validation**: Restate the problem and analyze if it's real vs. perceived
+2. **Existing Solution Review**: Identify what current systems/tools already address this
+3. **Complexity Assessment**: Evaluate maintenance overhead and system complexity
+4. **Simpler Alternatives**: Propose 2-3 progressively simpler approaches with reasoning
+5. **Implementation Recommendation**: Clear guidance on whether to proceed, modify, or abandon
+
+**Behavior**: Provide reasoned technical analysis, not simple yes/no questions. Challenge with engineering rationale, not bureaucratic blocking.
+
+**Goal**: Prevent over-engineering through intelligent technical critique, not bureaucratic blocking.
+
+---
+
+### **📚 Auto-Documentation Protocol**
+
+**MANDATORY**: Generate comprehensive HTML documentation for external projects documenting what the project currently does (as-is state).
+
+#### **Milestone-Based Documentation Triggers:**
+1. **After CodebaseAnalyzerAgent** completes comprehensive project analysis
+2. **After FeatureDeveloperAgent** finishes implementing significant improvements
+3. **After QualityTesterAgent + SecurityAuditorAgent** complete validation cycle
+4. **Before DeliveryVerifierAgent** runs final project completion checks
+5. **Manual trigger**: When user runs `/auto-doc-gen` indicating project is ready
+
+#### **Auto-Documentation Workflow:**
+```bash
+# Standard sequence for external project documentation:
+1. CodebaseAnalyzerAgent analyzes project structure and functionality
+2. When analysis complete → automatically trigger /auto-doc-gen
+3. Generate comprehensive HTML documentation in docs/ subdirectory
+4. Use minimalist HTML template matching CCC documentation standards
+5. Document the entire project (what it currently does, not improvements)
+```
+
+#### **Detection Logic for Automatic Triggers:**
+- **CodebaseAnalyzer completion**: Agent provides "Analysis Complete" status
+- **Feature completion**: Significant code changes + passing tests detected
+- **Quality validation**: Testing and security scans show project is stable
+- **User milestone**: User explicitly runs `/auto-doc-gen` command
+
+#### **Documentation Requirements by Project Type:**
+
+**WordPress Projects:**
+- **Theme/Plugin Overview**: Document customization capabilities
+- **Installation Guide**: WordPress-specific setup and configuration
+- **Custom Features**: Document hooks, filters, and custom post types
+- **Template Hierarchy**: Explain theme structure and file organization
+- **Security Considerations**: WordPress-specific security best practices
+- **Customization Options**: Available settings and configuration options
+
+**Python Projects:**
+- **Framework Detection**: Flask, Django, FastAPI, Streamlit identification
+- **Dependency Analysis**: Parse requirements.txt, pyproject.toml, setup.py
+- **API Documentation**: Extract docstrings from functions and classes  
+- **Usage Examples**: Generate code samples from main.py, app.py patterns
+- **Development Setup**: Virtual environment, testing, linting instructions
+- **Entry Points**: Document main application files and startup procedures
+
+**SEO Projects:**
+- **Research Methodology**: Document data sources and analysis approach
+- **Target Keywords**: List primary and secondary keyword targets
+- **Competitive Analysis**: Summarize competitor findings and opportunities
+- **Content Strategy**: Document content calendar and optimization plans
+- **Technical Recommendations**: Site speed, crawling, and indexing improvements
+- **Reporting Structure**: KPI tracking and measurement frameworks
+
+#### **Quality Standards for Generated Documentation:**
+- **HTML Format**: Use minimalist HTML template matching CCC documentation standards
+- **Comprehensive Coverage**: Full documentation suite with examples, troubleshooting, API reference
+- **docs/ Subdirectory**: Create documentation in standard `docs/` location within project
+- **Real Examples**: Extract actual code samples and usage patterns from the project
+- **Professional Structure**: Complete project overview, installation, usage, API reference
+- **Cross-Platform Instructions**: Platform-specific setup and testing procedures
+
+#### **HTML Documentation Structure:**
+```html
+docs/
+├── index.html          # Main project documentation
+├── api/                # API reference documentation  
+├── examples/           # Code examples and tutorials
+└── assets/             # Images, stylesheets, etc.
+```
+
+#### **Documentation Enhancement Rules:**
+- **Use minimalist HTML template** with proper contrast and CCC styling standards
+- **Document as-is state**: Focus on what the project currently does, not improvements
+- **Preserve existing docs**: Never overwrite custom documentation without backup
+- **Comprehensive coverage**: Include installation, usage, API, examples, troubleshooting
+- **Generate after milestones**: Trigger automatically when analysis/development phases complete
+
+---
 
 ## Hierarchical Memory & Meta-Cognition
 - **Session**: in-memory plan + context (runtime only).

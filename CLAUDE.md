@@ -347,7 +347,7 @@ Visual Indicators:
 - `/code-review` - Comprehensive code review with recommendations
 - `/dependency-audit` - Security and update analysis of dependencies
 - `/performance-baseline` - Establish performance benchmarks
-- `/documentation-gen` - Auto-generate project documentation
+- `/auto-doc-gen` - Auto-generate project documentation
 
 #### **Python Commands** 
 - `/test-suite-gen` - Generate comprehensive test suites
@@ -420,6 +420,83 @@ Each project type has optimized workflows:
 - **SEO**: Research workflows, multi-client data management
 - **WordPress**: Theme development, Elementor integration, WP-specific security
 
+### **📚 Auto-Documentation Protocol**
+
+**MANDATORY**: Generate comprehensive HTML documentation for external projects documenting what the project currently does (as-is state).
+
+#### **Milestone-Based Documentation Triggers:**
+1. **After CodebaseAnalyzerAgent** completes comprehensive project analysis
+2. **After FeatureDeveloperAgent** finishes implementing significant improvements
+3. **After QualityTesterAgent + SecurityAuditorAgent** complete validation cycle
+4. **Before DeliveryVerifierAgent** runs final project completion checks
+5. **Manual trigger**: When user runs `/auto-doc-gen` indicating project is ready
+
+#### **Auto-Documentation Workflow:**
+```bash
+# Standard sequence for external project documentation:
+1. CodebaseAnalyzerAgent analyzes project structure and functionality
+2. When analysis complete → automatically trigger /auto-doc-gen
+3. Generate comprehensive HTML documentation in docs/ subdirectory
+4. Use minimalist HTML template matching CCC documentation standards
+5. Document the entire project (what it currently does, not improvements)
+```
+
+#### **Detection Logic for Automatic Triggers:**
+- **CodebaseAnalyzer completion**: Agent provides "Analysis Complete" status
+- **Feature completion**: Significant code changes + passing tests detected
+- **Quality validation**: Testing and security scans show project is stable
+- **User milestone**: User explicitly runs `/auto-doc-gen` command
+
+#### **Documentation Requirements by Project Type:**
+
+**Python Projects:**
+- **Framework Detection**: Flask, Django, FastAPI, Streamlit identification
+- **Dependency Analysis**: Parse requirements.txt, pyproject.toml, setup.py
+- **API Documentation**: Extract docstrings from functions and classes  
+- **Usage Examples**: Generate code samples from main.py, app.py patterns
+- **Development Setup**: Virtual environment, testing, linting instructions
+- **Entry Points**: Document main application files and startup procedures
+
+**SEO Projects:**
+- **Research Methodology**: Document data sources and analysis approach
+- **Target Keywords**: List primary and secondary keyword targets
+- **Competitive Analysis**: Summarize competitor findings and opportunities
+- **Content Strategy**: Document content calendar and optimization plans
+- **Technical Recommendations**: Site speed, crawling, and indexing improvements
+- **Reporting Structure**: KPI tracking and measurement frameworks
+
+**WordPress Projects:**
+- **Theme/Plugin Overview**: Document customization capabilities
+- **Installation Guide**: WordPress-specific setup and configuration
+- **Custom Features**: Document hooks, filters, and custom post types
+- **Template Hierarchy**: Explain theme structure and file organization
+- **Security Considerations**: WordPress-specific security best practices
+- **Customization Options**: Available settings and configuration options
+
+#### **Quality Standards for Generated Documentation:**
+- **HTML Format**: Use minimalist HTML template matching CCC documentation standards
+- **Comprehensive Coverage**: Full documentation suite with examples, troubleshooting, API reference
+- **docs/ Subdirectory**: Create documentation in standard `docs/` location within project
+- **Real Examples**: Extract actual code samples and usage patterns from the project
+- **Professional Structure**: Complete project overview, installation, usage, API reference
+- **Cross-Platform Instructions**: Platform-specific setup and testing procedures
+
+#### **HTML Documentation Structure:**
+```html
+docs/
+├── index.html          # Main project documentation
+├── api/                # API reference documentation  
+├── examples/           # Code examples and tutorials
+└── assets/             # Images, stylesheets, etc.
+```
+
+#### **Documentation Enhancement Rules:**
+- **Use minimalist HTML template** with proper contrast and CCC styling standards
+- **Document as-is state**: Focus on what the project currently does, not improvements
+- **Preserve existing docs**: Never overwrite custom documentation without backup
+- **Comprehensive coverage**: Include installation, usage, API, examples, troubleshooting
+- **Generate after milestones**: Trigger automatically when analysis/development phases complete
+
 ---
 
 ## 🆘 **EMERGENCY PROTOCOLS**
@@ -439,39 +516,147 @@ Always end significant work with:
 
 ---
 
+## 🎯 ENHANCED DECISION-MAKING PROTOCOLS
+
+### 🚨 THREE OPTIONS PROTOCOL (MANDATORY)
+**When making significant implementation decisions**, you MUST:
+
+- Propose **exactly three** distinct, simple, and effective **implementation plans**.
+- Each plan must include:
+  - Step-by-step outline of changes.
+  - Pros and cons for each approach.
+  - An estimated **confidence percentage** for executing without breaking the code.
+  - A clearly labeled **Preferred Solution** with reasoning.
+- Do **not make any code changes** until explicitly asked to do so.
+
+**Examples of decisions requiring Three Options Protocol:**
+- Architecture choices (database, framework, file structure)
+- Implementation approaches for complex features
+- Integration strategies for external systems
+- Major refactoring or cleanup approaches
+- CCC template modifications or external project enhancements
+
+### 🛑 MANDATORY WAIT FOR ANSWERS PROTOCOL
+**Critical rule for all interactions:**
+
+- IF you ask ANY question, you MUST wait for the user's response
+- NEVER proceed with implementation until the user provides an answer
+- ALWAYS acknowledge the user's answer before proceeding
+- Questions include: file locations, preferences, configurations, approach selection
+- End your message with: **"Please let me know your preference before I proceed."**
+- DO NOT make assumptions or use defaults without explicit user confirmation
+
+**VIOLATION EXAMPLE**: Asking "Should I put checkpoints in files/ or root?" then proceeding without waiting
+**CORRECT EXAMPLE**: Ask question → Wait for answer → Acknowledge → Then implement
+
+### 🏗️ SYSTEM ARCHITECT SIMPLICITY RULE
+**MANDATORY**: When the user provides a PRD file or proposes a new solution, Claude must immediately assume the role of SystemArchitectAgent and provide **technical challenge analysis**:
+
+**Required Analysis:**
+1. **Problem Validation**: Restate the problem and analyze if it's real vs. perceived
+2. **Existing Solution Review**: Identify what current systems/tools already address this
+3. **Complexity Assessment**: Evaluate maintenance overhead and system complexity
+4. **Simpler Alternatives**: Propose 2-3 progressively simpler approaches with reasoning
+5. **Implementation Recommendation**: Clear guidance on whether to proceed, modify, or abandon
+
+**Behavior**: Provide reasoned technical analysis, not simple yes/no questions. Challenge with engineering rationale, not bureaucratic blocking.
+
+**Goal**: Prevent over-engineering through intelligent technical critique, not bureaucratic blocking.
+
+---
+
 ## Available MCP Servers
 
-## MCP USAGE POLICY & SELECTION RULES
+## 🔧 MCP TOOLING STRATEGY & EXECUTION LIFECYCLE
 
-### Always Use for Task Planning
-- **Sequential Thinking (sequential_thinking)**
-  - Enforce explicit stepwise reasoning for any multi-stage task planning.
-  - Input: thought, thoughtNumber, totalThoughts, etc.
-  - Claude MUST invoke this whenever it generates a structured plan (coding, analysis, workflows).
-  - Stop after max 10 sequential_thinking thoughts unless a revision is explicitly flagged.
-  - Default tool for: "Plan → Scaffold → Write → Test → Refactor".
+### 🎯 MCP Tool Hierarchy & Selection Rules
+- **ALWAYS run `list_tools` first** to enumerate available MCPs
+- **Tool preference hierarchy (use in this order):**
 
-### Research & Information Gathering
-1. **Context7 or ref-tools** → authoritative docs first.
-2. If not found → **Perplexity-Ask** (real-time web research with citations).
-3. If still missing → **Firecrawl** (scraping / crawl).
-4. If deterministic single URL → **fetch**.
+**1. Planning & Thinking:**
+- `sequential_thinking` - Explicit stepwise reasoning for multi-stage task planning
+- Use for: CCC workflows, external project analysis, complex decision trees
+- Stop after max 10 thoughts unless revision explicitly flagged
 
-### Visualization & Reporting
-- **chart-mcp** for plots, benchmarking, experiment visuals.
-- **screenshot-website-fast** for UI diffs, state captures.
+**2. Research & Documentation (in order of preference):**
+- `Context7` → authoritative, versioned documentation first
+- `ref-tools-mcp` (`ref_search_documentation`, `ref_read_url`) → API/library docs
+- `Perplexity-Ask` (`perplexity_ask`) → real-time web research with citations
+- `Firecrawl` (`firecrawl_scrape`, `firecrawl_crawl`, `firecrawl_search`) → structured web scraping
+- `fetch` → deterministic single URL ingestion
 
-### Integration Rule
-- **Agents orchestrate what needs research or visualization.**
-- **MCPs perform the actual retrieval/visualization.**
+**3. Visualization & Analysis:**
+- `chart-mcp` → data visualizations (line, bar, pie, scatter, treemap, radar, etc.)
+- `data-explorer` → dataset analysis and exploration
+- `screenshot-website-fast` → UI screenshots and visual analysis
 
-### Circuit Breaker for MCPs
-- If Firecrawl trips breaker → fallback to fetch → Perplexity.
-- If Perplexity fails repeatedly → fallback to ref-tools.
+**4. Specialized Tools:**
+- `dataforseo` → SEO keyword research and competitive analysis
+- Domain-specific tools based on project requirements
 
-### Security Reminder
-- Only invoke MCPs from the allowlist above.
-- Never bypass destructive-action guardrails.
+### 🔄 Execution Lifecycle Phases
+
+**[PLAN] - Sequential Thinking MCP**
+```json
+{
+  "thought": "Create structured plan: analyze → design → implement → test → verify",
+  "nextThoughtNeeded": true,
+  "thoughtNumber": 1,
+  "totalThoughts": 7,
+  "isRevision": false
+}
+```
+- Save plan to workflow_state.md under ## PLAN
+- Summarize in chat (≤15 lines), auto-proceed to EXECUTE
+
+**[EXECUTE] - Build Without Permission**
+- Implement ALL modules completely (zero placeholders)
+- Add timeout wrappers to EVERY external call
+- Integrate CircuitBreaker for API calls
+- Use AutoRecovery for flaky operations
+- For CCC: Run template validation and external project integration tests
+
+**[TEST] - Auto-Validate**
+- Generate validation scripts for CCC components
+- Test external project workflow (claude-work, ccc-launch)
+- Execute and append output to execution.log
+- Check return codes and error patterns
+
+**[VERIFY] - Success Criteria**
+- Pass requirements:
+  1. All CCC components functional
+  2. External project integration working
+  3. No breaking changes to existing workflows
+- Pass? Write "## STATUS: DONE" → proceed to [DONE]
+- Fail? → [REFINE]
+
+**[REFINE] - Bounded Self-Feedback**
+- Call sequential_thinking with isRevision: true
+- Increment loop_count in workflow_state.md
+- MAX 3 refinement loops (hard stop)
+- Backoff: 1s → 2s → 4s between attempts
+- Still failing? Write "## STATUS: BLOCKED" and STOP
+
+**[DONE] - Final Delivery**
+- Present: final CLI command, files changed, outputs, improvements
+- Document changes in CCC system documentation
+- End with: **CCC System Enhanced Successfully!**
+
+### 🛡️ Circuit Breaker & Fallback Rules
+- Max 5 concurrent calls
+- Timeouts: 15s/45s
+- Circuit breaker: open after 3 fails or 20% error rate
+- Half-open after 60s
+- If Firecrawl trips breaker → fallback to fetch → Perplexity
+- If Perplexity fails repeatedly → fallback to ref-tools
+- Tool conflicts? Specify server explicitly
+- Missing tool? Map to closest equivalent
+
+### 🔒 Security & Safety
+- Only invoke MCPs from the approved hierarchy above
+- Never bypass destructive-action guardrails
+- Always validate inputs before external tool calls
+- Preserve CCC system integrity during external project modifications
 
 - sequential_thinking, firecrawl, fetch, dataforseo, chart-mcp, data-explorer, Context7, ref-tools-mcp, screenshot-website-fast, perplexity-ask
 

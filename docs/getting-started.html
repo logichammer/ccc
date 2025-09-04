@@ -643,7 +643,153 @@
     <li><strong>Agent Guidance:</strong> Suggests the best starting agent for your project</li>
     <li><strong>Zero Friction:</strong> No manual setup - just launch and code</li>
     <li><strong>Status Awareness:</strong> Shows exactly which CLAUDE.md version is active</li>
+    <li><strong>Conflict Resolution:</strong> Handles existing CLAUDE.md files safely with backup options</li>
   </ul>
+
+  <h3>🔧 Smart Updates & Preservation</h3>
+  
+  <div class="success-box">
+    <strong>🛡️ Your Work is Protected!</strong><br>
+    CCC now preserves all your customizations during updates:
+  </div>
+
+  <h4>claude-work Update Options:</h4>
+  <div class="command-example">
+    # When .claude/ directory already exists:<br>
+    # Option 1: Update agents and commands (preserves customizations)<br>
+    # Option 2: Complete replacement (destroys customizations)<br>
+    # Option 3: Keep existing (no changes)<br><br>
+    
+    # What gets preserved with Option 1:<br>
+    # ✅ Custom commands you created<br>
+    # ✅ Modified CLAUDE.md files<br>
+    # ✅ Local configuration changes<br>
+    # ✅ Any work-in-progress files<br><br>
+    
+    # What gets updated with Option 1:<br>
+    # 🔄 Agent definitions (safe to update)<br>
+    # 🔄 Standard CCC commands<br>
+  </div>
+
+  <h4>ccc-launch CLAUDE.md Conflict Resolution:</h4>
+  <div class="command-example">
+    # If existing CLAUDE.md is found:<br>
+    # Option 1: Keep existing (limited CCC integration)<br>
+    # Option 2: Backup existing and use CCC version (full features)<br>
+    # Option 3: Cancel launch<br><br>
+    
+    # Option 2 creates: CLAUDE.md.backup<br>
+    # Your original file is safely preserved!<br>
+  </div>
+
+  <h3>📚 Auto-Documentation Generation</h3>
+  
+  <div class="success-box">
+    <strong>🆕 NEW FEATURE:</strong> Automatically generate comprehensive documentation for any project!
+  </div>
+
+  <h4>Available Documentation Commands:</h4>
+  <div class="command-example">
+    # Generate comprehensive HTML documentation<br>
+    /auto-doc-gen<br><br>
+    
+    # Generate complete documentation set with API reference<br>
+    /auto-doc-gen --output=full --format=html<br><br>
+    
+    # Specify project directory<br>
+    /auto-doc-gen --project-dir=/path/to/project --format=html<br>
+  </div>
+
+  <h4>What Gets Generated:</h4>
+  <ul>
+    <li><strong>HTML Documentation</strong> - Professional docs/index.html with minimalist styling</li>
+    <li><strong>Project Analysis</strong> - Detects Python files, frameworks, dependencies, languages</li>
+    <li><strong>Feature Detection</strong> - Identifies key functionality automatically</li>
+    <li><strong>Installation Instructions</strong> - Platform-specific setup guides with code blocks</li>
+    <li><strong>Usage Examples</strong> - Real code examples extracted from your project</li>
+    <li><strong>API Reference</strong> - Functions and classes extracted from docstrings</li>
+    <li><strong>Development Setup</strong> - Testing, linting, and contribution guidelines</li>
+    <li><strong>High Contrast Styling</strong> - Dark code blocks with bright text for readability</li>
+    <li><strong>Automatic Backup</strong> - Preserves existing docs as .backup files</li>
+  </ul>
+
+  <h4>🎯 Milestone-Based Automatic Generation:</h4>
+  <div class="info-box">
+    Documentation is automatically triggered at key project milestones:
+    <ul>
+      <li><strong>After CodebaseAnalyzerAgent</strong> completes comprehensive analysis</li>
+      <li><strong>After FeatureDeveloperAgent</strong> finishes major improvements</li>
+      <li><strong>After QualityTesterAgent + SecurityAuditorAgent</strong> complete validation</li>
+      <li><strong>Before DeliveryVerifierAgent</strong> runs final project completion checks</li>
+      <li><strong>Manual trigger</strong> when you run /auto-doc-gen</li>
+    </ul>
+  </div>
+
+  <div class="pro-tip">
+    <strong>💡 Pro Tip:</strong> Use with CodebaseAnalyzerAgent for enhanced analysis:<br>
+    <em>"Use CodebaseAnalyzerAgent to analyze this project then run /auto-doc-gen"</em>
+  </div>
+
+  <h4>Supported Project Types:</h4>
+  <ul>
+    <li><strong>Python:</strong> Flask/Django/FastAPI detection, pip requirements, virtual environments</li>
+    <li><strong>JavaScript/Node.js:</strong> Package.json analysis, npm scripts, framework detection</li>
+    <li><strong>WordPress:</strong> Theme/plugin structure, PHP documentation, customization guides</li>
+    <li><strong>Mixed Projects:</strong> Multi-language project support with appropriate sections</li>
+  </ul>
+
+  <h2>🎯 Enhanced Decision-Making Protocols</h2>
+  
+  <div class="success-box">
+    <strong>🆕 NEW FEATURE:</strong> CCC now includes structured decision-making protocols for better AI interactions!
+  </div>
+
+  <h3>🚨 Three Options Protocol</h3>
+  <p>When making significant implementation decisions, CCC AI will now:</p>
+  <ul>
+    <li><strong>Propose exactly 3 distinct implementation approaches</strong> with pros/cons</li>
+    <li><strong>Include confidence percentages</strong> for each approach</li>
+    <li><strong>Clearly label the preferred solution</strong> with detailed reasoning</li>
+    <li><strong>Wait for your approval</strong> before making any code changes</li>
+  </ul>
+
+  <h4>Examples of decisions requiring Three Options Protocol:</h4>
+  <div class="info-box">
+    <ul>
+      <li><strong>Python:</strong> Architecture choices, framework selection, database integration</li>
+      <li><strong>SEO:</strong> Analysis methodologies, reporting structures, tool integrations</li>
+      <li><strong>WordPress:</strong> Theme approaches, plugin architectures, performance optimizations</li>
+    </ul>
+  </div>
+
+  <h3>🛑 Mandatory Wait Protocol</h3>
+  <p>Critical improvement to prevent assumption-based execution:</p>
+  <div class="warning-box">
+    <strong>Key Rule:</strong> If CCC AI asks ANY question, it MUST wait for your response before proceeding.<br><br>
+    <strong>Benefits:</strong>
+    <ul>
+      <li>No more unwanted assumptions or default choices</li>
+      <li>Better control over implementation decisions</li>
+      <li>Clearer communication and confirmation workflow</li>
+    </ul>
+  </div>
+
+  <h3>🔧 Enhanced MCP Tool Hierarchy</h3>
+  <p>CCC now uses a comprehensive tool selection hierarchy:</p>
+  <div class="command-example">
+    # Tool Priority Order:<br>
+    1. Planning: sequential_thinking for structured reasoning<br>
+    2. Research: Context7 → ref-tools → Perplexity → Firecrawl → fetch<br>
+    3. Visualization: chart-mcp, data-explorer, screenshot-website-fast<br>
+    4. Specialized: dataforseo (SEO), domain-specific tools<br>
+  </div>
+
+  <h3>🔄 Execution Lifecycle Phases</h3>
+  <p>Structured workflow phases for consistent results:</p>
+  <div class="info-box">
+    <strong>[PLAN]</strong> → <strong>[EXECUTE]</strong> → <strong>[TEST]</strong> → <strong>[VERIFY]</strong> → <strong>[REFINE]</strong> → <strong>[DONE]</strong><br><br>
+    Each phase has specific success criteria and automatic validation steps.
+  </div>
 
   <h2>🔧 Troubleshooting Common Issues</h2>
 

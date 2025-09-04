@@ -199,6 +199,32 @@
             <p>These commands work with all project types and provide universal functionality.</p>
 
             <div class="command-item">
+                <div class="command-name">/auto-doc-gen</div>
+                <div class="command-description">
+                    Automatically generates comprehensive documentation for projects. Analyzes code structure, dependencies, and functionality to create professional README.md and technical documentation.
+                </div>
+                <div class="command-syntax">
+                    <strong>Usage:</strong> <code>/auto-doc-gen [output=readme|api|full] [format=markdown|html] [include_examples=true]</code>
+                </div>
+                <div class="command-examples">
+                    <strong>Examples:</strong><br>
+                    • <code>/auto-doc-gen</code> - Generate README.md<br>
+                    • <code>/auto-doc-gen output=full</code> - Generate complete documentation set<br>
+                    • <code>/auto-doc-gen output=api format=html</code> - Generate HTML API docs
+                </div>
+                <div class="features">
+                    <strong>✨ Intelligence Features:</strong>
+                    <ul>
+                        <li>Framework detection (Flask, Django, FastAPI, etc.)</li>
+                        <li>Dependency analysis from requirements.txt, package.json</li>
+                        <li>Docstring extraction for API documentation</li>
+                        <li>Code example generation from test files</li>
+                        <li>Professional formatting with badges and links</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-item">
                 <div class="command-name">/project-summary</div>
                 <div class="command-description">Generate comprehensive project analysis and documentation</div>
                 <div class="command-usage">

@@ -109,6 +109,47 @@ check_virtual_environment() {
     fi
 }
 
+handle_claude_md_conflicts() {
+    if [ -f "CLAUDE.md" ]; then
+        if grep -q "LINE ENDINGS RULE.*TOP PRIORITY" "CLAUDE.md" 2>/dev/null; then
+            print_success "CCC Enhanced CLAUDE.md detected (Beast Mode)"
+        else
+            print_warning "Non-CCC CLAUDE.md detected"
+            echo -e "${YELLOW}   Options:${NC}"
+            echo -e "${YELLOW}   1) Keep existing CLAUDE.md (limited CCC integration)${NC}"
+            echo -e "${YELLOW}   2) Backup existing and use CCC CLAUDE.md (full features)${NC}"
+            echo -e "${YELLOW}   3) Cancel launch${NC}"
+            
+            while true; do
+                read -p "Choose option (1/2/3): " claude_choice
+                case $claude_choice in
+                    1)
+                        print_success "Using existing CLAUDE.md"
+                        break
+                        ;;
+                    2)
+                        cp "CLAUDE.md" "CLAUDE.md.backup"
+                        print_success "Backed up existing CLAUDE.md to CLAUDE.md.backup"
+                        rm "CLAUDE.md"  # Remove so CCC can create its version
+                        break
+                        ;;
+                    3)
+                        print_error "Launch cancelled by user"
+                        exit 1
+                        ;;
+                    *)
+                        echo "Please choose 1, 2, or 3"
+                        ;;
+                esac
+            done
+        fi
+    elif [ -f ".claude/CLAUDE.md" ]; then
+        print_success "CCC Toolkit CLAUDE.md available"
+    else
+        print_success "No CLAUDE.md conflicts - ready for CCC setup"
+    fi
+}
+
 check_claude_cli() {
     print_step "Checking Claude CLI availability..."
     
@@ -245,6 +286,10 @@ main() {
     # Verify CCC system is available
     check_ccc_system
     
+    # Check for CLAUDE.md conflicts BEFORE setting up toolkit
+    print_step "Checking CLAUDE.md configuration..."
+    handle_claude_md_conflicts
+    
     # Set up CCC toolkit if not already present
     setup_ccc_if_needed
     
@@ -252,13 +297,13 @@ main() {
     local project_type=$(detect_project_type)
     print_success "Project type detected: $project_type"
     
-    # Show CLAUDE.md status
-    print_step "Checking CLAUDE.md configuration..."
+    # Show final CLAUDE.md status
+    print_step "Verifying CLAUDE.md setup..."
     if [ -f "CLAUDE.md" ]; then
         if grep -q "LINE ENDINGS RULE.*TOP PRIORITY" "CLAUDE.md" 2>/dev/null; then
-            print_success "CCC Enhanced CLAUDE.md detected (Beast Mode)"
+            print_success "CCC Enhanced CLAUDE.md active (Beast Mode)"
         else
-            print_warning "Standard CLAUDE.md detected (consider upgrading)"
+            print_success "Using existing CLAUDE.md (limited integration)"
         fi
     elif [ -f ".claude/CLAUDE.md" ]; then
         print_success "CCC Toolkit CLAUDE.md available"
