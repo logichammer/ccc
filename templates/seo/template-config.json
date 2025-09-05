@@ -1,0 +1,134 @@
+{
+  "template_name": "seo",
+  "template_version": "1.0.0",
+  "description": "SEO Analysis and Optimization Template",
+  "workflows": {
+    "full_seo_audit": {
+      "description": "Complete SEO audit workflow including technical, content, and competitive analysis",
+      "steps": [
+        {
+          "agent": "TechnicalSEOAgent",
+          "command": "technical_analysis",
+          "description": "Perform comprehensive technical SEO analysis",
+          "config": {
+            "checks": ["page_speed", "mobile_friendly", "crawlability", "indexability", "structured_data", "meta_optimization"]
+          }
+        },
+        {
+          "agent": "KeywordStrategyAgent", 
+          "command": "keyword_research",
+          "description": "Analyze keyword opportunities and competitive landscape",
+          "config": {
+            "include_competitors": true,
+            "analyze_gaps": true
+          }
+        },
+        {
+          "agent": "PerformanceProfilerAgent",
+          "command": "performance_audit", 
+          "description": "Analyze website performance and optimization opportunities",
+          "config": {
+            "audit_type": "comprehensive"
+          }
+        },
+        {
+          "agent": "MetricsReporterAgent",
+          "command": "generate_report",
+          "description": "Generate comprehensive SEO audit report",
+          "config": {
+            "include_visualizations": true,
+            "export_format": "html"
+          }
+        }
+      ]
+    },
+    "keyword_opportunity_analysis": {
+      "description": "Focus on keyword research and opportunity identification",
+      "steps": [
+        {
+          "agent": "KeywordStrategyAgent",
+          "command": "keyword_research",
+          "description": "Research target keywords and identify opportunities",
+          "config": {
+            "depth": "comprehensive",
+            "include_related": true
+          }
+        },
+        {
+          "agent": "MetricsReporterAgent",
+          "command": "keyword_report",
+          "description": "Generate keyword opportunity report",
+          "config": {
+            "include_charts": true
+          }
+        }
+      ]
+    },
+    "technical_optimization": {
+      "description": "Focus on technical SEO improvements",
+      "steps": [
+        {
+          "agent": "TechnicalSEOAgent",
+          "command": "technical_analysis", 
+          "description": "Comprehensive technical SEO audit",
+          "config": {
+            "include_recommendations": true
+          }
+        },
+        {
+          "agent": "PerformanceProfilerAgent",
+          "command": "performance_audit",
+          "description": "Performance optimization analysis",
+          "config": {
+            "focus": "core_web_vitals"
+          }
+        }
+      ]
+    }
+  },
+  "commands": {
+    "technical_analysis": "commands/technical_analysis.py",
+    "keyword_research": "commands/keyword_research.py",
+    "performance_audit": "commands/performance_audit.py",
+    "generate_report": "commands/generate_report.py",
+    "keyword_report": "commands/keyword_report.py"
+  },
+  "dependencies": {
+    "python_packages": [
+      "requests>=2.28.0",
+      "beautifulsoup4>=4.11.0",
+      "pandas>=1.5.0",
+      "matplotlib>=3.6.0",
+      "seaborn>=0.12.0"
+    ],
+    "external_tools": [
+      "Google Search Console API",
+      "DataForSEO API",
+      "Screaming Frog (optional)"
+    ]
+  },
+  "default_config": {
+    "output_directory": "output/seo_reports",
+    "data_retention_days": 90,
+    "default_timeout": 300,
+    "max_concurrent_requests": 5
+  },
+  "agent_preferences": {
+    "TechnicalSEOAgent": {
+      "priority_checks": ["page_speed", "mobile_friendly", "crawlability"],
+      "reporting_format": "detailed"
+    },
+    "KeywordStrategyAgent": {
+      "default_competitors": 5,
+      "keyword_difficulty_threshold": 70,
+      "min_search_volume": 100
+    },
+    "PerformanceProfilerAgent": {
+      "performance_budget": {
+        "fcp": 1.8,
+        "lcp": 2.5,
+        "cls": 0.1
+      }
+    }
+  }
+}

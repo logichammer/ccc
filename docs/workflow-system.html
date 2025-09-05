@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CCC Workflow Orchestration System</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 40px; line-height: 1.6; color: #222; background: #fff; }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { font-size: 2em; color: #2c3e50; }
+    h2 { font-size: 1.5em; color: #34495e; }
+    h3 { font-size: 1.2em; color: #34495e; }
+    pre, code { background: #2c3e50; color: #ecf0f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; }
+    pre { padding: 16px; margin: 16px 0; overflow-x: auto; }
+    code { padding: 2px 4px; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .workflow-tree { background: #f8f9fa; padding: 16px; border-left: 4px solid #007acc; margin: 16px 0; }
+    .command-example { background: #2c3e50; color: #ecf0f1; padding: 12px; border-radius: 6px; margin: 12px 0; }
+    .note { background: #fff3cd; border: 1px solid #ffeaa7; padding: 12px; border-radius: 4px; margin: 16px 0; }
+    ul { margin: 8px 0; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>CCC Workflow Orchestration System</h1>
+  
+  <p>The CCC Workflow Orchestration System provides automated multi-agent task coordination across Python, SEO, and WordPress projects. This system enables complex development workflows to be executed autonomously with intelligent agent switching and progress tracking.</p>
+
+  <h2>System Architecture</h2>
+  
+  <h3>Core Components</h3>
+  <ul>
+    <li><strong>bin/workflow_engine.py</strong> - Main orchestration engine that manages workflow definitions and execution</li>
+    <li><strong>bin/lib/workflow_runner.py</strong> - Execution runtime with agent coordination and TodoWrite integration</li>
+    <li><strong>templates/config/workflow_config.json</strong> - Global workflow definitions and agent mappings</li>
+    <li><strong>templates/{type}/commands/</strong> - Template-specific command modules for each workflow step</li>
+  </ul>
+
+  <h3>Agent Integration Layer</h3>
+  <p>The workflow system seamlessly integrates with the existing CCC agent system:</p>
+  
+  <div class="workflow-tree">
+    🏗️ SystemArchitectAgent (Orchestration)<br>
+    ├── ⚡ FeatureDeveloperAgent (Implementation)<br>
+    ├── 🔧 TechnicalSEOAgent (SEO Analysis)<br>
+    ├── 🔑 KeywordStrategyAgent (SEO Strategy)<br>
+    ├── 🖼️ FrontendImplementerAgent (WordPress/UI)<br>
+    ├── 🧪 QualityTesterAgent (Testing & Validation)<br>
+    ├── 🔒 SecurityAuditorAgent (Security Analysis)<br>
+    └── 📊 MetricsReporterAgent (Reporting & Analysis)
+  </div>
+
+  <h2>Template-Specific Workflows</h2>
+
+  <h3>SEO Template Workflows</h3>
+  
+  <h4>full_seo_audit</h4>
+  <p>Complete SEO audit workflow including technical, content, and competitive analysis.</p>
+  
+  <div class="command-example">
+ccc-workflow seo full_seo_audit --site="example.com" --competitors=5
+  </div>
+  
+  <p><strong>Workflow Steps:</strong></p>
+  <ol>
+    <li>🔧 TechnicalSEOAgent → technical_analysis (page speed, mobile, crawlability)</li>
+    <li>🔑 KeywordStrategyAgent → keyword_research (opportunities & competitive landscape)</li>
+    <li>⚡ PerformanceProfilerAgent → performance_audit (comprehensive performance analysis)</li>
+    <li>📊 MetricsReporterAgent → generate_report (HTML report with visualizations)</li>
+  </ol>
+
+  <h4>keyword_opportunity_analysis</h4>
+  <p>Focus on keyword research and opportunity identification.</p>
+  
+  <div class="command-example">
+ccc-workflow seo keyword_opportunity_analysis --keywords="ai chatbot,conversational ai"
+  </div>
+
+  <h4>technical_optimization</h4>
+  <p>Focus on technical SEO improvements and performance optimization.</p>
+
+  <h3>WordPress Template Workflows</h3>
+  
+  <h4>wordpress_setup</h4>
+  <p>Complete WordPress site setup workflow from design to deployment.</p>
+  
+  <div class="command-example">
+ccc-workflow wordpress wordpress_setup --theme="custom-theme" --setup_type="full"
+  </div>
+  
+  <p><strong>Workflow Steps:</strong></p>
+  <ol>
+    <li>🎨 InterfaceDesignerAgent → design_planning (wireframes & UX planning)</li>
+    <li>🖼️ FrontendImplementerAgent → theme_setup (install & configure theme)</li>
+    <li>⚡ FeatureDeveloperAgent → plugin_management (essential plugins installation)</li>
+    <li>🔒 SecurityAuditorAgent → security_audit (security hardening)</li>
+    <li>🧪 QualityTesterAgent → site_testing (functionality & performance testing)</li>
+  </ol>
+
+  <h4>theme_development</h4>
+  <p>Custom WordPress theme development workflow.</p>
+
+  <h4>plugin_development</h4>
+  <p>Custom WordPress plugin development workflow with security focus.</p>
+
+  <h4>site_maintenance</h4>
+  <p>WordPress maintenance and optimization workflow.</p>
+
+  <h3>Python Template Workflows</h3>
+  
+  <h4>new_project_setup</h4>
+  <p>Complete Python project setup with best practices.</p>
+  
+  <div class="command-example">
+ccc-workflow python new_project_setup --project_type="web" --python_version="3.11"
+  </div>
+  
+  <p><strong>Workflow Steps:</strong></p>
+  <ol>
+    <li>🏗️ SystemArchitectAgent → project_planning (requirements & architecture)</li>
+    <li>⚡ FeatureDeveloperAgent → project_setup (directory structure & configuration)</li>
+    <li>🧪 QualityTesterAgent → setup_quality_tools (pytest, black, flake8, mypy)</li>
+  </ol>
+
+  <h4>code_quality_check</h4>
+  <p>Comprehensive code quality analysis and automated fixes.</p>
+  
+  <div class="command-example">
+ccc-workflow python code_quality_check --checks="format,lint,test,security" --fix_issues=true
+  </div>
+
+  <h4>web_app_setup</h4>
+  <p>Setup Python web application with Flask framework.</p>
+
+  <h4>cli_app_setup</h4>
+  <p>Setup Python CLI application with Click framework.</p>
+
+  <h4>data_science_setup</h4>
+  <p>Setup Python data science project with Jupyter and analysis libraries.</p>
+
+  <h2>Workflow Execution</h2>
+
+  <h3>Basic Execution Syntax</h3>
+  <div class="command-example">
+ccc-workflow [template] [workflow_name] [options]
+  </div>
+
+  <h3>Execution Examples</h3>
+  
+  <div class="command-example">
+# SEO complete audit<br>
+ccc-workflow seo full_seo_audit --site="example.com" --competitors=3<br>
+<br>
+# Python code quality check with fixes<br>
+ccc-workflow python code_quality_check --fix_issues=true<br>
+<br>
+# WordPress theme development<br>
+ccc-workflow wordpress theme_development --theme="custom-theme"<br>
+<br>
+# Python web app setup<br>
+ccc-workflow python web_app_setup --framework="flask" --include_database=true
+  </div>
+
+  <h3>TodoWrite Integration</h3>
+  <p>Workflows integrate seamlessly with the existing TodoWrite system for progress tracking:</p>
+  
+  <ul>
+    <li><strong>Automatic Todo Creation</strong> - Each workflow step becomes a trackable todo item</li>
+    <li><strong>Real-time Updates</strong> - Status transitions automatically (pending → in_progress → completed)</li>
+    <li><strong>Error Handling</strong> - Failed steps preserve todo state for retry</li>
+    <li><strong>Agent Context</strong> - Each todo includes agent assignment and command context</li>
+  </ul>
+
+  <div class="note">
+    <strong>Note:</strong> TodoWrite integration ensures that even complex multi-agent workflows provide clear progress visibility and can be resumed if interrupted.
+  </div>
+
+  <h2>Agent Workflow Coordination</h2>
+
+  <h3>Agent Handoff Protocol</h3>
+  <p>Workflows automatically handle agent switching using the established handoff protocol:</p>
+  
+  <div class="command-example">
+🔄 AGENT HANDOFF: 🏗️ [SystemArchitectAgent] → 🔧 [TechnicalSEOAgent]<br>
+Reason: Execute technical_analysis command<br>
+Context: SEO audit workflow step<br>
+Expected Output: Technical analysis results<br>
+Return Trigger: Step completion or error
+  </div>
+
+  <h3>Workflow State Management</h3>
+  <p>The workflow runner maintains context between steps:</p>
+  
+  <ul>
+    <li><strong>WorkflowContext</strong> - Shared data and results across workflow steps</li>
+    <li><strong>Agent State</strong> - Current agent assignment and execution context</li>
+    <li><strong>Progress Tracking</strong> - Step completion status and timing</li>
+    <li><strong>Error Recovery</strong> - Failure points and retry mechanisms</li>
+  </ul>
+
+  <h2>Command Modules</h2>
+
+  <h3>Template-Specific Commands</h3>
+  <p>Each template includes specialized command modules that implement workflow steps:</p>
+  
+  <div class="workflow-tree">
+    /templates/seo/commands/<br>
+    ├── technical_analysis.py<br>
+    ├── keyword_research.py<br>
+    └── performance_audit.py<br>
+    <br>
+    /templates/wordpress/commands/<br>
+    ├── theme_setup.py<br>
+    ├── plugin_management.py<br>
+    └── design_planning.py<br>
+    <br>
+    /templates/python/commands/<br>
+    ├── project_setup.py<br>
+    ├── code_quality.py<br>
+    └── security_scan.py
+  </div>
+
+  <h3>Command Interface</h3>
+  <p>All command modules follow a standardized interface:</p>
+  
+  <div class="command-example">
+def execute(context, config: Dict[str, Any]) -> Dict[str, Any]:<br>
+    """<br>
+    Execute command with workflow context and configuration<br>
+    <br>
+    Args:<br>
+        context: WorkflowContext with shared data and results<br>
+        config: Command-specific configuration parameters<br>
+    <br>
+    Returns:<br>
+        Dictionary with command results and status<br>
+    """
+  </div>
+
+  <h2>Configuration System</h2>
+
+  <h3>Global Configuration</h3>
+  <p>The global workflow configuration defines system-wide settings and agent mappings:</p>
+  
+  <div class="command-example">
+/templates/config/workflow_config.json<br>
+├── global_workflows (system health, project setup)<br>
+├── agent_definitions (agent capabilities and mappings)<br>
+├── workflow_execution (timeouts, retries, logging)<br>
+└── integration_settings (TodoWrite, agent switching)
+  </div>
+
+  <h3>Template Configuration</h3>
+  <p>Each template defines its specific workflows and commands:</p>
+  
+  <div class="command-example">
+/templates/{type}/template-config.json<br>
+├── workflows (template-specific workflow definitions)<br>
+├── commands (command module mappings)<br>
+├── dependencies (required tools and packages)<br>
+├── default_config (template defaults)<br>
+└── agent_preferences (agent-specific settings)
+  </div>
+
+  <h2>Advanced Features</h2>
+
+  <h3>Parallel Execution</h3>
+  <p>Workflows support parallel execution of independent steps for improved performance.</p>
+
+  <h3>Circuit Breaker Pattern</h3>
+  <p>Built-in circuit breakers prevent cascading failures and provide graceful degradation.</p>
+
+  <h3>Workflow Composition</h3>
+  <p>Complex workflows can be composed from simpler workflow building blocks.</p>
+
+  <h3>Custom Workflows</h3>
+  <p>Users can define custom workflows by extending template configurations or creating new workflow definitions.</p>
+
+  <div class="note">
+    <strong>Future Enhancement:</strong> The workflow system is designed to be extensible, allowing for custom workflow definitions and template-specific optimizations.
+  </div>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Common Issues</h3>
+  <ul>
+    <li><strong>Command Not Found</strong> - Verify command module exists in template commands directory</li>
+    <li><strong>Agent Handoff Failure</strong> - Check agent definitions in global configuration</li>
+    <li><strong>Workflow Timeout</strong> - Adjust timeout settings in workflow configuration</li>
+    <li><strong>TodoWrite Integration</strong> - Ensure TodoWrite tool is available and functioning</li>
+  </ul>
+
+  <h3>Debugging</h3>
+  <p>Enable debug logging by setting log_level to "debug" in workflow configuration. This provides detailed execution traces and agent switching information.</p>
+
+  <h2>Best Practices</h2>
+
+  <ul>
+    <li><strong>Workflow Design</strong> - Keep workflows focused on specific outcomes with clear success criteria</li>
+    <li><strong>Command Modularity</strong> - Design command modules to be reusable across different workflows</li>
+    <li><strong>Error Handling</strong> - Implement robust error handling and recovery mechanisms in command modules</li>
+    <li><strong>Testing</strong> - Test workflows in isolation before integrating into larger automation sequences</li>
+    <li><strong>Documentation</strong> - Document custom workflows and command modules for maintainability</li>
+  </ul>
+
+</body>
+</html>

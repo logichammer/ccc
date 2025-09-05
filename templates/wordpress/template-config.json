@@ -1,0 +1,211 @@
+{
+  "template_name": "wordpress",
+  "template_version": "1.0.0",
+  "description": "WordPress Development and Management Template",
+  "workflows": {
+    "wordpress_setup": {
+      "description": "Complete WordPress site setup workflow",
+      "steps": [
+        {
+          "agent": "InterfaceDesignerAgent",
+          "command": "design_planning",
+          "description": "Plan WordPress site design and user experience",
+          "config": {
+            "include_wireframes": true,
+            "responsive_design": true
+          }
+        },
+        {
+          "agent": "FrontendImplementerAgent",
+          "command": "theme_setup",
+          "description": "Install and configure WordPress theme",
+          "config": {
+            "setup_type": "full",
+            "import_demo_content": true
+          }
+        },
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "plugin_management",
+          "description": "Install and configure essential plugins",
+          "config": {
+            "operation": "install",
+            "plugins": ["Yoast SEO", "WP Super Cache", "Contact Form 7", "Akismet Anti-Spam"]
+          }
+        },
+        {
+          "agent": "SecurityAuditorAgent",
+          "command": "security_audit",
+          "description": "Perform WordPress security audit and hardening",
+          "config": {
+            "include_plugin_scan": true,
+            "check_file_permissions": true
+          }
+        },
+        {
+          "agent": "QualityTesterAgent",
+          "command": "site_testing",
+          "description": "Test WordPress site functionality",
+          "config": {
+            "test_types": ["functionality", "responsive", "performance"]
+          }
+        }
+      ]
+    },
+    "theme_development": {
+      "description": "Custom WordPress theme development workflow",
+      "steps": [
+        {
+          "agent": "InterfaceDesignerAgent",
+          "command": "theme_design",
+          "description": "Design custom WordPress theme",
+          "config": {
+            "include_style_guide": true
+          }
+        },
+        {
+          "agent": "FrontendImplementerAgent",
+          "command": "theme_implementation",
+          "description": "Implement custom theme code",
+          "config": {
+            "include_gutenberg_blocks": true,
+            "responsive_design": true
+          }
+        },
+        {
+          "agent": "QualityTesterAgent",
+          "command": "theme_testing",
+          "description": "Test theme across devices and browsers",
+          "config": {
+            "cross_browser_testing": true
+          }
+        }
+      ]
+    },
+    "plugin_development": {
+      "description": "Custom WordPress plugin development workflow",
+      "steps": [
+        {
+          "agent": "SystemArchitectAgent",
+          "command": "plugin_architecture",
+          "description": "Design plugin architecture and features",
+          "config": {
+            "follow_wp_standards": true
+          }
+        },
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "plugin_implementation",
+          "description": "Implement plugin functionality",
+          "config": {
+            "include_admin_interface": true,
+            "security_focused": true
+          }
+        },
+        {
+          "agent": "QualityTesterAgent",
+          "command": "plugin_testing",
+          "description": "Test plugin functionality and compatibility",
+          "config": {
+            "test_wp_versions": ["6.3", "6.4"],
+            "test_php_versions": ["7.4", "8.0", "8.1", "8.2"]
+          }
+        }
+      ]
+    },
+    "site_maintenance": {
+      "description": "WordPress site maintenance and optimization workflow",
+      "steps": [
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "plugin_management",
+          "description": "Update plugins and check compatibility",
+          "config": {
+            "operation": "update",
+            "backup_before_update": true
+          }
+        },
+        {
+          "agent": "SecurityAuditorAgent",
+          "command": "security_audit",
+          "description": "Perform security scan and updates",
+          "config": {
+            "update_security_patches": true
+          }
+        },
+        {
+          "agent": "PerformanceProfilerAgent",
+          "command": "performance_optimization",
+          "description": "Optimize site performance",
+          "config": {
+            "optimize_database": true,
+            "optimize_images": true
+          }
+        }
+      ]
+    }
+  },
+  "commands": {
+    "theme_setup": "commands/theme_setup.py",
+    "plugin_management": "commands/plugin_management.py",
+    "design_planning": "commands/design_planning.py",
+    "theme_design": "commands/theme_design.py",
+    "theme_implementation": "commands/theme_implementation.py",
+    "plugin_architecture": "commands/plugin_architecture.py",
+    "plugin_implementation": "commands/plugin_implementation.py",
+    "security_audit": "commands/security_audit.py",
+    "site_testing": "commands/site_testing.py",
+    "theme_testing": "commands/theme_testing.py",
+    "plugin_testing": "commands/plugin_testing.py",
+    "performance_optimization": "commands/performance_optimization.py"
+  },
+  "dependencies": {
+    "php_requirements": {
+      "min_version": "7.4",
+      "recommended_version": "8.2",
+      "required_extensions": ["mysqli", "curl", "gd", "mbstring", "xml", "zip"]
+    },
+    "wordpress_requirements": {
+      "min_version": "5.0",
+      "recommended_version": "6.4"
+    },
+    "development_tools": [
+      "WP-CLI",
+      "Node.js (for theme development)",
+      "Composer",
+      "Git"
+    ]
+  },
+  "default_config": {
+    "development_environment": "local",
+    "staging_enabled": true,
+    "backup_frequency": "daily",
+    "cache_enabled": true,
+    "security_hardening": true,
+    "debug_mode": false
+  },
+  "agent_preferences": {
+    "InterfaceDesignerAgent": {
+      "design_system": "material_design",
+      "accessibility_compliance": "WCAG_2.1_AA",
+      "responsive_breakpoints": ["mobile", "tablet", "desktop"]
+    },
+    "FrontendImplementerAgent": {
+      "css_preprocessor": "sass",
+      "js_framework": "vanilla_js",
+      "build_tools": ["webpack", "gulp"]
+    },
+    "SecurityAuditorAgent": {
+      "security_plugins": ["Wordfence", "iThemes Security"],
+      "scan_frequency": "daily",
+      "vulnerability_threshold": "medium"
+    }
+  },
+  "project_structure": {
+    "theme_directory": "wp-content/themes/custom-theme",
+    "plugin_directory": "wp-content/plugins/custom-plugin",
+    "uploads_directory": "wp-content/uploads",
+    "backup_directory": "backups",
+    "development_tools": "dev-tools"
+  }
+}

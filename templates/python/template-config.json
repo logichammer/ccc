@@ -1,0 +1,281 @@
+{
+  "template_name": "python",
+  "template_version": "1.0.0",
+  "description": "Python Development Template with Quality Assurance",
+  "workflows": {
+    "new_project_setup": {
+      "description": "Complete Python project setup with best practices",
+      "steps": [
+        {
+          "agent": "SystemArchitectAgent",
+          "command": "project_planning",
+          "description": "Plan project architecture and requirements",
+          "config": {
+            "analyze_requirements": true,
+            "recommend_structure": true
+          }
+        },
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "project_setup",
+          "description": "Create Python project structure and configuration",
+          "config": {
+            "project_type": "library",
+            "python_version": "3.11",
+            "include_testing": true,
+            "include_docs": true
+          }
+        },
+        {
+          "agent": "QualityTesterAgent",
+          "command": "setup_quality_tools",
+          "description": "Configure code quality and testing tools",
+          "config": {
+            "tools": ["pytest", "black", "flake8", "mypy", "coverage"]
+          }
+        }
+      ]
+    },
+    "code_quality_check": {
+      "description": "Comprehensive code quality analysis and fixes",
+      "steps": [
+        {
+          "agent": "QualityTesterAgent",
+          "command": "code_quality",
+          "description": "Run comprehensive code quality checks",
+          "config": {
+            "checks": ["format", "lint", "type_check", "test", "security", "coverage"],
+            "fix_issues": true
+          }
+        },
+        {
+          "agent": "SecurityAuditorAgent",
+          "command": "security_scan",
+          "description": "Perform security vulnerability scan",
+          "config": {
+            "include_dependencies": true,
+            "check_code_patterns": true
+          }
+        }
+      ]
+    },
+    "web_app_setup": {
+      "description": "Setup Python web application with Flask",
+      "steps": [
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "project_setup",
+          "description": "Create Flask web application structure",
+          "config": {
+            "project_type": "web",
+            "framework": "flask",
+            "include_database": true
+          }
+        },
+        {
+          "agent": "FrontendImplementerAgent",
+          "command": "frontend_setup",
+          "description": "Setup frontend assets and templates",
+          "config": {
+            "template_engine": "jinja2",
+            "css_framework": "bootstrap"
+          }
+        },
+        {
+          "agent": "SecurityAuditorAgent",
+          "command": "web_security_audit",
+          "description": "Audit web application security",
+          "config": {
+            "check_csrf": true,
+            "check_sql_injection": true,
+            "check_xss": true
+          }
+        }
+      ]
+    },
+    "cli_app_setup": {
+      "description": "Setup Python CLI application with Click",
+      "steps": [
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "project_setup",
+          "description": "Create CLI application structure",
+          "config": {
+            "project_type": "cli",
+            "cli_framework": "click",
+            "include_config_system": true
+          }
+        },
+        {
+          "agent": "InteractionEnhancerAgent",
+          "command": "cli_ux_enhancement",
+          "description": "Enhance CLI user experience",
+          "config": {
+            "progress_bars": true,
+            "colored_output": true,
+            "help_system": true
+          }
+        }
+      ]
+    },
+    "data_science_setup": {
+      "description": "Setup Python data science project environment",
+      "steps": [
+        {
+          "agent": "FeatureDeveloperAgent",
+          "command": "project_setup",
+          "description": "Create data science project structure",
+          "config": {
+            "project_type": "data_science",
+            "include_jupyter": true,
+            "analysis_libraries": true
+          }
+        },
+        {
+          "agent": "MetricsReporterAgent",
+          "command": "setup_analysis_tools",
+          "description": "Configure data analysis and visualization tools",
+          "config": {
+            "visualization_libraries": ["matplotlib", "seaborn", "plotly"],
+            "analysis_libraries": ["pandas", "numpy", "scipy"]
+          }
+        }
+      ]
+    },
+    "deployment_preparation": {
+      "description": "Prepare Python project for deployment",
+      "steps": [
+        {
+          "agent": "QualityTesterAgent",
+          "command": "code_quality",
+          "description": "Final code quality check before deployment",
+          "config": {
+            "checks": ["format", "lint", "type_check", "test", "security"],
+            "strict_mode": true
+          }
+        },
+        {
+          "agent": "SystemArchitectAgent",
+          "command": "deployment_review",
+          "description": "Review deployment architecture and configuration",
+          "config": {
+            "check_dependencies": true,
+            "verify_configuration": true,
+            "performance_review": true
+          }
+        }
+      ]
+    }
+  },
+  "commands": {
+    "project_setup": "commands/project_setup.py",
+    "code_quality": "commands/code_quality.py",
+    "project_planning": "commands/project_planning.py",
+    "setup_quality_tools": "commands/setup_quality_tools.py",
+    "frontend_setup": "commands/frontend_setup.py",
+    "web_security_audit": "commands/web_security_audit.py",
+    "cli_ux_enhancement": "commands/cli_ux_enhancement.py",
+    "setup_analysis_tools": "commands/setup_analysis_tools.py",
+    "deployment_review": "commands/deployment_review.py",
+    "security_scan": "commands/security_scan.py"
+  },
+  "dependencies": {
+    "python_requirements": {
+      "min_version": "3.8",
+      "recommended_version": "3.11"
+    },
+    "development_tools": [
+      "pip",
+      "virtualenv",
+      "git",
+      "make"
+    ],
+    "quality_tools": [
+      "pytest>=7.0.0",
+      "black>=23.0.0",
+      "flake8>=6.0.0",
+      "mypy>=1.0.0",
+      "bandit>=1.7.0",
+      "safety>=2.0.0",
+      "coverage>=7.0.0"
+    ],
+    "web_frameworks": [
+      "Flask>=2.3.0",
+      "FastAPI>=0.100.0",
+      "Django>=4.2.0"
+    ],
+    "cli_frameworks": [
+      "click>=8.0.0",
+      "typer>=0.9.0",
+      "rich>=13.0.0"
+    ],
+    "data_science": [
+      "pandas>=2.0.0",
+      "numpy>=1.24.0",
+      "matplotlib>=3.7.0",
+      "seaborn>=0.12.0",
+      "jupyter>=1.0.0",
+      "scikit-learn>=1.3.0"
+    ]
+  },
+  "default_config": {
+    "code_style": {
+      "formatter": "black",
+      "line_length": 88,
+      "linter": "flake8",
+      "type_checker": "mypy"
+    },
+    "testing": {
+      "framework": "pytest",
+      "coverage_threshold": 80,
+      "run_parallel": true
+    },
+    "security": {
+      "scan_dependencies": true,
+      "scan_code": true,
+      "fail_on_high_severity": true
+    },
+    "documentation": {
+      "format": "sphinx",
+      "auto_generate": true,
+      "include_examples": true
+    }
+  },
+  "agent_preferences": {
+    "FeatureDeveloperAgent": {
+      "code_style": "pep8",
+      "documentation_style": "google",
+      "testing_approach": "tdd"
+    },
+    "QualityTesterAgent": {
+      "quality_gates": {
+        "code_coverage": 80,
+        "complexity_threshold": 10,
+        "security_threshold": "medium"
+      }
+    },
+    "SecurityAuditorAgent": {
+      "security_tools": ["bandit", "safety", "semgrep"],
+      "vulnerability_sources": ["nvd", "github_advisory"],
+      "scan_frequency": "on_commit"
+    }
+  },
+  "project_templates": {
+    "library": {
+      "structure": ["src/", "tests/", "docs/", "scripts/"],
+      "config_files": ["setup.py", "pyproject.toml", "requirements.txt"]
+    },
+    "web": {
+      "structure": ["app/", "templates/", "static/", "tests/", "migrations/"],
+      "config_files": ["app.py", "config.py", "requirements.txt", "wsgi.py"]
+    },
+    "cli": {
+      "structure": ["cli/", "commands/", "tests/", "docs/"],
+      "config_files": ["cli.py", "setup.py", "requirements.txt"]
+    },
+    "data_science": {
+      "structure": ["notebooks/", "data/", "src/", "output/", "tests/"],
+      "config_files": ["requirements.txt", "environment.yml", "config.yaml"]
+    }
+  }
+}

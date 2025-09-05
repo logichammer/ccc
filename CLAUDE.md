@@ -445,6 +445,50 @@ claude-work . --type python           # Force specific type
 claude-work . --cleanup               # Remove .claude/ when done (MANUAL ONLY)
 ```
 
+## 🔄 **WORKFLOW ORCHESTRATION SYSTEM**
+
+### **Workflow Engine Integration**
+The CCC system now includes a powerful workflow orchestration engine that automates multi-agent task coordination:
+
+**Core Components:**
+- `/bin/workflow_engine.py` - Main orchestration engine
+- `/bin/lib/workflow_runner.py` - Execution runtime with agent coordination
+- `/templates/config/workflow_config.json` - Global workflow definitions
+
+**Template-Specific Workflows:**
+Each template type includes predefined workflows:
+- **SEO**: `full_seo_audit`, `keyword_opportunity_analysis`, `technical_optimization`
+- **WordPress**: `wordpress_setup`, `theme_development`, `plugin_development`, `site_maintenance`
+- **Python**: `new_project_setup`, `code_quality_check`, `web_app_setup`, `cli_app_setup`, `data_science_setup`
+
+### **Workflow Execution Syntax**
+```bash
+# Execute predefined workflow
+ccc-workflow [template] [workflow_name] [context]
+
+# Examples:
+ccc-workflow seo full_seo_audit --site="example.com" --competitors=3
+ccc-workflow python code_quality_check --fix-issues=true
+ccc-workflow wordpress theme_development --theme="custom-theme"
+```
+
+### **Agent Workflow Coordination**
+Workflows automatically coordinate multiple agents:
+```
+🔄 WORKFLOW: full_seo_audit
+├── 🔧 TechnicalSEOAgent → technical_analysis
+├── 🔑 KeywordStrategyAgent → keyword_research  
+├── ⚡ PerformanceProfilerAgent → performance_audit
+└── 📊 MetricsReporterAgent → generate_report
+```
+
+### **TodoWrite Integration**
+Workflows integrate seamlessly with existing TodoWrite system:
+- Each workflow step becomes a trackable todo item
+- Real-time progress updates during execution
+- Automatic status transitions (pending → in_progress → completed)
+- Error handling preserves todo state for retry
+
 ### **CCC-Launch Integration Workflow**
 ```bash
 # 1. Navigate to your project
