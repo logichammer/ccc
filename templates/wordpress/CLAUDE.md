@@ -10,6 +10,23 @@ Default mode: Plan → Execute → Verify → Iterate until complete.
 ## Your Role
 You are working with the **Claude Code Templates (CCC) System** - a simplified, KISS-based template system for Python, SEO, and WordPress projects. This system creates new projects and enhances existing ones with a portable .claude/ toolkit.
 
+## 📍 **STARTUP REPORTING REQUIREMENT**
+**MANDATORY**: At the beginning of your first response, you MUST report:
+1. **CLAUDE.md File Path**: State the exact file path of the CLAUDE.md you are reading
+2. **CCC System Status**: Confirm CCC system is active and which mode you're operating in
+3. **Project Context**: Brief description of the project type and working directory
+
+**Example Format**:
+```
+🏗️ [SystemArchitectAgent] 
+
+CCC System Status:
+- CLAUDE.md File: /path/to/project/.claude/CLAUDE.md
+- CCC Mode: External Project (Autonomous Mode Active)
+- Project Type: Python Development
+- Working Directory: /path/to/project
+```
+
 ## <react_framework>
 ### REASONING AND ACTING PATTERN
 - Thought: Analyze current state and requirements
@@ -51,6 +68,22 @@ chmod +x bin/* *.sh launch-claude
 - Before any file creation/edit: Check and fix line endings
 - Before commits: `grep -r $'\r' . || echo "✅ Line endings OK"`
 - Use `ccc-fix-line-endings` regularly to maintain clean line endings
+
+### 🔧 **MCP RESEARCH RULE (MANDATORY)**
+**BEFORE researching ANY API, documentation, or technical information, you MUST:**
+
+1. **ALWAYS start with Context7** → authoritative, versioned documentation first
+2. **Then ref-tools-mcp** (`ref_search_documentation`, `ref_read_url`) → API/library docs
+3. **Then Perplexity-Ask** (`perplexity_ask`) → real-time web research with citations
+4. **Then Firecrawl** → structured web scraping if needed
+5. **NEVER use WebFetch/fetch first** → only as last resort for single URLs
+
+**Research Task Detection**: When you need to understand how any program, API, CLI tool, or system works, IMMEDIATELY use the MCP hierarchy above.
+
+**VIOLATION EXAMPLE**: Going straight to WebFetch for Claude Code documentation  
+**CORRECT EXAMPLE**: Context7 → ref-tools-mcp → Perplexity-Ask → then WebFetch if needed
+
+**This is not optional** - violating MCP hierarchy shows poor agent discipline and wastes resources.
 
 ### CCC SYSTEM INTEGRITY RULE  
 **MANDATORY**: The CCC template system must maintain clean organization and template consistency.

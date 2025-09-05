@@ -261,11 +261,12 @@ launch_claude_with_analysis() {
     echo
     echo -e "${YELLOW}📋 What happens next:${NC}"
     echo "  1. Claude Code opens with bypass permissions enabled"
-    echo "  2. Navigate to your project directory in Claude"
+    echo "  2. Claude Code will automatically detect and load CCC system"
     echo "  3. CCC toolkit is ready with CLAUDE.md and all agents"
+    echo "  4. Claude will report which CLAUDE.md file it's using"
     
     if [ "$project_type" = "python" ]; then
-        echo "  4. CodebaseAnalyzerAgent will analyze your Python project"
+        echo "  5. CodebaseAnalyzerAgent will analyze your Python project"
         echo
         echo -e "${BOLD}🤖 Auto-Analysis Command for Claude:${NC}"
         echo -e "${GREEN}\"Use CodebaseAnalyzerAgent to analyze this Python codebase and provide insights about its structure, patterns, and opportunities for improvement.\"${NC}"
@@ -275,8 +276,26 @@ launch_claude_with_analysis() {
     echo -e "${BLUE}🎯 CCC Launch Message created at: /tmp/ccc_launch_message.md${NC}"
     echo
     
-    # Launch Claude with bypass permissions
-    exec claude --dangerously-skip-permissions "$@"
+    # Determine CLAUDE.md location for system prompt
+    local claude_md_path=""
+    local claude_md_prompt=""
+    
+    if [ -f "./.claude/CLAUDE.md" ]; then
+        claude_md_path="$(pwd)/.claude/CLAUDE.md"
+        claude_md_prompt="CCC System Active: Read and follow all instructions from CLAUDE.md file at ${claude_md_path}. You are operating with the full CCC toolkit including 25+ specialized agents, autonomous mode, and enhanced workflows. Report the CLAUDE.md file path you are using at startup."
+    elif [ -f "./CLAUDE.md" ]; then
+        claude_md_path="$(pwd)/CLAUDE.md"
+        claude_md_prompt="CCC System Active: Read and follow all instructions from CLAUDE.md file at ${claude_md_path}. You are operating with the full CCC toolkit including 25+ specialized agents, autonomous mode, and enhanced workflows. Report the CLAUDE.md file path you are using at startup."
+    else
+        claude_md_prompt="CCC System Detected: No CLAUDE.md found in current directory or .claude/ subdirectory. CCC toolkit files are available but system instructions may be missing."
+    fi
+    
+    # Launch Claude with CCC integration parameters
+    exec claude --dangerously-skip-permissions \
+                --append-system-prompt "$claude_md_prompt" \
+                --add-dir "./.claude" \
+                --permission-mode bypassPermissions \
+                "$@"
 }
 
 main() {
