@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CCC Workflow Format Specification</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 40px; line-height: 1.6; color: #222; background: #fff; }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { font-size: 2em; color: #2c3e50; }
+    h2 { font-size: 1.5em; color: #34495e; }
+    h3 { font-size: 1.2em; color: #34495e; }
+    pre, code { background: #2c3e50; color: #ecf0f1; padding: 8px 12px; border-radius: 4px; font-family: monospace; }
+    pre { padding: 16px; margin: 16px 0; overflow-x: auto; }
+    code { padding: 2px 4px; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .example-box { background: #f8f9fa; padding: 16px; border-left: 4px solid #007acc; margin: 16px 0; }
+    .warning-box { background: #fff3cd; border: 1px solid #ffeaa7; padding: 12px; border-radius: 4px; margin: 16px 0; }
+    ul { margin: 8px 0; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>CCC Workflow Format Specification</h1>
+  
+  <p>This document defines the markdown format for creating initial workflow drafts that will be processed by the CCC Workflow System.</p>
+  
+  <h2>Workflow Creation Process</h2>
+  
+  <ol>
+    <li><strong>Write Initial Draft</strong>: Create a markdown file describing your workflow goals in natural language</li>
+    <li><strong>Chat Interview</strong>: System will ask clarifying questions via chat interface</li>
+    <li><strong>System Generates Suggestions</strong>: Detailed workflow with agents, MCPs, and execution plan</li>
+    <li><strong>User Edits & Approves</strong>: Modify the suggested workflow as needed</li>
+    <li><strong>Technical Validation</strong>: System verifies feasibility and dependencies</li>
+    <li><strong>Execute Workflow</strong>: Run the approved workflow</li>
+  </ol>
+
+  <h2>Initial Draft Format</h2>
+  
+  <div class="example-box">
+    <h3>Basic Structure</h3>
+    <pre><code># [Workflow Name]
+
+## Goal
+Brief description of what you want to accomplish.
+
+## Context
+- What type of project/client is this for?
+- What data/files do you have available?
+- What kind of output do you need?
+
+## Requirements (Optional)
+- Specific constraints or preferences
+- Output format preferences
+- Time sensitivity
+
+## Expected Challenges (Optional)
+- Known limitations or concerns
+- Data quality issues
+- Integration requirements</code></pre>
+  </div>
+
+  <h2>Example Initial Drafts</h2>
+
+  <h3>SEO Audit Example</h3>
+  <div class="example-box">
+    <pre><code># SEO Technical Audit for Client
+
+## Goal
+I need to perform a comprehensive technical SEO audit for a client's e-commerce website.
+
+## Context
+- E-commerce site built on Shopify
+- I have access to Google Search Console data
+- Client wants to improve Core Web Vitals and organic rankings
+- Need professional report for client presentation
+
+## Requirements
+- Must include competitor analysis (I'll provide competitor list)
+- Need both technical recommendations and content gaps
+- Output should be professional HTML report + Excel data
+- Timeline: Complete within 2 hours
+
+## Expected Challenges
+- Site has 2000+ products, may be slow to crawl
+- GSC data might be incomplete for newer pages
+- Need to balance depth vs speed of analysis</code></pre>
+  </div>
+
+  <h3>Python Code Analysis Example</h3>
+  <div class="example-box">
+    <pre><code># Code Quality Assessment for Flask API
+
+## Goal
+Analyze a Python Flask API codebase for security, performance, and maintainability issues.
+
+## Context
+- Flask application with ~5000 lines of code
+- Uses SQLAlchemy, Redis, Celery
+- Production deployment needs security review
+- Team wants test coverage improvements
+
+## Requirements
+- Focus on security vulnerabilities first
+- Need specific test case recommendations
+- Want performance bottleneck identification
+- Must include dependency audit
+
+## Expected Challenges
+- Some legacy code without type hints
+- Mixed coding standards across modules
+- Large SQLAlchemy models may be complex to analyze</code></pre>
+  </div>
+
+  <h3>Data Correlation Analysis Example</h3>
+  <div class="example-box">
+    <pre><code># Customer Behavior Correlation Analysis
+
+## Goal
+Find unexpected correlations in customer data to identify conversion optimization opportunities.
+
+## Context
+- E-commerce customer data (purchase history, demographics, behavior)
+- 6 months of data, ~50k customers
+- Want to improve conversion rates and AOV
+- Multiple CSV files with different data points
+
+## Requirements
+- Statistical significance testing
+- Visual correlation matrices
+- Actionable insights prioritized by potential impact
+- Export findings to presentation-ready format
+
+## Expected Challenges
+- Data quality may vary between sources
+- Need to handle missing values appropriately
+- Some seasonal effects may confuse correlations</code></pre>
+  </div>
+
+  <h2>What Happens Next</h2>
+
+  <p>After you create your initial draft markdown file:</p>
+
+  <ol>
+    <li><strong>System Analysis</strong>: The workflow system will analyze your draft and identify:
+      <ul>
+        <li>Available agents that match your requirements</li>
+        <li>Relevant MCPs for data collection</li>
+        <li>Input file expectations</li>
+        <li>Potential workflow stages</li>
+      </ul>
+    </li>
+    
+    <li><strong>Interview Questions</strong>: Based on the analysis, you'll be asked clarifying questions such as:
+      <ul>
+        <li>"Which specific competitor URLs should be analyzed?"</li>
+        <li>"What's the acceptable processing time for this workflow?"</li>
+        <li>"Do you need real-time data or is cached data acceptable?"</li>
+        <li>"Which output format is most important: HTML report, Excel data, or JSON?"</li>
+      </ul>
+    </li>
+    
+    <li><strong>Generated Workflow</strong>: A detailed workflow specification including:
+      <ul>
+        <li>Specific agent assignments per stage</li>
+        <li>MCP selections with alternatives</li>
+        <li>Parallelization opportunities and warnings</li>
+        <li>Input file requirements</li>
+        <li>Expected output structure</li>
+        <li>Estimated execution time</li>
+      </ul>
+    </li>
+  </ol>
+
+  <div class="warning-box">
+    <strong>Important Notes:</strong><br>
+    • Keep initial drafts conversational and focused on business goals<br>
+    • Don't worry about technical implementation details in the draft<br>
+    • The more context you provide, the better the system can tailor recommendations<br>
+    • You'll have full control to edit the generated workflow before execution
+  </div>
+
+  <h2>File Storage Locations</h2>
+
+  <ul>
+    <li><strong>Initial Drafts</strong>: <code>/workflows/draft/[workflow-name].md</code></li>
+    <li><strong>Generated Suggestions</strong>: <code>/workflows/suggested/[workflow-name].md</code></li>
+    <li><strong>Approved Workflows</strong>: <code>/workflows/active/[workflow-name].md</code></li>
+    <li><strong>Completed Workflows</strong>: <code>/workflows/archive/[workflow-name].md</code> (optional)</li>
+  </ul>
+
+  <h2>Next Steps</h2>
+
+  <p>Ready to create your first workflow? Start by writing an initial draft using the format above, then use the CCC Workflow System to begin the interview process.</p>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>/test-mcps Command - CCC Documentation</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 15px; 
+      border-radius: 4px; 
+      font-family: monospace; 
+      font-size: 14px;
+      overflow-x: auto;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    .code-inline { 
+      background: #f8f9fa; 
+      color: #e74c3c; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+    }
+    .example {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .success {
+      background: #f1f8e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>🧪 /test-mcps Command</h1>
+
+  <div class="note">
+    <strong>📋 Quick Navigation:</strong> <a href="../index.html">← Main Documentation</a> | 
+    <a href="../workflow/index.html">Workflow System</a>
+  </div>
+
+  <h2>Overview</h2>
+  <p>The <code class="code-inline">/test-mcps</code> command performs comprehensive health checks on all available MCP (Model Context Protocol) servers and displays the results in a beautiful Rich CLI interface.</p>
+
+  <div class="success">
+    <strong>✅ Purpose:</strong> Quickly identify which MCPs are working and which need attention, providing actionable diagnostics for system maintenance.
+  </div>
+
+  <h2>Usage</h2>
+
+  <h3>🎯 Claude Code Slash Command (Recommended)</h3>
+  <pre>/test-mcps</pre>
+  <p>Type this directly in Claude Code chat interface - no parameters required.</p>
+
+  <h3>🖥️ Terminal Command (Alternative)</h3>
+  <pre># From CCC project root directory
+./bin/test-mcps
+
+# Or directly with Python
+python3 commands/test-mcps.py</pre>
+
+  <div class="success">
+    <strong>✅ Both methods:</strong> Automatically test all configured MCPs and display identical Rich CLI formatted results.
+  </div>
+
+  <h2>What It Tests</h2>
+
+  <p>The command tests all MCPs defined in our CLAUDE.md configuration:</p>
+
+  <div class="example">
+    <h4>🔍 Tested MCPs:</h4>
+    <ul>
+      <li><strong>sequential_thinking</strong> - Task planning and stepwise reasoning</li>
+      <li><strong>firecrawl</strong> - Web scraping and content extraction</li>
+      <li><strong>fetch</strong> - Simple URL content retrieval</li>
+      <li><strong>dataforseo</strong> - SEO data and SERP analysis</li>
+      <li><strong>chart-mcp</strong> - Data visualization and chart generation</li>
+      <li><strong>data-explorer</strong> - Data analysis and exploration</li>
+      <li><strong>Context7</strong> - Authoritative documentation injection</li>
+      <li><strong>ref-tools-mcp</strong> - API/library documentation lookup</li>
+      <li><strong>screenshot-website-fast</strong> - Website screenshot capture</li>
+      <li><strong>perplexity-ask</strong> - Real-time web research with citations</li>
+    </ul>
+  </div>
+
+  <h2>Output Format</h2>
+
+  <p>The command produces a rich, formatted output with:</p>
+
+  <h3>📊 Summary Panel</h3>
+  <pre>┌─ MCP Test Results Summary ─┐
+│ ✅ Working MCPs: 9          │
+│ ❌ Broken MCPs: 1           │
+│ 📊 Total Tested: 10         │
+│ 📈 Success Rate: 90.0%      │
+└─────────────────────────────┘</pre>
+
+  <h3>🟢 Working MCPs Table</h3>
+  <p>Shows all functional MCPs with their descriptions and status messages in a green-themed table.</p>
+
+  <h3>🔴 Broken MCPs Table</h3>
+  <p>Displays any non-functional MCPs with specific error messages in a red-themed table for easy identification.</p>
+
+  <h3>💡 Recommendations</h3>
+  <p>When MCPs fail, the command provides actionable next steps for troubleshooting.</p>
+
+  <h2>Example Output</h2>
+
+  <div class="example">
+    <h4>Typical successful run shows:</h4>
+    <pre>🧪 CCC MCP Testing Suite
+Testing all available MCPs for connectivity and functionality...
+
+┌────────── MCP Test Results Summary ──────────┐
+│ ✅ Working MCPs: 9                          │
+│ ❌ Broken MCPs: 1                           │
+│ 📊 Total Tested: 10                         │
+│ 📈 Success Rate: 90.0%                      │
+└──────────────────────────────────────────────┘
+
+🟢 Working MCPs          │  🔴 Broken MCPs
+sequential_thinking ✅   │  screenshot-website-fast ❌
+firecrawl ✅            │  (no browser available)
+fetch ✅               │
+... and more            │</pre>
+  </div>
+
+  <h2>Use Cases</h2>
+
+  <h3>🔧 System Diagnostics</h3>
+  <p>Run before starting major workflows to ensure all required MCPs are available:</p>
+  <pre># Check MCP health before SEO analysis
+/test-mcps
+
+# If all MCPs green, proceed with workflow
+/seo-audit site=example.com</pre>
+
+  <h3>🐛 Troubleshooting</h3>
+  <p>When workflows fail unexpectedly, use this command to identify MCP connectivity issues:</p>
+  <pre># Workflow failed? Check MCPs first
+/test-mcps
+
+# Look for red entries that might explain failures</pre>
+
+  <h3>🚀 Development & Deployment</h3>
+  <p>Verify MCP configuration in new environments:</p>
+  <pre># After setting up CCC system
+/test-mcps
+
+# Ensure all expected MCPs are working before going live</pre>
+
+  <h2>Exit Codes</h2>
+
+  <div class="note">
+    <strong>📋 Return Values:</strong>
+    <ul>
+      <li><strong>0</strong> - All MCPs working correctly</li>
+      <li><strong>1</strong> - One or more MCPs failed tests</li>
+      <li><strong>130</strong> - User interrupted test (Ctrl+C)</li>
+    </ul>
+  </div>
+
+  <h2>Common Issues & Solutions</h2>
+
+  <div class="warning">
+    <strong>🚨 Frequent Problems:</strong>
+    
+    <h4>Screenshot MCP Not Available</h4>
+    <p><strong>Cause:</strong> No browser installed (chromium, chrome, firefox)</p>
+    <p><strong>Solution:</strong> Install a browser or accept that screenshots won't work</p>
+
+    <h4>External API MCPs Failing</h4>
+    <p><strong>Cause:</strong> Missing API keys or network connectivity</p>
+    <p><strong>Solution:</strong> Check environment variables and internet connection</p>
+
+    <h4>Permission Errors</h4>
+    <p><strong>Cause:</strong> MCP servers can't access required resources</p>
+    <p><strong>Solution:</strong> Review file permissions and user privileges</p>
+  </div>
+
+  <h2>Technical Details</h2>
+
+  <h3>🏗️ Implementation</h3>
+  <ul>
+    <li><strong>Language:</strong> Python 3 with async/await</li>
+    <li><strong>Dependencies:</strong> Rich library for CLI formatting</li>
+    <li><strong>Location:</strong> <code class="code-inline">commands/test-mcps.py</code></li>
+    <li><strong>Wrapper:</strong> <code class="code-inline">bin/test-mcps</code></li>
+  </ul>
+
+  <h3>🧪 Test Methodology</h3>
+  <p>Each MCP is tested with lightweight, non-intrusive calls designed to verify basic connectivity without consuming resources or triggering rate limits.</p>
+
+  <h2>Integration with Workflows</h2>
+
+  <p>The <code class="code-inline">/test-mcps</code> command integrates seamlessly with the CCC workflow system:</p>
+
+  <pre># Include MCP health check in workflow validation
+workflow-system validate my-workflow --include-mcp-check
+
+# Or run standalone before critical operations
+/test-mcps && /seo-audit site=example.com</pre>
+
+  <div class="success">
+    <strong>💡 Pro Tip:</strong> Run <code class="code-inline">/test-mcps</code> as part of your daily workflow startup routine to catch MCP issues early and avoid workflow failures.
+  </div>
+
+  <h2>See Also</h2>
+  <ul>
+    <li><a href="../workflow/troubleshooting.html">Workflow Troubleshooting Guide</a></li>
+    <li><a href="../workflow/index.html">Complete Workflow System Documentation</a></li>
+    <li><a href="../index.html">Main CCC Documentation</a></li>
+  </ul>
+
+</body>
+</html>

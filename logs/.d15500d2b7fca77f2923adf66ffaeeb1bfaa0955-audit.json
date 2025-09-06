@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/loki/code/ccc/logs/.d15500d2b7fca77f2923adf66ffaeeb1bfaa0955-audit.json",
+    "files": [
+        {
+            "date": 1757120224722,
+            "name": "/home/loki/code/ccc/logs/mcp-puppeteer-2025-09-05.log",
+            "hash": "57cc41830374f665a189437bafe6dbfb3f24b8e711a4fa167fbcc000f08ae9ef"
+        }
+    ],
+    "hashType": "sha256"
+}

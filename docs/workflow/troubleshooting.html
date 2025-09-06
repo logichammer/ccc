@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Troubleshooting Guide - CCC Workflow System</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 15px; 
+      border-radius: 4px; 
+      font-family: monospace; 
+      font-size: 14px;
+      overflow-x: auto;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      max-width: 100%;
+    }
+    .code-inline { 
+      background: #f8f9fa; 
+      color: #e74c3c; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+    }
+    .error-card {
+      background: #fff5f5;
+      border-left: 4px solid #e74c3c;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .solution-card {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background: #f1f8e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .diagnostic-command {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      border-left: 4px solid #f39c12;
+      font-family: monospace;
+    }
+    .toc {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin-left: 20px; }
+    li { margin-bottom: 8px; }
+    .error-category {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .error-category h3 {
+      color: #e74c3c;
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔧 Troubleshooting Guide</h1>
+
+  <div class="note">
+    <strong>📖 Quick Navigation:</strong> <a href="index.html">← Main Guide</a> | 
+    <a href="execution-guide.html">← Execution Guide</a> | 
+    <a href="quick-start.html">Quick Start →</a>
+  </div>
+
+  <div class="toc">
+    <h3>🎯 Common Issues</h3>
+    <ul>
+      <li><a href="#file-issues">File Management Issues</a></li>
+      <li><a href="#config-issues">Configuration Problems</a></li>
+      <li><a href="#execution-issues">Execution Failures</a></li>
+      <li><a href="#agent-issues">Agent & MCP Problems</a></li>
+      <li><a href="#validation-issues">Validation Failures</a></li>
+      <li><a href="#performance-issues">Performance Problems</a></li>
+      <li><a href="#output-issues">Output & Report Issues</a></li>
+      <li><a href="#diagnostic-commands">Diagnostic Commands</a></li>
+    </ul>
+  </div>
+
+  <h2 id="file-issues">📁 File Management Issues</h2>
+
+  <div class="error-category">
+    <h3>❌ Multiple draft files found - please specify which one</h3>
+    <div class="error-card">
+      <strong>Error Message:</strong><br>
+      <code>❌ Multiple draft files found - please specify which one:<br>
+      • format-v3-technical-brief<br>
+      • format-v4-enhanced<br>
+      <br>
+      💡 Usage: workflow-system create &lt;workflow-name&gt;</code>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Use explicit workflow name:</strong>
+          <div class="diagnostic-command">workflow-system create format-v4-enhanced</div>
+        </li>
+        <li><strong>Keep only one draft file for auto-detection:</strong>
+          <div class="diagnostic-command">
+# Move extra files to backup<br>
+mkdir -p /tmp/draft-backup<br>
+mv workflows/draft/format-v3-technical-brief.md /tmp/draft-backup/<br>
+<br>
+# Now auto-detection will work<br>
+workflow-system create
+          </div>
+        </li>
+        <li><strong>Archive completed drafts:</strong>
+          <div class="diagnostic-command">
+# Move old drafts to archive for reference<br>
+mv workflows/draft/old-workflow.md workflows/archive/
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="error-category">
+    <h3>❌ No draft workflow files found</h3>
+    <div class="error-card">
+      <strong>Error Message:</strong><br>
+      <code>❌ No draft workflow files found in workflows/draft/<br>
+      💡 Create a draft workflow markdown file first</code>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Create a basic draft workflow:</strong>
+          <div class="diagnostic-command">
+cat > workflows/draft/my-workflow.md << 'EOF'<br>
+# My SEO Workflow<br>
+<br>
+## Goal<br>
+SEO analysis for {{SITE_URL}} targeting "{{MAIN_KEYWORD}}"<br>
+<br>
+## Process<br>
+- Site crawl and technical analysis<br>
+- Competitor research and benchmarking<br>
+- Performance optimization recommendations<br>
+EOF
+          </div>
+        </li>
+        <li><strong>Copy from an existing format:</strong>
+          <div class="diagnostic-command">cp workflows/suggested/completed-workflow.md workflows/draft/new-workflow.md</div>
+        </li>
+        <li><strong>Verify directory structure:</strong>
+          <div class="diagnostic-command">ls -la workflows/draft/</div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="config-issues">⚙️ Configuration Problems</h2>
+
+  <div class="error-category">
+    <h3>❌ Config file contains invalid JSON</h3>
+    <div class="error-card">
+      <strong>Symptoms:</strong>
+      <ul>
+        <li>Variables not substituted in workflow</li>
+        <li>"JSON decode error" messages</li>
+        <li>Config template generation fails</li>
+      </ul>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Validate JSON syntax:</strong>
+          <div class="diagnostic-command">
+# Check JSON validity<br>
+cat workflows/draft/inputs/workflow-config.json | python -m json.tool<br>
+<br>
+# If valid, pretty-prints the JSON<br>
+# If invalid, shows specific syntax error
+          </div>
+        </li>
+        <li><strong>Common JSON errors:</strong>
+          <ul>
+            <li>Missing commas between properties</li>
+            <li>Trailing commas after last property</li>
+            <li>Unescaped quotes in string values</li>
+            <li>Missing closing brackets or braces</li>
+          </ul>
+        </li>
+        <li><strong>Regenerate config template:</strong>
+          <div class="diagnostic-command">
+# Remove corrupted config<br>
+rm workflows/draft/inputs/workflow-config.json<br>
+<br>
+# Generate fresh template<br>
+workflow-system config-template
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="error-category">
+    <h3>❌ Variables not being substituted</h3>
+    <div class="error-card">
+      <strong>Symptoms:</strong>
+      <ul>
+        <li>{{SITE_URL}} appears literally in generated workflows</li>
+        <li>Interview asks for values already in config</li>
+        <li>Execution uses placeholder values</li>
+      </ul>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Verify config file location:</strong>
+          <div class="diagnostic-command">
+# Config must be in inputs directory<br>
+ls -la workflows/draft/inputs/workflow-config.json<br>
+<br>
+# Not in the draft directory root<br>
+ls -la workflows/draft/workflow-config.json  # ❌ Wrong location
+          </div>
+        </li>
+        <li><strong>Check variable format in markdown:</strong>
+          <div class="diagnostic-command">
+# Variables must use double braces<br>
+grep -n "{{.*}}" workflows/draft/my-workflow.md<br>
+<br>
+# Should show lines like:<br>
+# 4: SEO analysis for {{SITE_URL}} targeting "{{MAIN_KEYWORD}}"
+          </div>
+        </li>
+        <li><strong>Verify config variable names match:</strong>
+          <div class="diagnostic-command">
+# Extract variables from markdown<br>
+grep -o "{{[^}]*}}" workflows/draft/my-workflow.md | sort -u<br>
+<br>
+# Check they exist in config<br>
+cat workflows/draft/inputs/workflow-config.json | jq '.variables | keys[]'
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="execution-issues">⚡ Execution Failures</h2>
+
+  <div class="error-category">
+    <h3>❌ Workflow not found in active stage</h3>
+    <div class="error-card">
+      <strong>Error Message:</strong><br>
+      <code>❌ Workflow 'my-workflow' not found in active stage<br>
+      Available workflows: []</code>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Create workflow first:</strong>
+          <div class="diagnostic-command">
+# Must create workflow before executing<br>
+workflow-system create my-workflow<br>
+<br>
+# Then execute<br>
+workflow-system execute my-workflow
+          </div>
+        </li>
+        <li><strong>Check workflow stages:</strong>
+          <div class="diagnostic-command">
+# List workflows in all stages<br>
+workflow-system list<br>
+<br>
+# Look for workflow in suggested stage<br>
+ls workflows/suggested/
+          </div>
+        </li>
+        <li><strong>Move workflow to active stage manually:</strong>
+          <div class="diagnostic-command">mv workflows/suggested/my-workflow.md workflows/active/</div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="error-category">
+    <h3>❌ Interview process interrupted</h3>
+    <div class="error-card">
+      <strong>Error Message:</strong><br>
+      <code>Error creating workflow: EOF when reading a line</code>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Use interactive terminal:</strong>
+          <div class="diagnostic-command">
+# Ensure you're in an interactive shell<br>
+echo $-  # Should include 'i' for interactive<br>
+<br>
+# Run in proper terminal, not script<br>
+workflow-system create  # In interactive bash/zsh
+          </div>
+        </li>
+        <li><strong>Pre-populate config to skip interview:</strong>
+          <div class="diagnostic-command">
+# Generate and fill config template<br>
+workflow-system config-template<br>
+<br>
+# Edit with real values<br>
+nano workflows/draft/inputs/workflow-config.json<br>
+<br>
+# Try creation again<br>
+workflow-system create
+          </div>
+        </li>
+        <li><strong>Use explicit workflow name:</strong>
+          <div class="diagnostic-command">workflow-system create my-specific-workflow</div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="agent-issues">🤖 Agent & MCP Problems</h2>
+
+  <div class="error-category">
+    <h3>❌ Required agents not available</h3>
+    <div class="error-card">
+      <strong>Symptoms:</strong>
+      <ul>
+        <li>Validation fails with agent availability errors</li>
+        <li>Execution stops with "agent not found" errors</li>
+        <li>Low success probability in validation</li>
+      </ul>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Check system status:</strong>
+          <div class="diagnostic-command">
+workflow-system status<br>
+<br>
+# Look for:<br>
+# • Available agents: 23<br>
+# • Available MCPs: 10
+          </div>
+        </li>
+        <li><strong>Update agent specifications in workflow:</strong>
+          <div class="diagnostic-command">
+# Edit suggested workflow to use available agents<br>
+nano workflows/suggested/my-workflow.md<br>
+<br>
+# Replace unavailable agents with alternatives
+          </div>
+        </li>
+        <li><strong>Use fallback agents:</strong>
+          <ul>
+            <li>TechnicalSEOAgent → SystemArchitectAgent</li>
+            <li>BenchmarkResearchAgent → CodebaseAnalyzerAgent</li>
+            <li>SpecializedAgent → FeatureDeveloperAgent</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="error-category">
+    <h3>❌ MCP server connectivity issues</h3>
+    <div class="error-card">
+      <strong>Symptoms:</strong>
+      <ul>
+        <li>Execution fails during data collection stages</li>
+        <li>"MCP server timeout" errors</li>
+        <li>Partial results with missing data</li>
+      </ul>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Test MCP connectivity:</strong>
+          <div class="diagnostic-command">
+# Check basic connectivity<br>
+curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health<br>
+<br>
+# Should return 200 for healthy MCP server
+          </div>
+        </li>
+        <li><strong>Use fallback MCPs:</strong>
+          <ul>
+            <li>firecrawl unavailable → use fetch</li>
+            <li>dataforseo unavailable → use perplexity-ask</li>
+            <li>chart-mcp unavailable → use data-explorer</li>
+          </ul>
+        </li>
+        <li><strong>Run with reduced functionality:</strong>
+          <div class="diagnostic-command">
+# Execute with mock data only<br>
+workflow-system execute my-workflow --dry-run<br>
+<br>
+# Or modify workflow to remove MCP dependencies
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="validation-issues">✅ Validation Failures</h2>
+
+  <div class="error-category">
+    <h3>❌ Low success probability</h3>
+    <div class="error-card">
+      <strong>Validation Output:</strong><br>
+      <code>🎯 Success Probability: 67%<br>
+      ⚠️ Below recommended threshold of 80%</code>
+    </div>
+    
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Run detailed validation:</strong>
+          <div class="diagnostic-command">workflow-system validate my-workflow --verbose</div>
+        </li>
+        <li><strong>Address specific issues:</strong>
+          <ul>
+            <li>Missing required agents → update workflow specifications</li>
+            <li>Unrealistic timeline → adjust execution estimates</li>
+            <li>Resource constraints → simplify workflow requirements</li>
+            <li>Complex dependencies → restructure stage dependencies</li>
+          </ul>
+        </li>
+        <li><strong>Simplify workflow:</strong>
+          <div class="diagnostic-command">
+# Reduce scope temporarily<br>
+# - Fewer competitors to analyze<br>
+# - Basic instead of comprehensive analysis<br>
+# - Fewer output formats required
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="performance-issues">⚡ Performance Problems</h2>
+
+  <div class="error-category">
+    <h3>❌ Execution taking too long</h3>
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Monitor execution progress:</strong>
+          <div class="diagnostic-command">
+# Run with verbose logging<br>
+workflow-system execute my-workflow --verbose<br>
+<br>
+# Check execution logs<br>
+tail -f /home/loki/seo-projects/*/reports/*/execution-log.txt
+          </div>
+        </li>
+        <li><strong>Optimize workflow parameters:</strong>
+          <ul>
+            <li>Reduce crawl budget (500 → 100 pages)</li>
+            <li>Limit competitor analysis (10 → 5 competitors)</li>
+            <li>Use "quick" instead of "comprehensive" mode</li>
+            <li>Skip optional analysis stages</li>
+          </ul>
+        </li>
+        <li><strong>Check system resources:</strong>
+          <div class="diagnostic-command">
+# Monitor system usage<br>
+top -p $(pgrep -f workflow-system)<br>
+<br>
+# Check disk space<br>
+df -h
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="output-issues">📊 Output & Report Issues</h2>
+
+  <div class="error-category">
+    <h3>❌ Reports not generated</h3>
+    <div class="solution-card">
+      <strong>🔧 Solutions:</strong>
+      <ol>
+        <li><strong>Check output directory permissions:</strong>
+          <div class="diagnostic-command">
+# Ensure write permissions<br>
+ls -la reports/<br>
+chmod 755 reports/<br>
+mkdir -p /home/loki/seo-projects/test/reports/
+          </div>
+        </li>
+        <li><strong>Verify execution completion:</strong>
+          <div class="diagnostic-command">
+# Check execution log for errors<br>
+cat /home/loki/seo-projects/*/reports/*/execution-log.txt | grep -i error<br>
+<br>
+# Look for incomplete stages<br>
+grep -i "stage.*failed" /home/loki/seo-projects/*/reports/*/execution-log.txt
+          </div>
+        </li>
+        <li><strong>Run with dry-run first:</strong>
+          <div class="diagnostic-command">workflow-system execute my-workflow --dry-run --verbose</div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <h2 id="diagnostic-commands">🔍 Diagnostic Commands</h2>
+
+  <div class="success">
+    <strong>🛠️ Essential Debug Commands:</strong>
+  </div>
+
+  <h3>System Status</h3>
+  <div class="diagnostic-command">
+# Complete system overview<br>
+workflow-system status --verbose<br>
+<br>
+# Check workflow counts by stage<br>
+workflow-system list<br>
+<br>
+# Verify directory structure<br>
+find workflows/ -type f -name "*.md" | head -10
+  </div>
+
+  <h3>Validation Diagnostics</h3>
+  <div class="diagnostic-command">
+# Detailed validation with specific errors<br>
+workflow-system validate my-workflow --verbose<br>
+<br>
+# Check agent availability<br>
+ls agents/*.json | wc -l  # Should be 23+<br>
+<br>
+# Test MCP connectivity<br>
+echo "Testing basic connectivity..." && curl -s localhost:3000/health || echo "MCP unreachable"
+  </div>
+
+  <h3>Configuration Diagnostics</h3>
+  <div class="diagnostic-command">
+# Check config file syntax<br>
+cat workflows/draft/inputs/workflow-config.json | python -m json.tool<br>
+<br>
+# Verify variable extraction<br>
+grep -o "{{[^}]*}}" workflows/draft/*.md | sort -u<br>
+<br>
+# Compare variables in config vs markdown<br>
+echo "Variables in markdown:"<br>
+grep -ho "{{[^}]*}}" workflows/draft/*.md | sed 's/[{}]//g' | sort -u<br>
+echo "Variables in config:"<br>
+cat workflows/draft/inputs/workflow-config.json | jq -r '.variables | keys[]' 2>/dev/null | sort
+  </div>
+
+  <h3>Execution Diagnostics</h3>
+  <div class="diagnostic-command">
+# Preview execution without running<br>
+workflow-system execute my-workflow --dry-run --verbose<br>
+<br>
+# Check recent execution logs<br>
+find reports/ -name "execution-log.txt" -newer $(date -d '1 hour ago' +%Y%m%d%H%M) -exec tail -20 {} \;<br>
+<br>
+# Monitor active execution<br>
+watch -n 5 'ls -la /home/loki/seo-projects/*/reports/* | tail -5'
+  </div>
+
+  <h3>File System Diagnostics</h3>
+  <div class="diagnostic-command">
+# Check permissions<br>
+ls -la workflows/<br>
+ls -la workflows/draft/<br>
+ls -la reports/<br>
+<br>
+# Verify file existence<br>
+echo "Draft workflows:"<br>
+ls workflows/draft/*.md 2>/dev/null || echo "No draft files found"<br>
+<br>
+echo "Config files:"<br>
+ls workflows/draft/inputs/*.json 2>/dev/null || echo "No config files found"<br>
+<br>
+# Check disk space<br>
+df -h . | tail -1
+  </div>
+
+  <div class="warning">
+    <strong>⚠️ Emergency Recovery:</strong>
+    <div class="diagnostic-command">
+# If system is completely broken:<br>
+<br>
+# 1. Check basic functionality<br>
+workflow-system status<br>
+<br>
+# 2. Clean up any partial executions<br>
+pkill -f workflow-system<br>
+<br>
+# 3. Reset to clean state<br>
+mkdir -p workflows/{draft,suggested,active,archive}<br>
+<br>
+# 4. Test with minimal workflow<br>
+echo "# Test Workflow" > workflows/draft/test.md<br>
+workflow-system config-template<br>
+<br>
+# 5. If still failing, check system installation<br>
+which python3<br>
+python3 --version<br>
+pip list | grep -E "(yaml|json)"
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>📞 Getting Additional Help:</strong>
+    <ul>
+      <li><strong>Verbose Mode:</strong> Always use <code class="code-inline">--verbose</code> when troubleshooting</li>
+      <li><strong>Log Files:</strong> Check execution logs in <code class="code-inline">/home/loki/seo-projects/*/reports/*/execution-log.txt</code></li>
+      <li><strong>Incremental Testing:</strong> Use <code class="code-inline">--dry-run</code> to test without side effects</li>
+      <li><strong>System Status:</strong> <code class="code-inline">workflow-system status</code> provides comprehensive system overview</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <strong>📖 Next Steps:</strong>
+    <ul>
+      <li><a href="quick-start.html">Quick Start Guide →</a> - Start fresh with working examples</li>
+      <li><a href="cli-reference.html">← CLI Reference</a> - Detailed command documentation</li>
+      <li><a href="index.html">← Main Guide</a> - Complete system overview</li>
+    </ul>
+  </div>
+
+</body>
+</html>

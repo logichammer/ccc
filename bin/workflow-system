@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""
+CCC Workflow Definition & Execution System (WDES)
+Main entry point for workflow creation, validation, and execution.
+"""
+
+import sys
+import argparse
+import os
+from pathlib import Path
+
+# Add the lib directory to the Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
+
+from workflow_core import WorkflowSystem
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='CCC Workflow Definition & Execution System',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  workflow-system create                     # Create workflow from single draft file
+  workflow-system validate my-workflow       # Validate technical feasibility  
+  workflow-system execute my-workflow        # Run approved workflow
+  workflow-system config-template           # Generate JSON config for single draft
+  workflow-system list                       # List available workflows
+  workflow-system archive my-workflow        # Archive completed workflow
+        """
+    )
+    
+    parser.add_argument('command', 
+                       choices=['create', 'validate', 'execute', 'list', 'archive', 'status', 'config-template'],
+                       help='Action to perform')
+    parser.add_argument('workflow_name', nargs='?',
+                       help='Name of workflow file (without extension)')
+    parser.add_argument('--config', '-c', 
+                       help='Override default configuration file')
+    parser.add_argument('--client', 
+                       help='Client slug for client-specific settings')
+    parser.add_argument('--dry-run', action='store_true',
+                       help='Show what would be done without executing')
+    parser.add_argument('--verbose', '-v', action='store_true',
+                       help='Enable verbose output')
+    
+    args = parser.parse_args()
+    
+    # Initialize the workflow system
+    try:
+        workflow_system = WorkflowSystem(
+            config_file=args.config,
+            client_slug=args.client,
+            verbose=args.verbose
+        )
+        
+        # Execute the requested command
+        if args.command == 'create':
+            if args.workflow_name:
+                # Explicit workflow name provided
+                workflow_system.create_workflow(args.workflow_name)
+            else:
+                # Auto-detect single draft file
+                draft_files = list(workflow_system.workflows_dir.glob("draft/*.md"))
+                if len(draft_files) == 0:
+                    print("❌ No draft workflow files found in workflows/draft/")
+                    print("💡 Create a draft workflow markdown file first")
+                    sys.exit(1)
+                elif len(draft_files) == 1:
+                    workflow_name = draft_files[0].stem
+                    print(f"🎯 Auto-detected draft workflow: {workflow_name}")
+                    workflow_system.create_workflow(workflow_name)
+                else:
+                    print(f"❌ Multiple draft files found - please specify which one:")
+                    for draft_file in draft_files:
+                        print(f"  • {draft_file.stem}")
+                    print(f"\n💡 Usage: workflow-system create <workflow-name>")
+                    sys.exit(1)
+            
+        elif args.command == 'validate':
+            if not args.workflow_name:
+                print("Error: workflow_name required for validate command")
+                sys.exit(1)
+            workflow_system.validate_workflow(args.workflow_name)
+            
+        elif args.command == 'execute':
+            if not args.workflow_name:
+                print("Error: workflow_name required for execute command")
+                sys.exit(1)
+            workflow_system.execute_workflow(args.workflow_name, dry_run=args.dry_run)
+            
+        elif args.command == 'list':
+            workflow_system.list_workflows()
+            
+        elif args.command == 'archive':
+            if not args.workflow_name:
+                print("Error: workflow_name required for archive command")
+                sys.exit(1)
+            workflow_system.archive_workflow(args.workflow_name)
+            
+        elif args.command == 'status':
+            workflow_system.show_status()
+            
+        elif args.command == 'config-template':
+            if args.workflow_name:
+                # Explicit workflow name provided
+                workflow_system.generate_config_template(args.workflow_name)
+            else:
+                # Auto-detect single draft file
+                draft_files = list(workflow_system.workflows_dir.glob("draft/*.md"))
+                if len(draft_files) == 0:
+                    print("❌ No draft workflow files found in workflows/draft/")
+                    print("💡 Create a draft workflow markdown file first")
+                    sys.exit(1)
+                elif len(draft_files) == 1:
+                    workflow_name = draft_files[0].stem
+                    print(f"🎯 Auto-detected draft workflow: {workflow_name}")
+                    workflow_system.generate_config_template(workflow_name)
+                else:
+                    print(f"❌ Multiple draft files found - please specify which one:")
+                    for draft_file in draft_files:
+                        print(f"  • {draft_file.stem}")
+                    print(f"\n💡 Usage: workflow-system config-template <workflow-name>")
+                    sys.exit(1)
+            
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()

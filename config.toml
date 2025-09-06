@@ -32,9 +32,6 @@ wordpress = "WordPressBuilderAgent"
 
 [commands] 
 directory = "./commands"
-discovery_method = "tags"
-organization = "by_type"
-deduplication = true
 
 [external_projects]
 temp_directory = ".claude"

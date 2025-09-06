@@ -10,40 +10,6 @@ Default mode: Plan → Execute → Verify → Iterate until complete.
 ## Your Role
 You are working with the **Claude Code Templates (CCC) System** - a simplified, KISS-based template system for Python, SEO, and WordPress projects. This system creates new projects and enhances existing ones with a portable .claude/ toolkit.
 
-## 📍 **STARTUP REPORTING REQUIREMENT**
-**MANDATORY**: At the beginning of your first response, you MUST report:
-1. **CLAUDE.md File Path**: State the exact file path of the CLAUDE.md you are reading
-2. **CCC System Status**: Confirm CCC system is active and which mode you're operating in
-3. **Project Context**: Brief description of the project type and working directory
-
-**Example Format**:
-```
-🏗️ [SystemArchitectAgent] 
-
-CCC System Status:
-- CLAUDE.md File: /path/to/project/.claude/CLAUDE.md
-- CCC Mode: External Project (Autonomous Mode Active)
-- Project Type: Python Development
-- Working Directory: /path/to/project
-```
-
-## 📍 **STARTUP REPORTING REQUIREMENT**
-**MANDATORY**: At the beginning of your first response, you MUST report:
-1. **CLAUDE.md File Path**: State the exact file path of the CLAUDE.md you are reading
-2. **CCC System Status**: Confirm CCC system is active and which mode you're operating in
-3. **Project Context**: Brief description of the project type and working directory
-
-**Example Format**:
-```
-🏗️ [SystemArchitectAgent] 
-
-CCC System Status:
-- CLAUDE.md File: /path/to/project/.claude/CLAUDE.md
-- CCC Mode: External Project (Autonomous Mode Active)
-- Project Type: Python Development
-- Working Directory: /path/to/project
-```
-
 ## <react_framework>
 ### REASONING AND ACTING PATTERN
 - Thought: Analyze current state and requirements
@@ -62,20 +28,8 @@ CCC System Status:
 ### 🚨 LINE ENDINGS RULE (TOP PRIORITY)
 **MANDATORY**: ALL files MUST use Unix line endings (`\n` only, NO `\r\n`)
 
-**Why Linux line endings matter:**
-- Windows uses `\r\n` (CRLF) while Linux/Unix uses `\n` (LF) only
-- Wrong line endings cause script execution failures and Git issues
-- CCC system is designed for Linux-compatible line endings throughout
-
-**Quick fixes:**
+**Emergency fix if scripts fail:**
 ```bash
-# Use the CCC line endings fixer (recommended)
-ccc-fix-line-endings
-
-# Or use dos2unix if available
-dos2unix filename
-
-# Emergency fix if scripts fail
 find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.md" -o -name "*.txt" -o -name "*.toml" \) -exec sed -i 's/\r$//' {} \;
 chmod +x bin/* *.sh launch-claude
 ```
@@ -84,52 +38,6 @@ chmod +x bin/* *.sh launch-claude
 - Configure Git: `git config core.autocrlf false && git config core.eol lf`
 - Before any file creation/edit: Check and fix line endings
 - Before commits: `grep -r $'\r' . || echo "✅ Line endings OK"`
-- Use `ccc-fix-line-endings` regularly to maintain clean line endings
-
-### 🔧 **MCP RESEARCH RULE (MANDATORY)**
-**BEFORE researching ANY API, documentation, or technical information, you MUST:**
-
-1. **ALWAYS start with Context7** → authoritative, versioned documentation first
-2. **Then ref-tools-mcp** (`ref_search_documentation`, `ref_read_url`) → API/library docs
-3. **Then Perplexity-Ask** (`perplexity_ask`) → real-time web research with citations
-4. **Then Firecrawl** → structured web scraping if needed
-5. **NEVER use WebFetch/fetch first** → only as last resort for single URLs
-
-**Research Task Detection**: When you need to understand how any program, API, CLI tool, or system works, IMMEDIATELY use the MCP hierarchy above.
-
-**VIOLATION EXAMPLE**: Going straight to WebFetch for Claude Code documentation  
-**CORRECT EXAMPLE**: Context7 → ref-tools-mcp → Perplexity-Ask → then WebFetch if needed
-
-**This is not optional** - violating MCP hierarchy shows poor agent discipline and wastes resources.
-
-### MANDATORY FILE CREATION CHECK RULE
-**CRITICAL**: Before creating ANY file, Claude MUST perform this verification sequence:
-
-**BEFORE FILE CREATION, ASK:**
-1. **Is this documentation?** → Should this be in `/docs/` directory?
-2. **File extension check** → Should this have `.html` extension instead of `.md`?
-3. **Documentation standards** → If creating `.md`, STOP and convert to HTML format
-4. **Location verification** → Is this the correct directory for this file type?
-5. **Existing file check** → Does a similar file already exist that should be edited instead?
-
-**MANDATORY QUESTIONS:**
-- "Is this a documentation file?" → YES = `/docs/` + `.html`
-- "Is this a command definition?" → YES = `/commands/category/` + `.md`
-- "Is this a configuration file?" → YES = verify correct config directory
-- "Am I about to create a duplicate?" → YES = edit existing instead
-
-**ENFORCEMENT EXAMPLES:**
-- ❌ Creating `README.md` → ✅ Create `/docs/readme.html`
-- ❌ Creating `/some-guide.md` → ✅ Create `/docs/some-guide.html`
-- ❌ Creating duplicate files → ✅ Edit existing file
-- ❌ Creating in wrong directory → ✅ Place in correct location
-
-**VIOLATION CONSEQUENCES:**
-- Creating files in wrong locations wastes time and creates cleanup work
-- Creating .md files when HTML is required violates documentation standards
-- Duplicate file creation fragments information and causes confusion
-
-**This check is MANDATORY before every Write, MultiEdit, or file creation operation.**
 
 ### CCC SYSTEM INTEGRITY RULE  
 **MANDATORY**: The CCC template system must maintain clean organization and template consistency.
@@ -158,30 +66,25 @@ chmod +x bin/* *.sh launch-claude
 
 **Enforcement**: Before modifying templates, verify changes apply to all project types. Test external project workflows remain functional.
 
-### DEVELOPMENT MILESTONE COMMIT RULE
-**MANDATORY**: Create git commits at logical development milestones to preserve work and maintain clear history.
+### POST-PRD COMPLETION RULE
+**MANDATORY**: After completing any major PRD implementation, create a git commit to preserve the work.
 
 **When to commit:**
-- **Major feature implemented AND tested** - Complete functional addition with verification
-- **Significant optimization added AND verified** - Performance/efficiency improvements confirmed working  
-- **Critical bug fixed AND validated** - Important issues resolved with testing confirmation
-- **Logical development milestone reached** - Natural stopping points in development workflow
-- **Complete PRD phase finished** - When working through structured PRD implementation
-- **Major refactoring/cleanup completed** - Structural improvements with full system verification
+- After completing all phases of a PRD-driven development workflow
+- When a major feature/refactoring/cleanup project is finished
+- After successful final verification shows all systems working
 
 **Commit requirements:**
 - Run complete test suite first to ensure nothing is broken
-- Use descriptive commit message that summarizes the development milestone
-- Include relevant identifiers (PRD, feature name, bug ID) when applicable
+- Use descriptive commit message that summarizes the PRD outcome
+- Include the PRD identifier or project name in the commit message
 - Add co-authored-by Claude attribution
-- Format: `feat/fix/refactor: [milestone summary] 🤖 Generated with Claude Code`
+- Format: `feat/fix/refactor: [PRD outcome summary] 🤖 Generated with Claude Code`
 
 **Example commit messages:**
-- `feat: implement MCP testing command with Rich CLI formatting 🤖 Generated with Claude Code`
-- `fix: resolve CSS text clipping in HTML documentation 🤖 Generated with Claude Code`
 - `refactor: complete root directory cleanup and file consolidation 🤖 Generated with Claude Code`
-- `perf: optimize workflow execution with parallel processing 🤖 Generated with Claude Code`
-- `docs: add comprehensive slash command placement documentation 🤖 Generated with Claude Code`
+- `feat: implement agent-driven development system with PRD workflow 🤖 Generated with Claude Code`
+- `fix: resolve configuration file organization and temp directory setup 🤖 Generated with Claude Code`
 
 **Enforcement**: This rule ensures project milestones are preserved and provides clear development history.
 
@@ -226,35 +129,7 @@ CRITICAL: When creating HTML documentation with code blocks:
 - **NEVER use low contrast combinations** like `#1e1e1e` background with `#d4d4d4` text (too washed out)
 - **Test readability** - commands must be clearly visible and easy to read
 - **Follow workflows-guide.html pattern** - `.command-example` class provides excellent contrast reference
-- This applies to ALL HTML documentation including `.code-block`, `<pre><code>`, and command examples
-
-### HTML CODE BLOCK OVERFLOW RULE
-CRITICAL: When creating HTML documentation with code blocks to prevent text clipping:
-
-- **REQUIRED OVERFLOW PROPERTIES**: All code blocks MUST include these properties to prevent clipping:
-  - `overflow-x: auto;` - Enables horizontal scrolling when needed
-  - `word-wrap: break-word;` - Breaks long words that would overflow
-  - `max-width: 100%;` - Prevents container overflow
-
-- **WORKING CSS TEMPLATE**: Use this exact CSS from working examples:
-  ```css
-  pre, code { 
-    background: #2c3e50; 
-    color: #ecf0f1; 
-    padding: 15px; 
-    border-radius: 4px; 
-    font-family: monospace; 
-    font-size: 14px;
-    overflow-x: auto;
-    word-wrap: break-word;
-    max-width: 100%;
-  }
-  ```
-
-- **DO NOT USE `white-space: pre-wrap;` unless specifically needed** - it causes excessive vertical spacing
-- **USE WORKING EXAMPLES**: Copy CSS from `/docs/workflow/` files that display correctly
-- **TEST ON REAL CONTENT**: Verify no text clipping and reasonable spacing
-- **NEVER BREAK WORKING EXAMPLES**: If a file already works correctly, don't modify it
+- This applies to ALL HTML documentation including `.code-block`, `<pre><code>`, and command examples  
 
 #### Example (Correct):
 ```
@@ -323,8 +198,8 @@ Always start and finish with the agent indicator:
 ### AGENT SELECTION CRITERIA & TRIGGERS
 
 **🏗️ SystemArchitectAgent (DEFAULT)**
-- Triggers: system design, architecture validation, performance optimization, technical debt analysis, troubleshooting, debugging system issues
-- Keywords: architecture, design, system, performance, scalability, technical debt, troubleshooting, debug, fix, diagnose, solve
+- Triggers: system design, architecture validation, performance optimization, technical debt analysis
+- Keywords: architecture, design, system, performance, scalability, technical debt
 
 **⚡ FeatureDeveloperAgent**
 - Triggers: implementing features, writing code, building functionality
@@ -435,12 +310,10 @@ Handoff Examples:
 - Research → Architecture
 
 Persistence Rules:
-- **DEFAULT ENFORCEMENT**: Always start as 🏗️ SystemArchitectAgent unless explicit keywords trigger a specialized agent
 - Stay in specialized agent for related subtasks
-- Return to 🏗️ when context changes or task scope expands
-- Chain agents for multi-step workflows
+- Return to 🏗️ when context changes
+- Chain agents for multi-step
 - Honor user override always
-- **When in doubt, stay as 🏗️ SystemArchitectAgent**
 
 Visual Indicators:
 🏗️ | ⚡ | 🔍 | 💻 | 📈 | 🔄 | ✅ | 🎨 | 🖼️ | 🎯 | 🔑 | 📊 | 🧪 | 📱 | 🔒 | 🔧 | 🎭 | 🔧 | 🎨
@@ -461,7 +334,7 @@ Visual Indicators:
 - `/code-review` - Comprehensive code review with recommendations
 - `/dependency-audit` - Security and update analysis of dependencies
 - `/performance-baseline` - Establish performance benchmarks
-- `/auto-doc-gen` - Auto-generate project documentation
+- `/documentation-gen` - Auto-generate project documentation
 
 #### **Python Commands** 
 - `/test-suite-gen` - Generate comprehensive test suites
@@ -509,50 +382,6 @@ claude-work . --type python           # Force specific type
 claude-work . --cleanup               # Remove .claude/ when done (MANUAL ONLY)
 ```
 
-## 🔄 **WORKFLOW ORCHESTRATION SYSTEM**
-
-### **Workflow Engine Integration**
-The CCC system now includes a powerful workflow orchestration engine that automates multi-agent task coordination:
-
-**Core Components:**
-- `/bin/workflow_engine.py` - Main orchestration engine
-- `/bin/lib/workflow_runner.py` - Execution runtime with agent coordination
-- `/templates/config/workflow_config.json` - Global workflow definitions
-
-**Template-Specific Workflows:**
-Each template type includes predefined workflows:
-- **SEO**: `full_seo_audit`, `keyword_opportunity_analysis`, `technical_optimization`
-- **WordPress**: `wordpress_setup`, `theme_development`, `plugin_development`, `site_maintenance`
-- **Python**: `new_project_setup`, `code_quality_check`, `web_app_setup`, `cli_app_setup`, `data_science_setup`
-
-### **Workflow Execution Syntax**
-```bash
-# Execute predefined workflow
-ccc-workflow [template] [workflow_name] [context]
-
-# Examples:
-ccc-workflow seo full_seo_audit --site="example.com" --competitors=3
-ccc-workflow python code_quality_check --fix-issues=true
-ccc-workflow wordpress theme_development --theme="custom-theme"
-```
-
-### **Agent Workflow Coordination**
-Workflows automatically coordinate multiple agents:
-```
-🔄 WORKFLOW: full_seo_audit
-├── 🔧 TechnicalSEOAgent → technical_analysis
-├── 🔑 KeywordStrategyAgent → keyword_research  
-├── ⚡ PerformanceProfilerAgent → performance_audit
-└── 📊 MetricsReporterAgent → generate_report
-```
-
-### **TodoWrite Integration**
-Workflows integrate seamlessly with existing TodoWrite system:
-- Each workflow step becomes a trackable todo item
-- Real-time progress updates during execution
-- Automatic status transitions (pending → in_progress → completed)
-- Error handling preserves todo state for retry
-
 ### **CCC-Launch Integration Workflow**
 ```bash
 # 1. Navigate to your project
@@ -578,83 +407,6 @@ Each project type has optimized workflows:
 - **SEO**: Research workflows, multi-client data management
 - **WordPress**: Theme development, Elementor integration, WP-specific security
 
-### **📚 Auto-Documentation Protocol**
-
-**MANDATORY**: Generate comprehensive HTML documentation for external projects documenting what the project currently does (as-is state).
-
-#### **Milestone-Based Documentation Triggers:**
-1. **After CodebaseAnalyzerAgent** completes comprehensive project analysis
-2. **After FeatureDeveloperAgent** finishes implementing significant improvements
-3. **After QualityTesterAgent + SecurityAuditorAgent** complete validation cycle
-4. **Before DeliveryVerifierAgent** runs final project completion checks
-5. **Manual trigger**: When user runs `/auto-doc-gen` indicating project is ready
-
-#### **Auto-Documentation Workflow:**
-```bash
-# Standard sequence for external project documentation:
-1. CodebaseAnalyzerAgent analyzes project structure and functionality
-2. When analysis complete → automatically trigger /auto-doc-gen
-3. Generate comprehensive HTML documentation in docs/ subdirectory
-4. Use minimalist HTML template matching CCC documentation standards
-5. Document the entire project (what it currently does, not improvements)
-```
-
-#### **Detection Logic for Automatic Triggers:**
-- **CodebaseAnalyzer completion**: Agent provides "Analysis Complete" status
-- **Feature completion**: Significant code changes + passing tests detected
-- **Quality validation**: Testing and security scans show project is stable
-- **User milestone**: User explicitly runs `/auto-doc-gen` command
-
-#### **Documentation Requirements by Project Type:**
-
-**Python Projects:**
-- **Framework Detection**: Flask, Django, FastAPI, Streamlit identification
-- **Dependency Analysis**: Parse requirements.txt, pyproject.toml, setup.py
-- **API Documentation**: Extract docstrings from functions and classes  
-- **Usage Examples**: Generate code samples from main.py, app.py patterns
-- **Development Setup**: Virtual environment, testing, linting instructions
-- **Entry Points**: Document main application files and startup procedures
-
-**SEO Projects:**
-- **Research Methodology**: Document data sources and analysis approach
-- **Target Keywords**: List primary and secondary keyword targets
-- **Competitive Analysis**: Summarize competitor findings and opportunities
-- **Content Strategy**: Document content calendar and optimization plans
-- **Technical Recommendations**: Site speed, crawling, and indexing improvements
-- **Reporting Structure**: KPI tracking and measurement frameworks
-
-**WordPress Projects:**
-- **Theme/Plugin Overview**: Document customization capabilities
-- **Installation Guide**: WordPress-specific setup and configuration
-- **Custom Features**: Document hooks, filters, and custom post types
-- **Template Hierarchy**: Explain theme structure and file organization
-- **Security Considerations**: WordPress-specific security best practices
-- **Customization Options**: Available settings and configuration options
-
-#### **Quality Standards for Generated Documentation:**
-- **HTML Format**: Use minimalist HTML template matching CCC documentation standards
-- **Comprehensive Coverage**: Full documentation suite with examples, troubleshooting, API reference
-- **docs/ Subdirectory**: Create documentation in standard `docs/` location within project
-- **Real Examples**: Extract actual code samples and usage patterns from the project
-- **Professional Structure**: Complete project overview, installation, usage, API reference
-- **Cross-Platform Instructions**: Platform-specific setup and testing procedures
-
-#### **HTML Documentation Structure:**
-```html
-docs/
-├── index.html          # Main project documentation
-├── api/                # API reference documentation  
-├── examples/           # Code examples and tutorials
-└── assets/             # Images, stylesheets, etc.
-```
-
-#### **Documentation Enhancement Rules:**
-- **Use minimalist HTML template** with proper contrast and CCC styling standards
-- **Document as-is state**: Focus on what the project currently does, not improvements
-- **Preserve existing docs**: Never overwrite custom documentation without backup
-- **Comprehensive coverage**: Include installation, usage, API, examples, troubleshooting
-- **Generate after milestones**: Trigger automatically when analysis/development phases complete
-
 ---
 
 ## 🆘 **EMERGENCY PROTOCOLS**
@@ -674,147 +426,39 @@ Always end significant work with:
 
 ---
 
-## 🎯 ENHANCED DECISION-MAKING PROTOCOLS
-
-### 🚨 THREE OPTIONS PROTOCOL (MANDATORY)
-**When making significant implementation decisions**, you MUST:
-
-- Propose **exactly three** distinct, simple, and effective **implementation plans**.
-- Each plan must include:
-  - Step-by-step outline of changes.
-  - Pros and cons for each approach.
-  - An estimated **confidence percentage** for executing without breaking the code.
-  - A clearly labeled **Preferred Solution** with reasoning.
-- Do **not make any code changes** until explicitly asked to do so.
-
-**Examples of decisions requiring Three Options Protocol:**
-- Architecture choices (database, framework, file structure)
-- Implementation approaches for complex features
-- Integration strategies for external systems
-- Major refactoring or cleanup approaches
-- CCC template modifications or external project enhancements
-
-### 🛑 MANDATORY WAIT FOR ANSWERS PROTOCOL
-**Critical rule for all interactions:**
-
-- IF you ask ANY question, you MUST wait for the user's response
-- NEVER proceed with implementation until the user provides an answer
-- ALWAYS acknowledge the user's answer before proceeding
-- Questions include: file locations, preferences, configurations, approach selection
-- End your message with: **"Please let me know your preference before I proceed."**
-- DO NOT make assumptions or use defaults without explicit user confirmation
-
-**VIOLATION EXAMPLE**: Asking "Should I put checkpoints in files/ or root?" then proceeding without waiting
-**CORRECT EXAMPLE**: Ask question → Wait for answer → Acknowledge → Then implement
-
-### 🏗️ SYSTEM ARCHITECT SIMPLICITY RULE
-**MANDATORY**: When the user provides a PRD file or proposes a new solution, Claude must immediately assume the role of SystemArchitectAgent and provide **technical challenge analysis**:
-
-**Required Analysis:**
-1. **Problem Validation**: Restate the problem and analyze if it's real vs. perceived
-2. **Existing Solution Review**: Identify what current systems/tools already address this
-3. **Complexity Assessment**: Evaluate maintenance overhead and system complexity
-4. **Simpler Alternatives**: Propose 2-3 progressively simpler approaches with reasoning
-5. **Implementation Recommendation**: Clear guidance on whether to proceed, modify, or abandon
-
-**Behavior**: Provide reasoned technical analysis, not simple yes/no questions. Challenge with engineering rationale, not bureaucratic blocking.
-
-**Goal**: Prevent over-engineering through intelligent technical critique, not bureaucratic blocking.
-
----
-
 ## Available MCP Servers
 
-## 🔧 MCP TOOLING STRATEGY & EXECUTION LIFECYCLE
+## MCP USAGE POLICY & SELECTION RULES
 
-### 🎯 MCP Tool Hierarchy & Selection Rules
-- **ALWAYS run `list_tools` first** to enumerate available MCPs
-- **Tool preference hierarchy (use in this order):**
+### Always Use for Task Planning
+- **Sequential Thinking (sequential_thinking)**
+  - Enforce explicit stepwise reasoning for any multi-stage task planning.
+  - Input: thought, thoughtNumber, totalThoughts, etc.
+  - Claude MUST invoke this whenever it generates a structured plan (coding, analysis, workflows).
+  - Stop after max 10 sequential_thinking thoughts unless a revision is explicitly flagged.
+  - Default tool for: "Plan → Scaffold → Write → Test → Refactor".
 
-**1. Planning & Thinking:**
-- `sequential_thinking` - Explicit stepwise reasoning for multi-stage task planning
-- Use for: CCC workflows, external project analysis, complex decision trees
-- Stop after max 10 thoughts unless revision explicitly flagged
+### Research & Information Gathering
+1. **Context7 or ref-tools** → authoritative docs first.
+2. If not found → **Perplexity-Ask** (real-time web research with citations).
+3. If still missing → **Firecrawl** (scraping / crawl).
+4. If deterministic single URL → **fetch**.
 
-**2. Research & Documentation (in order of preference):**
-- `Context7` → authoritative, versioned documentation first
-- `ref-tools-mcp` (`ref_search_documentation`, `ref_read_url`) → API/library docs
-- `Perplexity-Ask` (`perplexity_ask`) → real-time web research with citations
-- `Firecrawl` (`firecrawl_scrape`, `firecrawl_crawl`, `firecrawl_search`) → structured web scraping
-- `fetch` → deterministic single URL ingestion
+### Visualization & Reporting
+- **chart-mcp** for plots, benchmarking, experiment visuals.
+- **screenshot-website-fast** for UI diffs, state captures.
 
-**3. Visualization & Analysis:**
-- `chart-mcp` → data visualizations (line, bar, pie, scatter, treemap, radar, etc.)
-- `data-explorer` → dataset analysis and exploration
-- `screenshot-website-fast` → UI screenshots and visual analysis
+### Integration Rule
+- **Agents orchestrate what needs research or visualization.**
+- **MCPs perform the actual retrieval/visualization.**
 
-**4. Specialized Tools:**
-- `dataforseo` → SEO keyword research and competitive analysis
-- Domain-specific tools based on project requirements
+### Circuit Breaker for MCPs
+- If Firecrawl trips breaker → fallback to fetch → Perplexity.
+- If Perplexity fails repeatedly → fallback to ref-tools.
 
-### 🔄 Execution Lifecycle Phases
-
-**[PLAN] - Sequential Thinking MCP**
-```json
-{
-  "thought": "Create structured plan: analyze → design → implement → test → verify",
-  "nextThoughtNeeded": true,
-  "thoughtNumber": 1,
-  "totalThoughts": 7,
-  "isRevision": false
-}
-```
-- Save plan to workflow_state.md under ## PLAN
-- Summarize in chat (≤15 lines), auto-proceed to EXECUTE
-
-**[EXECUTE] - Build Without Permission**
-- Implement ALL modules completely (zero placeholders)
-- Add timeout wrappers to EVERY external call
-- Integrate CircuitBreaker for API calls
-- Use AutoRecovery for flaky operations
-- For CCC: Run template validation and external project integration tests
-
-**[TEST] - Auto-Validate**
-- Generate validation scripts for CCC components
-- Test external project workflow (claude-work, ccc-launch)
-- Execute and append output to execution.log
-- Check return codes and error patterns
-
-**[VERIFY] - Success Criteria**
-- Pass requirements:
-  1. All CCC components functional
-  2. External project integration working
-  3. No breaking changes to existing workflows
-- Pass? Write "## STATUS: DONE" → proceed to [DONE]
-- Fail? → [REFINE]
-
-**[REFINE] - Bounded Self-Feedback**
-- Call sequential_thinking with isRevision: true
-- Increment loop_count in workflow_state.md
-- MAX 3 refinement loops (hard stop)
-- Backoff: 1s → 2s → 4s between attempts
-- Still failing? Write "## STATUS: BLOCKED" and STOP
-
-**[DONE] - Final Delivery**
-- Present: final CLI command, files changed, outputs, improvements
-- Document changes in CCC system documentation
-- End with: **CCC System Enhanced Successfully!**
-
-### 🛡️ Circuit Breaker & Fallback Rules
-- Max 5 concurrent calls
-- Timeouts: 15s/45s
-- Circuit breaker: open after 3 fails or 20% error rate
-- Half-open after 60s
-- If Firecrawl trips breaker → fallback to fetch → Perplexity
-- If Perplexity fails repeatedly → fallback to ref-tools
-- Tool conflicts? Specify server explicitly
-- Missing tool? Map to closest equivalent
-
-### 🔒 Security & Safety
-- Only invoke MCPs from the approved hierarchy above
-- Never bypass destructive-action guardrails
-- Always validate inputs before external tool calls
-- Preserve CCC system integrity during external project modifications
+### Security Reminder
+- Only invoke MCPs from the allowlist above.
+- Never bypass destructive-action guardrails.
 
 - sequential_thinking, firecrawl, fetch, dataforseo, chart-mcp, data-explorer, Context7, ref-tools-mcp, screenshot-website-fast, perplexity-ask
 
@@ -1207,31 +851,6 @@ Reply "Approve plan" to run autonomously
 
 ---
 
-## CLAUDE CODE SLASH COMMAND PLACEMENT RULE
-CRITICAL: When creating Claude Code slash commands, use correct directory structure:
-
-**CORRECT LOCATION:**
-- **All Commands**: `.claude/commands/command-name.md`
-
-**Claude Code Recognition Pattern:**
-- Commands appear as `/command-name` in slash command list
-- Must be in markdown (.md) format with proper frontmatter
-- Must be in `.claude/commands/` directory (NOT `/commands/`)
-
-**Example Structure:**
-```
-.claude/commands/
-├── test-mcps.md                    # Appears as /test-mcps
-├── project-summary.md              # Appears as /project-summary
-├── test-suite-gen.md              # Appears as /test-suite-gen
-├── seo-audit.md                   # Appears as /seo-audit
-└── keyword-research.md            # Appears as /keyword-research
-```
-
-**Enforcement**: Keep all commands in the `.claude/commands/` directory for Claude Code recognition.
-
----
-
 
 ## Hierarchical Memory & Meta-Cognition
 - **Session**: in-memory plan + context (runtime only).
@@ -1239,3 +858,27 @@ CRITICAL: When creating Claude Code slash commands, use correct directory struct
 - **Semantic**: knowledge tags (domain, libraries).
 - **Persistent**: stored explicitly in `docs/claude_memory.json`.
 - **Self-assess**: Accuracy, Completeness, Relevance, Clarity, Usefulness + 1 improvement after every task.
+
+
+---
+
+## 🔗 EXTERNAL PROJECT CONTEXT
+
+**Project Type(s) Detected:** python
+**Working Mode:** External Project (Temporary .claude/ directory)
+**Original Project:** Preserved and unmodified
+
+### External Project Guidelines:
+1. **Preserve Original Structure** - Never modify the original project files unless explicitly requested
+2. **Use .claude/ Directory** - All toolkit files are in the temporary .claude/ directory
+3. **Cleanup Available** - Delete .claude/ directory when done to remove all traces
+4. **Portable Agents** - All 20+ agents are available for analysis and development
+5. **Type-Specific Tools** - Commands and workflows optimized for detected project type(s)
+
+### Quick Cleanup:
+```bash
+# Remove all Claude toolkit files when done
+rm -rf .claude/
+```
+
+---

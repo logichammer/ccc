@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Workflow Format Gallery - CCC Workflow System</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 15px; 
+      border-radius: 4px; 
+      font-family: monospace; 
+      font-size: 14px;
+      overflow-x: auto;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      max-width: 100%;
+    }
+    .format-card {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .format-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .format-name {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .complexity-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: white;
+    }
+    .simple { background: #27ae60; }
+    .moderate { background: #f39c12; }
+    .complex { background: #e74c3c; }
+    .enterprise { background: #8e44ad; }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background: #f1f8e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .format-preview {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      border-left: 4px solid #3498db;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .comparison-table th, .comparison-table td {
+      border: 1px solid #dee2e6;
+      padding: 12px;
+      text-align: left;
+    }
+    .comparison-table th {
+      background: #f8f9fa;
+      font-weight: bold;
+    }
+    .checkmark { color: #27ae60; font-weight: bold; }
+    .xmark { color: #e74c3c; font-weight: bold; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin-left: 20px; }
+    li { margin-bottom: 8px; }
+    .toc {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Workflow Format Gallery</h1>
+
+  <div class="note">
+    <strong>📖 Quick Navigation:</strong> <a href="index.html">← Main Guide</a> | 
+    <a href="cli-reference.html">CLI Reference</a> | 
+    <a href="interview-system-guide.html">Interview System →</a>
+  </div>
+
+  <div class="toc">
+    <h3>🎯 Format Categories</h3>
+    <ul>
+      <li><a href="#conversational">Conversational Formats</a> - Natural language, simple input</li>
+      <li><a href="#technical">Technical Formats</a> - Structured specifications</li>
+      <li><a href="#enterprise">Enterprise Formats</a> - Compliance and detailed requirements</li>
+      <li><a href="#comparison">Format Comparison</a> - Side-by-side feature comparison</li>
+      <li><a href="#choosing">Choosing the Right Format</a> - Selection guidance</li>
+    </ul>
+  </div>
+
+  <div class="success">
+    <strong>🌟 Key Insight:</strong> All formats deliver identical high-quality results - they differ only in presentation complexity and initial request style. Choose based on your preference for simplicity vs. detailed specification.
+  </div>
+
+  <h2 id="conversational">🗣️ Conversational Formats</h2>
+  <p>These formats prioritize ease of use and natural language over technical precision.</p>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">📱 Minimal Request Format</div>
+      <div class="complexity-badge simple">Simple</div>
+    </div>
+    <p><strong>Best For:</strong> Quick requests, minimal setup, non-technical users</p>
+    <p><strong>Input Style:</strong> Just provide URL and keyword</p>
+    
+    <div class="format-preview">
+# SEO Check<br>
+<br>
+**Need**: Website URL + keyword<br>
+**Get**: Analysis + fixes<br>
+<br>
+## Input<br>
+- `{{SITE_URL}}` <br>
+- `{{MAIN_KEYWORD}}`<br>
+<br>
+## Process (~20 min)<br>
+1. **Scan** - Crawl site, check competitors, test speed<br>
+2. **Find** - Issues, gaps, opportunities  <br>
+3. **Report** - Dashboard + action list<br>
+<br>
+## Results<br>
+- **Dashboard** - Performance vs competitors<br>
+- **Actions** - Ranked by impact/effort<br>
+- **Details** - Technical fixes with examples<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Extremely simple to use</li>
+      <li>✅ Zero learning curve</li>
+      <li>✅ Fast to set up</li>
+    </ul>
+    
+    <h4>Best Use Cases:</h4>
+    <ul>
+      <li>Quick audits for clients</li>
+      <li>Initial website assessments</li>
+      <li>Non-technical team members</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">💬 Conversational Format</div>
+      <div class="complexity-badge simple">Simple</div>
+    </div>
+    <p><strong>Best For:</strong> Natural language interaction, friendly presentation</p>
+    <p><strong>Input Style:</strong> Conversational instructions</p>
+    
+    <div class="format-preview">
+# SEO Audit - Conversational Format<br>
+<br>
+Just tell me your website and main keyword, and I'll do a complete SEO analysis.<br>
+<br>
+**What I need:**<br>
+- Your website URL<br>
+- The main keyword you want to rank for<br>
+<br>
+**What you'll get in ~20 minutes:**<br>
+- Complete performance overview vs competitors<br>
+- List of issues to fix, ranked by priority<br>
+- Interactive dashboard showing opportunities<br>
+<br>
+**The process:**<br>
+1. I'll crawl your site and check everything<br>
+2. Look at your top competitors <br>
+3. Run performance tests<br>
+4. Find the biggest opportunities<br>
+5. Create your action plan with effort estimates<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Human-friendly language</li>
+      <li>✅ Clear expectations</li>
+      <li>✅ Approachable for all skill levels</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">🕵️ Detective Story Format</div>
+      <div class="complexity-badge moderate">Creative</div>
+    </div>
+    <p><strong>Best For:</strong> Engaging presentations, client reports, storytelling approach</p>
+    <p><strong>Input Style:</strong> Narrative-driven with investigation metaphors</p>
+    
+    <div class="format-preview">
+# The SEO Detective Story: Uncovering Your Website's Hidden Potential<br>
+<br>
+## The Case Brief<br>
+Your website {{SITE_URL}} is struggling to rank for "{{MAIN_KEYWORD}}", and you need answers. Like any good detective story, we'll follow the clues, investigate the suspects (your competitors), and solve the mystery.<br>
+<br>
+## Chapter 1: The Investigation Begins (8-12 minutes)<br>
+<br>
+### Scene 1: The Crime Scene Analysis<br>
+Our first stop is your website itself. We'll conduct a thorough forensic examination...<br>
+<br>
+**The Evidence Collection**:<br>
+- *The Technical Autopsy*: Using Firecrawl, we'll dissect every page<br>
+- *The Performance Interrogation*: Your site faces a rigorous performance test<br>
+- *The Content Investigation*: Every piece of content gets scrutinized<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Highly engaging presentation</li>
+      <li>✅ Memorable and unique</li>
+      <li>✅ Great for client presentations</li>
+    </ul>
+  </div>
+
+  <h2 id="technical">🔧 Technical Formats</h2>
+  <p>These formats provide structured specifications with technical details and tool callouts.</p>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">📋 Bullet Point Format</div>
+      <div class="complexity-badge moderate">Structured</div>
+    </div>
+    <p><strong>Best For:</strong> Action-oriented teams, clear checklists, project management</p>
+    <p><strong>Input Style:</strong> Structured bullet points with clear sections</p>
+    
+    <div class="format-preview">
+# SEO Audit - Action-Oriented Format<br>
+<br>
+## What You Need to Provide<br>
+• **Website URL** ({{SITE_URL}})  <br>
+• **Main Keyword** ({{MAIN_KEYWORD}})<br>
+• **Analysis Depth**: Quick / Standard / Deep (default: Standard)<br>
+<br>
+## What Happens Next (~20 minutes)<br>
+<br>
+### Data Gathering Phase (8-12 min)<br>
+• **Site Crawl**: Full technical analysis using Firecrawl<br>
+  - Page structure, meta tags, headers, content analysis<br>
+  - Internal linking patterns and URL structure<br>
+<br>
+• **Competitor Research**: Top 5 competitors via DataForSEO  <br>
+  - SERP analysis for your target keyword<br>
+  - Performance benchmarking<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Clear, scannable format</li>
+      <li>✅ Specific tool mentions</li>
+      <li>✅ Action-oriented language</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">⚙️ Technical Brief Format</div>
+      <div class="complexity-badge moderate">Technical</div>
+    </div>
+    <p><strong>Best For:</strong> Technical teams, developers, precise specifications</p>
+    <p><strong>Input Style:</strong> YAML configurations with tool specifications</p>
+    
+    <div class="format-preview">
+# Technical SEO Analysis Protocol<br>
+<br>
+## System Configuration<br>
+```yaml<br>
+target_site: "{{SITE_URL}}"<br>
+primary_keyword: "{{MAIN_KEYWORD}}"<br>
+crawl_budget: 500<br>
+competitor_count: 5<br>
+analysis_mode: "comprehensive"<br>
+device_priority: "mobile_first"<br>
+```<br>
+<br>
+## Execution Pipeline<br>
+<br>
+### Data Acquisition Stage<br>
+**Tools**: Firecrawl, DataForSEO, Lighthouse<br>
+**Outputs**: Site architecture map, SERP landscape, performance metrics<br>
+**Duration**: 8-12 minutes<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Precise technical specifications</li>
+      <li>✅ Clear tool dependencies</li>
+      <li>✅ Structured configuration</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">💻 Code Style Format</div>
+      <div class="complexity-badge complex">Advanced</div>
+    </div>
+    <p><strong>Best For:</strong> Developers, programmatic workflows, API integration</p>
+    <p><strong>Input Style:</strong> Programming syntax with class definitions</p>
+    
+    <div class="format-preview">
+# SEO_Audit_Workflow.md<br>
+<br>
+```python<br>
+# Workflow Configuration<br>
+class SEOAuditWorkflow:<br>
+    def __init__(self):<br>
+        self.target_site = "{{SITE_URL}}"<br>
+        self.primary_keyword = "{{MAIN_KEYWORD}}"<br>
+        self.config = {<br>
+            "crawl_depth": 500,<br>
+            "analysis_mode": "comprehensive", <br>
+            "competitor_count": 5<br>
+        }<br>
+```<br>
+<br>
+## Execution Pipeline<br>
+<br>
+```yaml<br>
+stages:<br>
+  data_collection:<br>
+    duration: "8-12 minutes"<br>
+    parallel_tasks:<br>
+      - crawl_site:<br>
+          tool: "firecrawl"<br>
+          output: "site_architecture.json"<br>
+```<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Familiar to developers</li>
+      <li>✅ Programmatic structure</li>
+      <li>✅ API-ready specifications</li>
+    </ul>
+  </div>
+
+  <h2 id="enterprise">🏢 Enterprise Formats</h2>
+  <p>These formats provide comprehensive specifications for enterprise environments.</p>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">🎯 Enhanced Technical Specification</div>
+      <div class="complexity-badge complex">Comprehensive</div>
+    </div>
+    <p><strong>Best For:</strong> Professional services, detailed requirements, quality assurance</p>
+    <p><strong>Input Style:</strong> JSON configurations with comprehensive specifications</p>
+    
+    <div class="format-preview">
+# SEO Audit Workflow - Enhanced Technical Specification<br>
+<br>
+## Primary Configuration Parameters<br>
+```json<br>
+{<br>
+  "target_site": "{{SITE_URL}}",<br>
+  "primary_keyword": "{{MAIN_KEYWORD}}",<br>
+  "crawl_configuration": {<br>
+    "max_pages": 500,<br>
+    "include_subdomains": false,<br>
+    "follow_redirects": true,<br>
+    "respect_robots": true<br>
+  },<br>
+  "competitive_analysis": {<br>
+    "serp_positions": 10,<br>
+    "backlink_analysis": true,<br>
+    "content_analysis_depth": "full"<br>
+  }<br>
+}<br>
+```<br>
+<br>
+## Optional Enhancement Files<br>
+<br>
+• `inputs/search_console_data.csv` → Adds real search performance data<br>
+  - Columns: query, impressions, clicks, position, ctr<br>
+  - Focus on: high-impression queries, position changes<br>
+  - Exclude: branded queries (if specified)<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Comprehensive specifications</li>
+      <li>✅ Detailed input file support</li>
+      <li>✅ Professional presentation</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">🏛️ Enterprise Compliance Format</div>
+      <div class="complexity-badge enterprise">Enterprise</div>
+    </div>
+    <p><strong>Best For:</strong> Large organizations, compliance requirements, audit trails</p>
+    <p><strong>Input Style:</strong> Full enterprise specifications with SLAs</p>
+    
+    <div class="format-preview">
+# Enterprise SEO Audit Protocol - Technical Implementation Specification<br>
+<br>
+## Workflow Metadata<br>
+```yaml<br>
+workflow_id: "enterprise_seo_audit_v2.1"<br>
+classification: "technical_analysis"<br>
+compliance_requirements: ["data_retention", "audit_trail", "quality_assurance"]<br>
+sla_requirements:<br>
+  execution_time: "20_minutes_maximum"<br>
+  data_quality: "95_percent_minimum"<br>
+  deliverable_completeness: "100_percent_required"<br>
+```<br>
+<br>
+## Multi-Agent Orchestration Framework<br>
+<br>
+### Agent Assignment Matrix<br>
+```yaml<br>
+primary_agents:<br>
+  technical_crawler_agent:<br>
+    tool_access: ["firecrawl", "lighthouse", "pagespeed_insights"]<br>
+    success_criteria: ["crawl_completion_95_percent"]<br>
+```<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Full compliance documentation</li>
+      <li>✅ SLA specifications</li>
+      <li>✅ Audit trail requirements</li>
+      <li>✅ Quality assurance frameworks</li>
+    </ul>
+  </div>
+
+  <div class="format-card">
+    <div class="format-header">
+      <div class="format-name">🔬 Scientific Method Format</div>
+      <div class="complexity-badge enterprise">Research</div>
+    </div>
+    <p><strong>Best For:</strong> Research environments, statistical validation, academic rigor</p>
+    <p><strong>Input Style:</strong> Research protocols with hypothesis testing</p>
+    
+    <div class="format-preview">
+# SEO Performance Analysis - Empirical Research Protocol<br>
+<br>
+## Research Hypothesis<br>
+**Primary Research Question**: What technical and content factors correlate with improved search engine visibility for {{SITE_URL}} targeting "{{MAIN_KEYWORD}}"?<br>
+<br>
+## Experimental Design<br>
+<br>
+### Independent Variables<br>
+```yaml<br>
+technical_factors:<br>
+  - page_load_speed: "core_web_vitals_measurement"<br>
+  - mobile_optimization: "responsive_design_compliance"<br>
+  - schema_implementation: "structured_data_coverage"<br>
+```<br>
+<br>
+### Statistical Analysis Framework<br>
+```python<br>
+def perform_correlation_analysis(site_data, performance_metrics):<br>
+    for technical_factor in TECHNICAL_FACTORS:<br>
+        r, p_value = pearsonr(site_data[technical_factor], performance_metrics)<br>
+        if p_value < 0.05:  # Statistical significance<br>
+```<br>
+    </div>
+    
+    <h4>Advantages:</h4>
+    <ul>
+      <li>✅ Scientific rigor</li>
+      <li>✅ Statistical validation</li>
+      <li>✅ Hypothesis-driven approach</li>
+      <li>✅ Reproducible methodology</li>
+    </ul>
+  </div>
+
+  <h2 id="comparison">📊 Format Comparison</h2>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Format</th>
+        <th>Complexity</th>
+        <th>Setup Time</th>
+        <th>Technical Detail</th>
+        <th>Best For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Minimal Request</td>
+        <td><span class="simple">Simple</span></td>
+        <td>< 1 min</td>
+        <td>Low</td>
+        <td>Quick audits, non-technical users</td>
+      </tr>
+      <tr>
+        <td>Conversational</td>
+        <td><span class="simple">Simple</span></td>
+        <td>2-3 min</td>
+        <td>Low</td>
+        <td>Client-friendly presentations</td>
+      </tr>
+      <tr>
+        <td>Bullet Point</td>
+        <td><span class="moderate">Moderate</span></td>
+        <td>3-5 min</td>
+        <td>Medium</td>
+        <td>Project management, clear actions</td>
+      </tr>
+      <tr>
+        <td>Technical Brief</td>
+        <td><span class="moderate">Moderate</span></td>
+        <td>5-8 min</td>
+        <td>High</td>
+        <td>Technical teams, developers</td>
+      </tr>
+      <tr>
+        <td>Enhanced Technical</td>
+        <td><span class="complex">Complex</span></td>
+        <td>8-12 min</td>
+        <td>Very High</td>
+        <td>Professional services, detailed specs</td>
+      </tr>
+      <tr>
+        <td>Enterprise Compliance</td>
+        <td><span class="enterprise">Enterprise</span></td>
+        <td>15-20 min</td>
+        <td>Maximum</td>
+        <td>Large organizations, compliance</td>
+      </tr>
+      <tr>
+        <td>Scientific Method</td>
+        <td><span class="enterprise">Research</span></td>
+        <td>20-25 min</td>
+        <td>Academic</td>
+        <td>Research environments, validation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="choosing">🎯 Choosing the Right Format</h2>
+
+  <h3>Decision Tree</h3>
+
+  <div class="note">
+    <strong>❓ Ask Yourself:</strong>
+    <ul>
+      <li><strong>Who is the audience?</strong> - Technical team vs. business stakeholders</li>
+      <li><strong>How much detail is needed?</strong> - Quick overview vs. comprehensive specification</li>
+      <li><strong>What's the timeline?</strong> - Immediate vs. planned implementation</li>
+      <li><strong>Are there compliance requirements?</strong> - Enterprise policies vs. informal process</li>
+    </ul>
+  </div>
+
+  <h3>Recommendation Guide</h3>
+
+  <div class="format-grid">
+    <div class="format-card">
+      <h4>🚀 Getting Started</h4>
+      <p><strong>Recommended:</strong> Conversational or Minimal Request</p>
+      <ul>
+        <li>Fastest to set up</li>
+        <li>Easy to understand</li>
+        <li>Great for learning the system</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h4>👔 Professional Services</h4>
+      <p><strong>Recommended:</strong> Enhanced Technical Specification</p>
+      <ul>
+        <li>Professional presentation</li>
+        <li>Detailed specifications</li>
+        <li>Client-ready output</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h4>💻 Development Teams</h4>
+      <p><strong>Recommended:</strong> Technical Brief or Code Style</p>
+      <ul>
+        <li>Familiar syntax</li>
+        <li>Clear tool dependencies</li>
+        <li>API-ready structure</li>
+      </ul>
+    </div>
+
+    <div class="format-card">
+      <h4>🏢 Enterprise Organizations</h4>
+      <p><strong>Recommended:</strong> Enterprise Compliance</p>
+      <ul>
+        <li>Full audit trails</li>
+        <li>SLA compliance</li>
+        <li>Quality assurance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="success">
+    <strong>🔑 Remember:</strong> You can switch formats at any time. Start simple and add complexity as needed. The underlying workflow execution engine is identical across all formats.
+  </div>
+
+  <h3>Custom Format Development</h3>
+  
+  <p>Need a format that doesn't exist? The system is designed for extensibility:</p>
+  <ul>
+    <li>Create custom markdown formats with your preferred structure</li>
+    <li>Use the same variable system (<code>{{VARIABLE}}</code>)</li>
+    <li>Leverage the same JSON configuration approach</li>
+    <li>All system features work with custom formats</li>
+  </ul>
+
+  <div class="note">
+    <strong>📖 Next Steps:</strong>
+    <ul>
+      <li><a href="interview-system-guide.html">Interview System Guide →</a> - Learn how workflows are created</li>
+      <li><a href="json-config-advanced.html">Advanced JSON Configuration</a> - Complex configuration patterns</li>
+      <li><a href="cli-reference.html">← CLI Reference</a> - Command documentation</li>
+      <li><a href="index.html">← Main Guide</a> - System overview</li>
+    </ul>
+  </div>
+
+</body>
+</html>

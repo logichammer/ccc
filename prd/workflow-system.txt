@@ -1,0 +1,1048 @@
+# PRD: CCC Workflow Definition & Execution System
+
+## Product Overview
+
+**Product Name**: CCC Workflow Definition & Execution System (WDES)
+**Version**: 1.0
+**Date**: 2025-01-09
+**Owner**: CCC System Team
+
+## Executive Summary
+
+Create a comprehensive workflow definition and execution system that allows users to define complex multi-stage workflows in human-readable Markdown, with intelligent system assistance for agent/MCP selection, automatic parallelization, and consistent reproducible outputs.
+
+## Problem Statement
+
+**Current State:**
+- Ad-hoc agent coordination requiring manual orchestration
+- Inconsistent MCP selection decisions
+- No reusable workflow templates
+- Manual parameter passing between stages
+- Lack of standardized output formats
+- No systematic retry/error handling
+
+**Pain Points:**
+- SEO audits require manual coordination of 5+ agents and MCPs
+- Workflow knowledge is lost between sessions
+- Inconsistent results when repeating similar analyses
+- Time-consuming setup for common tasks
+- No way to share/reuse successful workflows
+
+**Business Impact:**
+- Reduced productivity from manual workflow coordination
+- Inconsistent deliverables to clients
+- Knowledge silos preventing workflow reuse
+- Increased error rates from manual processes
+
+## Success Criteria
+
+**Primary Goals:**
+1. **Workflow Definition**: Users can define workflows in flexible Markdown format
+2. **Intelligent Assistance**: System interviews users and suggests optimal agent/MCP combinations
+3. **Reproducibility**: Same inputs produce consistent outputs across runs
+4. **Parallelization**: System automatically identifies parallel execution opportunities
+5. **Validation**: All agents, MCPs, and methods validated before execution
+
+**Success Metrics:**
+- 90% reduction in time to setup common workflows (SEO audits, code analysis)
+- 95% success rate for workflow execution
+- Zero workflow failures due to invalid agent/MCP references
+- 80% of workflows leverage parallel execution where beneficial
+- 75% of workflow runs discover at least 2 unexpected correlations
+- 90% of correlation discoveries rated as "actionable" by users
+- 60% reduction in manual data analysis time through automated insights
+- 85% of workflows auto-suggest additional visualization opportunities
+
+## User Stories
+
+### Core User Stories
+
+**As a marketing analyst, I want to:**
+- Define an SEO audit workflow in simple Markdown
+- Have the system suggest the best tools and agents for each task
+- Run the same workflow consistently across different clients
+- Get standardized dashboards and reports every time
+
+**As a developer, I want to:**
+- Create code analysis workflows that use multiple agents
+- Have workflows automatically retry failed steps
+- Share workflows with team members
+- Validate workflows before running on production systems
+
+### System User Stories
+
+**As the CCC system, I want to:**
+- Parse flexible Markdown workflow definitions
+- Interview users to clarify ambiguous requirements
+- Suggest optimal agent/MCP combinations with alternatives
+- Execute workflows with automatic parallelization
+- Validate all components before execution
+- Generate consistent, standardized outputs
+
+## Technical Requirements
+
+### Functional Requirements
+
+#### FR-1: Markdown Workflow Parser
+- Parse flexible Markdown workflow definitions
+- Support variable parameter definitions
+- Handle multiple stages with dependencies
+- Extract success criteria and validation rules
+- Support inline documentation and comments
+
+#### FR-2: Interactive Interview System
+- Conduct structured interviews to clarify requirements
+- Suggest missing parameters or stages
+- Validate user inputs against available resources
+- Provide intelligent defaults based on workflow type
+- Generate summary of interview results
+
+#### FR-3: Agent & MCP Discovery Engine
+- Maintain current inventory of available agents
+- Maintain current inventory of available MCPs with methods
+- Suggest optimal agent/MCP combinations for tasks
+- Provide alternative options with pros/cons
+- Validate agent/MCP availability and compatibility
+
+#### FR-4: Execution Engine
+- Execute multi-stage workflows with dependency management
+- Implement automatic parallelization where safe
+- Handle parameter passing between stages
+- Provide real-time execution status
+- Generate execution logs and audit trails
+
+#### FR-5: Configuration Management
+- Support workflow-specific configuration files
+- Handle variable substitution and parameter validation
+- Manage environment-specific settings
+- Support configuration inheritance and overrides
+
+#### FR-6: Error Handling & Retry Logic
+- Implement configurable retry policies per stage
+- Support skip-on-failure vs. stop-on-failure modes
+- Provide detailed error reporting and suggestions
+- Maintain workflow state for resumption after failures
+
+#### FR-7: Output Generation & Validation
+- Generate standardized outputs as defined in workflows
+- Support multiple output formats (HTML, PDF, JSON, Excel)
+- Validate outputs against defined success criteria
+- Create mockups/previews of expected outputs
+
+#### FR-8: Workflow Storage & Organization
+- Store workflows in project directory structure
+- Organize by use case (Marketing, Development, etc.)
+- Support workflow versioning and change tracking
+- Enable workflow sharing and collaboration
+
+#### FR-9: Input File Management & Recommendations
+- **Intelligent File Discovery**: Auto-scan client `inputs/` directories and catalog available data sources
+- **Format Recognition**: Detect and validate file formats (CSV, JSON, XML, TXT, XLSX, PDF)
+- **Content Analysis**: Analyze file headers, schemas, and sample data to understand contents
+- **Workflow Matching**: Suggest optimal input files based on workflow requirements and stage needs
+- **Quality Assessment**: Check data completeness, freshness, and reliability scores
+- **Template Generation**: Create standardized input file templates for common workflow types
+- **Fallback Orchestration**: Implement cascading fallback mechanisms when preferred inputs are missing
+- **Data Lineage Tracking**: Maintain audit trail of which files were used in which workflow runs
+- **Version Management**: Track input file versions and flag when newer data becomes available
+- **Compatibility Checking**: Verify input files meet workflow stage requirements before execution
+
+**Supported Input Types:**
+- **GSC Exports**: search_analytics.csv, page_performance.csv, crawl_errors.csv
+- **Analytics Data**: ga4_export.json, conversion_data.csv, traffic_sources.xlsx
+- **Competitor Lists**: competitors.txt, competitor_metrics.json
+- **Keyword Data**: target_keywords.csv, rank_tracking.json, search_volume.xlsx
+- **Technical Audit**: lighthouse_reports.json, crawl_data.csv, site_structure.xml
+- **Content Inventory**: content_audit.csv, meta_data.xlsx, internal_links.json
+- **Custom Data**: historical_performance.json, business_metrics.csv, conversion_funnels.xlsx
+
+**Intelligent Recommendations:**
+- "Found fresh GSC data (updated 2 days ago) - recommend using over cached version"
+- "Detected competitor analysis template - suggest filling with top 5 organic rivals"
+- "Missing conversion data - workflow can proceed with traffic-only analysis"
+- "Historical data available for trend comparison - add to workflow stages"
+
+#### FR-10: Correlation Discovery & Advanced Analytics
+- **Automated Pattern Recognition**: Scan intermediate data for statistical correlations between metrics (R² > 0.5)
+- **Cross-Metric Analysis**: Identify unexpected relationships (e.g., page speed vs. social engagement, keyword density vs. conversion rate)
+- **Anomaly Detection**: Flag outliers and statistical deviations requiring immediate attention
+- **Trend Synthesis**: Combine multiple data sources to reveal hidden patterns
+- **Predictive Insights**: Suggest potential outcomes based on discovered correlations
+- **Visualization Recommendations**: Auto-generate chart types best suited for discovered relationships
+- **Comparative Intelligence**: Track correlation patterns across different workflow runs and clients
+- **Insight Prioritization**: Rank discoveries by statistical significance and business impact
+- **Automated Hypothesis Generation**: Propose testable theories based on data patterns
+- **Meta-Analysis**: Aggregate insights across multiple workflow executions for broader understanding
+
+**Example Discoveries:**
+- "Sites with faster Core Web Vitals show 23% higher organic click-through rates"
+- "Content with 7-12 semantic keywords correlates with 15% better conversion rates"
+- "Technical SEO scores above 85 predict 40% faster indexing of new content"
+- "Mobile page speed improvements show 3x correlation with local search visibility"
+
+#### FR-11: Standardized Report Template System
+- **Template Repository**: Maintain library of standardized report templates in `/templates/reports/`
+- **Template Categories**: Organize by domain (SEO, Python, Data Analysis, WordPress)
+- **Dynamic Template Selection**: Auto-select optimal template based on workflow type and outputs
+- **Template Inheritance**: Support base templates with domain-specific extensions
+- **Custom Template Creation**: Allow users to create and save custom report templates
+- **Template Validation**: Verify template compatibility with workflow outputs
+- **Template Versioning**: Track template changes and maintain backwards compatibility
+- **Multi-Format Support**: Templates for HTML, PDF, Excel, and JSON outputs
+- **Brand Customization**: Support client-specific branding and styling
+- **Template Metadata**: Include template description, required data fields, and usage examples
+
+**Template Storage Structure:**
+```
+/templates/reports/
+├── base/
+│   ├── executive_summary.html
+│   ├── technical_report.html
+│   └── dashboard_template.html
+├── seo/
+│   ├── seo_audit_report.html
+│   ├── competitor_analysis.html
+│   ├── keyword_strategy.html
+│   └── technical_seo_report.html
+├── python/
+│   ├── code_analysis_report.html
+│   ├── security_audit_report.html
+│   ├── performance_report.html
+│   └── test_coverage_report.html
+├── data_analysis/
+│   ├── correlation_report.html
+│   ├── anomaly_detection.html
+│   └── predictive_insights.html
+└── custom/
+    └── client_specific/
+        └── [client-name]_template.html
+```
+
+**Template Features:**
+- **Variable Substitution**: `{{workflow.title}}`, `{{results.key_metrics}}`, `{{client.name}}`
+- **Conditional Sections**: Show/hide content based on data availability
+- **Chart Integration**: Seamless embedding of chart-mcp visualizations
+- **Responsive Design**: Templates work across desktop, tablet, mobile
+- **Export Optimization**: Ensure templates render properly in PDF generation
+
+#### FR-12: Role-Based Agent Recommendations & Action Items
+- **Role Detection**: Automatically detect user context (SEO specialist, Python developer, CRO expert, etc.) from project type and workflow patterns
+- **Role-Specific Suggestions**: Tailor correlation insights and action items to user's expertise area
+- **Agent Orchestration Recommendations**: Suggest optimal agent combinations for discovered opportunities
+- **Context-Aware Prioritization**: Rank suggestions by impact and feasibility within user's domain
+- **Cross-Domain Insights**: Identify opportunities that require expertise from multiple domains
+- **Learning Adaptation**: Improve recommendations based on user acceptance/rejection patterns
+
+**SEO Specialist Recommendations:**
+- **Technical Issues**: "TechnicalSEOAgent should address Core Web Vitals impact on rankings"
+- **Content Opportunities**: "ContentAgent can optimize pages with high impressions but low CTR"
+- **Keyword Strategy**: "KeywordStrategyAgent should explore semantic keyword clusters with 40% search overlap"
+- **Competitive Intelligence**: "BenchmarkResearchAgent can analyze competitor content gaps"
+
+**Python Developer Recommendations:**
+- **Performance Bottlenecks**: "PerformanceProfilerAgent should investigate 300ms+ database queries"
+- **Code Quality**: "CodebaseAnalyzerAgent can refactor complex functions with cyclomatic complexity > 10"
+- **Security Issues**: "SecurityAuditorAgent should audit dependencies with known vulnerabilities"
+- **Testing Gaps**: "QualityTesterAgent can improve coverage for modules below 80% threshold"
+
+**Conversion Rate Optimizer Recommendations:**
+- **Funnel Analysis**: "ConversionOptimizerAgent should test checkout flow with 23% drop-off rate"
+- **User Experience**: "InteractionEnhancerAgent can improve pages with high bounce rates"
+- **A/B Testing**: "MetricsReporterAgent should track form completion correlation with field count"
+- **Mobile Optimization**: "ResponsiveAdapterAgent should prioritize mobile conversion improvements"
+
+**Data Analysis Specialist Recommendations:**
+- **Pattern Discovery**: "DataPipelineAgent should investigate seasonal trends in conversion data"
+- **Visualization**: "MetricsReporterAgent can create interactive dashboards for anomaly monitoring"
+- **Predictive Modeling**: "Correlation analysis suggests implementing predictive user behavior model"
+- **Data Quality**: "Data integrity checks reveal 15% incomplete records requiring cleanup"
+
+**Action Item Framework:**
+- **Impact Score**: High/Medium/Low based on potential business value
+- **Effort Estimation**: Hours or days required for implementation
+- **Agent Assignment**: Specific agent recommendation with rationale
+- **Dependencies**: Prerequisites or blocking factors
+- **Success Metrics**: How to measure improvement after implementation
+
+#### FR-13: Post-Workflow File Management
+- **Input Archiving**: Copy all input files used to `reports/workflow-name_date/inputs/` for reproducibility
+- **Organized Output Structure**: Create timestamped directories with standardized naming conventions
+- **Artifact Categorization**: Organize outputs by type (raw_data/, charts/, reports/, artifacts/)
+- **Comprehensive Documentation**: Generate workflow summary with execution log, decisions made, and results achieved
+- **Audit Trail Generation**: Complete record of file operations, data sources, and transformation steps
+- **Retention Policy Management**: Configurable cleanup rules based on age, client preferences, and storage limits
+- **Cross-Reference Generation**: Link related workflow runs and identify data dependencies
+- **Export Package Creation**: Bundle complete workflow results for client delivery or backup
+- **Metadata Preservation**: Store workflow configuration, agent decisions, and performance metrics
+- **Change Detection**: Track differences between workflow runs on similar data
+
+**Automated Organization Example:**
+```
+/reports/seo-audit-comprehensive_2025_01_09_14_30/
+├── inputs/                     # Archived copies of source files
+│   ├── gsc_search_analytics.csv
+│   ├── competitor_list.txt
+│   └── workflow_config.yaml
+├── artifacts/                  # Generated data and intermediate results
+│   ├── gsc/
+│   │   ├── processed_queries.json
+│   │   └── top_pages_analysis.csv  
+│   ├── crawl/
+│   │   ├── technical_issues.json
+│   │   └── site_structure.csv
+│   └── correlations/
+│       ├── speed_rankings.json
+│       └── content_performance.csv
+├── charts/                     # All visualizations and graphs
+│   ├── keyword_gaps_chart.png
+│   ├── competitor_comparison.html
+│   └── performance_trends.svg
+├── reports/                    # Final deliverables
+│   ├── seo_dashboard.html
+│   ├── executive_summary.pdf
+│   └── technical_recommendations.xlsx
+├── execution_log.json          # Complete workflow execution record
+├── workflow_summary.html       # Human-readable summary
+└── metadata.json              # Workflow configuration and metrics
+```
+
+**Retention Policies:**
+- **Temporary files**: 7 days (raw API responses, temp calculations)
+- **Working data**: 30 days (processed datasets, intermediate analysis)
+- **Final reports**: 1 year (client deliverables, dashboards)
+- **Audit trails**: 3 years (execution logs, metadata)
+- **Client preference overrides**: Honor custom retention requirements
+
+### Non-Functional Requirements
+
+#### NFR-1: Reliability (PRIMARY PRIORITY)
+- **99.5% uptime** for workflow execution engine
+- **98% success rate** for workflow completion (increased from 95%)
+- **Graceful degradation** when external services are unavailable
+- **Automatic recovery** from transient failures with exponential backoff
+- **Data integrity** maintained across all stages with checksums and validation
+- **Fallback mechanisms** for all external dependencies (MCP, API calls)
+- **State persistence** to resume workflows after interruptions
+- **Comprehensive error logging** with detailed diagnostics
+- **Safe failure modes** - partial results preserved even on workflow abortion
+- **Validation gates** at every stage before proceeding to next step
+- **Rollback capability** for workflows that encounter critical failures
+
+#### NFR-2: Performance (SECONDARY TO RELIABILITY)
+- Workflow parsing: < 2 seconds for complex workflows (reliability over speed)
+- Interview completion: < 5 minutes for most workflows
+- Execution startup: < 15 seconds after comprehensive validation (increased for thorough checks)
+- Parallel execution: 60% reduction in total workflow time (reduced from 70% to ensure stability)
+- **Performance monitoring** with automatic throttling to prevent system overload
+- **Resource usage caps** to prevent runaway processes
+
+#### NFR-3: Usability
+- Markdown syntax learning curve < 30 minutes
+- Interview process intuitive for non-technical users
+- Clear error messages with actionable suggestions
+- Comprehensive documentation and examples
+
+#### NFR-4: Scalability
+- Support concurrent execution of multiple workflows
+- Handle workflows with 20+ stages
+- Scale to 100+ workflow definitions per project
+- Efficient resource utilization during parallel execution
+
+## User Interface Requirements
+
+### Workflow Definition Interface
+```markdown
+# Sample Workflow Definition Format
+
+# SEO Competitive Analysis Workflow
+
+## Description
+Comprehensive SEO analysis comparing target site against top competitors with automated reporting.
+
+## Parameters
+- site_url: The primary website to analyze (required)
+- competitors: List of competitor URLs (optional, max 5)
+- timeframe: Analysis period in days (default: 90)
+- output_format: [dashboard, pdf, excel] (default: dashboard)
+- client_slug: Client identifier for storage organization (required)
+
+## Inputs (Optional)
+- gsc_data: inputs/gsc_search_analytics.csv (GSC export fallback)
+- competitor_list: inputs/competitor_urls.txt (predefined competitor list)
+- custom_keywords: inputs/target_keywords.csv (specific keywords to analyze)
+- historical_data: inputs/previous_audit.json (compare against previous results)
+
+## Stages
+
+### Stage 1: Data Collection
+**Description**: Gather baseline SEO data from multiple sources
+**Recommended Agents**: 
+- TechnicalSEOAgent (primary) - GSC data retrieval and technical analysis
+- BenchmarkResearchAgent (secondary) - competitor data collection
+**Suggested MCPs**: 
+- gsc-mcp for Search Console data
+- dataforseo-mcp for competitor SERP analysis  
+- firecrawl-mcp for technical site crawling
+**Parallel Execution**: Tasks 1.1, 1.2, 1.3 can run concurrently
+**Success Criteria**: 
+- Search Console data retrieved (validate: >1000 queries, 90-day timeframe)
+- Competitor SERP data collected (validate: all competitors analyzed)
+- Technical crawl completed (validate: >80% pages crawled successfully)
+**Expected Correlations**: Site speed vs. ranking positions, content length vs. organic traffic
+
+### Stage 2: Competitive Analysis  
+**Description**: Compare performance against competitors and identify opportunities
+**Dependencies**: Stage 1 (requires all data collection tasks)
+**Recommended Agents**:
+- KeywordStrategyAgent (primary) - keyword gap analysis
+- ConversionOptimizerAgent (secondary) - competitor funnel analysis
+- DataPipelineAgent (tertiary) - data correlation discovery
+**Suggested MCPs**:
+- data-explorer-mcp for statistical analysis
+- chart-mcp for visualization generation
+**Success Criteria**:
+- Keyword gaps identified (target: 20+ high-value opportunities)
+- Ranking opportunities found (target: 10+ quick wins)
+- Content gaps documented (target: 5+ content themes)
+**Expected Insights**: "Competitors ranking for keywords with 30% higher search volume", "Content gaps in technical topics show 3x less competition"
+
+### Stage 3: Reporting & Recommendations
+**Description**: Generate comprehensive reports with actionable insights
+**Dependencies**: Stage 2 (requires analysis completion)
+**Recommended Agents**:
+- MetricsReporterAgent (primary) - dashboard and report creation
+- ContentAgent (secondary) - executive summary writing
+- WorkflowOrchestratorAgent (tertiary) - next-step workflow suggestions
+**Suggested MCPs**:
+- chart-mcp for data visualizations
+- screenshot-website-fast for UI captures
+**Template Selection**: Auto-select from `/templates/reports/seo/seo_audit_report.html`
+**Success Criteria**:
+- Interactive dashboard created (validate: all key metrics visible)
+- Executive summary generated (validate: <2 pages, actionable recommendations)
+- Action items prioritized (validate: impact scores assigned, agent assignments made)
+**Agent Handoff Recommendations**:
+- "TechnicalSEOAgent should address 15 Core Web Vitals issues found"
+- "ContentAgent should create content for 12 keyword gaps identified"
+- "ConversionOptimizerAgent should test landing page variations for high-traffic keywords"
+
+## Expected Outputs
+- **Primary Deliverables**:
+  - seo_dashboard.html: Interactive dashboard with key metrics and trend visualizations
+  - executive_summary.pdf: High-level findings and recommendations with correlation insights
+  - technical_recommendations.xlsx: Prioritized action items with impact estimates
+  
+- **Advanced Analytics** (Auto-Generated):
+  - correlation_discoveries.html: Statistical relationships found between metrics
+  - anomaly_report.pdf: Outliers and unusual patterns requiring attention
+  - predictive_insights.json: Forecasted outcomes based on current data
+  - comparative_benchmarks.html: Performance vs. competitors and industry standards
+  
+- **Raw Data & Artifacts**:
+  - raw_data/: Detailed data files for further analysis and validation
+  - intermediate_analysis/: Processing steps and calculated metrics
+  - visualization_data/: Chart data in reusable formats (JSON, CSV)
+  
+- **Workflow Metadata**:
+  - execution_summary.json: Complete audit trail of workflow decisions
+  - data_lineage.html: Visual map of data sources and transformations
+  - recommendations_pipeline.md: Logic behind prioritization and suggestions
+```
+
+### Interview Interface
+```
+CCC Workflow Interview System
+============================
+
+I've analyzed your "SEO Competitive Analysis" workflow.
+
+CLARIFICATION NEEDED:
+
+1. Data Sources: Which search console should I access?
+   - Google Search Console (recommended)
+   - Bing Webmaster Tools
+   - Both platforms
+
+2. Competitor Discovery: How should I identify competitors?
+   - Use provided list only
+   - Auto-discover top 5 organic competitors  
+   - Hybrid approach (provided + discovered)
+
+3. Technical Crawl Depth: How comprehensive should the crawl be?
+   - Quick scan (key pages only) - 5 minutes
+   - Standard crawl (up to 1000 pages) - 20 minutes  
+   - Deep crawl (unlimited) - 60+ minutes
+
+SUGGESTED IMPROVEMENTS:
+
+- Add keyword rank tracking over time
+- Include backlink analysis stage
+- Generate competitor content gap analysis
+- Add local SEO signals if applicable
+
+Would you like me to proceed with these clarifications?
+```
+
+### Execution Proposal Interface
+```markdown
+# Proposed Execution Plan: SEO Competitive Analysis
+
+## Execution Overview
+**Estimated Duration**: 25-30 minutes
+**Parallel Stages**: 2 of 3 stages can run in parallel
+**Resource Requirements**: DataForSEO API, GSC access, chart-mcp
+
+## Stage Execution Plan
+
+### Stage 1: Data Collection (Parallel Execution)
+**Duration**: 8-12 minutes
+
+**Task 1.1**: Search Console Data [TechnicalSEOAgent + gsc-mcp]
+- Method: gsc.query_search_analytics()
+- Parameters: site_url, date_range=90d, dimensions=[query,page]
+- Output: gsc_data.json
+- **Alternative**: BenchmarkResearchAgent + dataforseo-mcp
+
+**Task 1.2**: Competitor SERP Analysis [BenchmarkResearchAgent + dataforseo-mcp] 
+- Method: dataforseo.serp_google()  
+- Parameters: competitors[], location, language
+- Output: competitor_serps.json
+- **Alternative**: Firecrawl for manual competitor discovery
+
+**Task 1.3**: Technical Site Crawl [TechnicalSEOAgent + firecrawl-mcp]
+- Method: firecrawl.crawl()
+- Parameters: site_url, max_pages=1000, include_technical=true
+- Output: technical_audit.json
+- **Alternative**: Custom crawler via Bash tools
+
+### Stage 2: Analysis (Sequential - depends on Stage 1)
+**Duration**: 10-12 minutes
+
+**Task 2.1**: Keyword Gap Analysis [DataAnalysisAgent + data-explorer-mcp]
+- Inputs: gsc_data.json, competitor_serps.json
+- Method: analyze_keyword_gaps()
+- Output: keyword_gaps.json, opportunities.json
+
+**Task 2.2**: Technical Issues Prioritization [PerformanceProfilerAgent]
+- Inputs: technical_audit.json
+- Method: prioritize_technical_issues()
+- Output: technical_priorities.json
+
+### Stage 3: Visualization & Reporting (Parallel Execution)
+**Duration**: 5-8 minutes
+
+**Task 3.1**: Dashboard Generation [MetricsReporterAgent + chart-mcp]
+- Inputs: All previous outputs
+- Method: chart_mcp.create_dashboard()
+- Output: seo_dashboard.html
+
+**Task 3.2**: Executive Summary [ContentAgent]
+- Inputs: keyword_gaps.json, technical_priorities.json  
+- Method: generate_executive_summary()
+- Output: executive_summary.pdf
+
+## Validation Checklist
+✓ All MCPs available and accessible
+✓ Agent compatibility verified
+✓ Parameter validation completed
+✓ Output formats confirmed
+✓ Retry policies configured
+✓ Success criteria defined
+
+## Configuration Required
+```yaml
+# config/seo_analysis.yaml
+api_keys:
+  dataforseo_api_key: ${DATAFORSEO_API_KEY}
+  gsc_credentials: ${GSC_CREDENTIALS_PATH}
+
+retry_policies:
+  max_retries: 3
+  backoff_strategy: exponential
+  retry_on: [timeout, rate_limit, server_error]
+
+output_settings:
+  dashboard_theme: "professional"
+  pdf_format: "executive"
+  data_retention: "30_days"
+```
+
+PROCEED WITH EXECUTION? [Y/n]
+```
+
+## Sample Workflow Templates
+
+### SEO Workflow Templates
+
+#### Template 1: Technical SEO Audit
+```markdown
+# Technical SEO Audit Workflow
+
+## Parameters
+- site_url: Target website URL (required)
+- audit_depth: [quick, standard, comprehensive] (default: standard)
+- client_slug: Client identifier (required)
+
+## Inputs (Optional)
+- sitemap_url: inputs/sitemap.xml
+- robots_txt: inputs/robots.txt
+- previous_audit: inputs/last_audit.json
+
+## Stages
+
+### Stage 1: Technical Discovery
+**Recommended Agents**: TechnicalSEOAgent (primary)
+**Suggested MCPs**: firecrawl-mcp, lighthouse-mcp
+**Parallel Tasks**: Site crawl + page speed analysis
+**Expected Findings**: Core Web Vitals issues, indexing problems
+
+### Stage 2: Issue Analysis  
+**Recommended Agents**: PerformanceProfilerAgent, SecurityAuditorAgent
+**Expected Correlations**: Page load time vs bounce rate, mobile scores vs rankings
+
+### Stage 3: Prioritized Recommendations
+**Template**: `/templates/reports/seo/technical_seo_report.html`
+**Agent Handoffs**: "PerformanceProfilerAgent should optimize images on 23 pages"
+```
+
+#### Template 2: Competitor Content Gap Analysis
+```markdown
+# Competitor Content Gap Analysis
+
+## Parameters
+- primary_site: Your website (required)
+- competitors: List of competitor URLs (required, 2-5 sites)
+- content_categories: [blog, product pages, resources] (default: all)
+
+## Stages
+
+### Stage 1: Content Inventory
+**Recommended Agents**: BenchmarkResearchAgent, ContentAgent
+**Suggested MCPs**: firecrawl-mcp, dataforseo-mcp
+**Expected Data**: 500+ competitor pages analyzed
+
+### Stage 2: Gap Identification
+**Recommended Agents**: KeywordStrategyAgent, DataPipelineAgent  
+**Expected Insights**: "Competitors have 40% more technical content", "Missing content in 'automation' category"
+
+### Stage 3: Content Strategy
+**Template**: `/templates/reports/seo/content_strategy.html`
+**Agent Handoffs**: "ContentAgent should create 15 articles in identified gap areas"
+```
+
+### Python Development Workflow Templates
+
+#### Template 3: Code Quality Assessment
+```markdown
+# Python Code Quality Assessment
+
+## Parameters  
+- repository_path: Path to Python codebase (required)
+- quality_threshold: Minimum acceptable score (default: 8.0)
+- include_security: Enable security scanning (default: true)
+
+## Inputs (Optional)
+- requirements: requirements.txt or pyproject.toml
+- test_config: inputs/pytest.ini or tox.ini
+
+## Stages
+
+### Stage 1: Static Analysis
+**Recommended Agents**: CodebaseAnalyzerAgent (primary)
+**Suggested MCPs**: pylint-mcp, black-mcp, mypy-mcp
+**Parallel Tasks**: Style check + type analysis + complexity analysis
+**Success Criteria**: <100 style violations, type coverage >80%
+
+### Stage 2: Security Audit
+**Recommended Agents**: SecurityAuditorAgent
+**Suggested MCPs**: bandit-mcp, safety-mcp
+**Expected Findings**: Dependency vulnerabilities, code security issues
+
+### Stage 3: Performance Profiling
+**Recommended Agents**: PerformanceProfilerAgent
+**Expected Correlations**: Function complexity vs execution time
+
+### Stage 4: Quality Report
+**Template**: `/templates/reports/python/code_analysis_report.html`
+**Agent Handoffs**: "FeatureDeveloperAgent should refactor 8 high-complexity functions"
+```
+
+#### Template 4: Test Coverage Enhancement
+```markdown
+# Test Coverage Enhancement Workflow
+
+## Parameters
+- target_coverage: Desired coverage percentage (default: 90)
+- test_framework: [pytest, unittest, nose] (auto-detect)
+- focus_modules: Specific modules to prioritize (optional)
+
+## Stages
+
+### Stage 1: Coverage Analysis
+**Recommended Agents**: QualityTesterAgent, CodebaseAnalyzerAgent
+**Suggested MCPs**: coverage-mcp, pytest-mcp
+**Success Criteria**: Coverage report generated, gaps identified
+
+### Stage 2: Test Generation Strategy
+**Recommended Agents**: FeatureDeveloperAgent (test creation)
+**Expected Insights**: "Functions with >10 parameters need 3x more test cases"
+
+### Stage 3: Implementation & Validation
+**Template**: `/templates/reports/python/test_coverage_report.html`
+**Agent Handoffs**: "QualityTesterAgent should implement 45 missing test cases"
+```
+
+### Data Analysis Workflow Templates
+
+#### Template 5: Correlation Discovery Analysis
+```markdown
+# Data Correlation Discovery
+
+## Parameters
+- data_sources: List of CSV/JSON files (required)
+- correlation_threshold: Minimum R² value (default: 0.5)
+- analysis_type: [exploratory, confirmatory] (default: exploratory)
+
+## Inputs (Required)
+- primary_dataset: inputs/main_data.csv
+- secondary_data: inputs/supplementary_data.csv (optional)
+
+## Stages
+
+### Stage 1: Data Validation & Cleaning
+**Recommended Agents**: DataPipelineAgent
+**Suggested MCPs**: pandas-mcp, data-explorer-mcp
+**Success Criteria**: <5% missing values, data types validated
+
+### Stage 2: Correlation Analysis
+**Recommended Agents**: MetricsReporterAgent, DataPipelineAgent
+**Suggested MCPs**: chart-mcp, statistical-analysis-mcp
+**Expected Discoveries**: "Customer age correlates with purchase frequency (R²=0.73)"
+
+### Stage 3: Visualization & Insights
+**Template**: `/templates/reports/data_analysis/correlation_report.html`
+**Agent Handoffs**: "ConversionOptimizerAgent should A/B test insights from age-purchase correlation"
+```
+
+#### Template 6: Anomaly Detection Pipeline
+```markdown
+# Anomaly Detection & Alerting
+
+## Parameters
+- data_stream: Real-time or batch data source (required)
+- sensitivity: [low, medium, high] (default: medium)
+- alert_threshold: Standard deviations for alerts (default: 2.5)
+
+## Stages
+
+### Stage 1: Baseline Establishment
+**Recommended Agents**: DataPipelineAgent
+**Expected Output**: Statistical baseline for normal behavior patterns
+
+### Stage 2: Anomaly Detection
+**Suggested MCPs**: scikit-learn-mcp, chart-mcp
+**Expected Insights**: "Traffic spike 340% above normal on mobile devices"
+
+### Stage 3: Alert Generation
+**Template**: `/templates/reports/data_analysis/anomaly_detection.html`
+**Agent Handoffs**: "MetricsReporterAgent should investigate traffic anomaly source"
+```
+
+### WordPress Development Templates
+
+#### Template 7: WordPress Performance Optimization
+```markdown
+# WordPress Performance Optimization
+
+## Parameters
+- wp_site_url: WordPress site URL (required)
+- optimization_level: [basic, advanced, comprehensive] (default: advanced)
+- target_performance: Desired PageSpeed score (default: 90)
+
+## Stages
+
+### Stage 1: Performance Baseline
+**Recommended Agents**: PerformanceProfilerAgent, TechnicalSEOAgent
+**Suggested MCPs**: lighthouse-mcp, gtmetrix-mcp
+**Success Criteria**: Current performance scores documented
+
+### Stage 2: WordPress-Specific Analysis
+**Recommended Agents**: WordPressBuilderAgent, SecurityAuditorAgent
+**Expected Findings**: Plugin performance impact, theme optimization opportunities
+
+### Stage 3: Implementation Plan
+**Template**: `/templates/reports/wordpress/performance_report.html`
+**Agent Handoffs**: "WordPressBuilderAgent should optimize 12 slow-loading plugins"
+```
+
+### Template Usage Instructions
+
+**Template Discovery**: System automatically suggests templates based on:
+- Project type detection (Python files → development templates)
+- User role identification (SEO specialist → SEO templates) 
+- Previous workflow patterns (frequently used template types)
+
+**Template Customization**: Users can:
+- Fork existing templates for custom versions
+- Modify agent recommendations and MCP selections
+- Add custom stages and success criteria
+- Save personalized templates in `/templates/custom/`
+
+**Template Validation**: Before execution, system:
+- Verifies all recommended agents are available
+- Confirms suggested MCPs are accessible
+- Validates input file requirements
+- Checks template compatibility with current CCC configuration
+
+## Technical Architecture
+
+### System Components
+
+#### 1. Workflow Parser Engine
+```
+/bin/workflow_parser.py
+├── MarkdownParser: Parse workflow definitions
+├── ParameterExtractor: Extract and validate parameters  
+├── StageAnalyzer: Identify stages and dependencies
+└── ValidationEngine: Validate workflow structure
+```
+
+#### 2. Interview & Discovery System
+```
+/bin/interview_engine.py
+├── InterviewOrchestrator: Manage interview flow
+├── MCPDiscoveryAgent: Query available MCPs and methods
+├── AgentMatcher: Suggest optimal agent combinations
+└── AlternativeGenerator: Provide alternative approaches
+```
+
+#### 3. Execution Engine
+```
+/bin/workflow_executor.py
+├── DependencyResolver: Build execution graph
+├── ParallelizationOptimizer: Identify parallel opportunities
+├── StageRunner: Execute individual workflow stages
+├── ParameterManager: Handle variable substitution
+└── OutputValidator: Verify stage outputs
+```
+
+#### 4. Configuration Management
+```
+/bin/config_manager.py  
+├── ConfigLoader: Load and merge configuration files
+├── ParameterValidator: Validate parameter values
+├── EnvironmentManager: Handle environment variables
+└── SecretManager: Secure API key management
+```
+
+#### 5. Error Handling & Retry System
+```
+/bin/error_handler.py
+├── RetryPolicyManager: Configure retry behaviors
+├── ErrorClassifier: Categorize and route errors  
+├── FailureRecovery: Attempt automatic recovery
+└── StateManager: Maintain workflow execution state
+```
+
+### Data Flow Architecture
+
+```
+[Markdown Definition] 
+    ↓
+[Workflow Parser] → [Parameter Validation]
+    ↓
+[Interview System] → [User Clarifications]
+    ↓  
+[Agent/MCP Discovery] → [Execution Plan Generation]
+    ↓
+[User Approval] → [Configuration Loading]
+    ↓
+[Execution Engine] → [Parallel Stage Runner]
+    ↓
+[Output Generation] → [Validation & Delivery]
+```
+
+### File System Structure
+
+#### Workflow Definitions
+```
+/workflows/
+├── marketing/
+│   ├── seo_audit_comprehensive.md
+│   ├── competitor_analysis.md
+│   └── content_gap_analysis.md
+├── development/
+│   ├── code_quality_audit.md
+│   ├── security_assessment.md
+│   └── performance_optimization.md
+├── config/
+│   ├── default.yaml
+│   ├── marketing.yaml
+│   └── development.yaml
+└── templates/
+    ├── seo_workflow_template.md
+    └── dev_workflow_template.md
+```
+
+#### Client Project Structure (SEO Projects)
+```
+/home/loki/seo-projects/
+├── client-acme-corp/
+│   ├── inputs/                          # Input files for workflows
+│   │   ├── gsc_search_analytics.csv
+│   │   ├── competitor_list.txt
+│   │   └── custom_keywords.csv
+│   └── reports/                         # Workflow execution results
+│       ├── seo-audit-comprehensive_2025_01_09/
+│       │   ├── inputs/                  # Archived input files
+│       │   ├── artifacts/
+│       │   │   ├── gsc/
+│       │   │   ├── crawl/
+│       │   │   ├── charts/
+│       │   │   └── reports/
+│       │   ├── execution_log.json
+│       │   └── workflow_summary.html
+│       └── competitor-analysis_2025_01_15/
+├── client-beta-inc/
+│   ├── inputs/
+│   └── reports/
+└── client-gamma-llc/
+    ├── inputs/
+    └── reports/
+```
+
+#### Development Project Structure  
+```
+/home/loki/python-projects/
+├── project-alpha/
+│   ├── inputs/
+│   │   ├── codebase_snapshot.zip
+│   │   └── requirements.txt
+│   └── reports/
+│       ├── code-quality-audit_2025_01_09/
+│       └── security-assessment_2025_01_12/
+```
+
+## Implementation Plan
+
+### Phase 1: Core Parser & Interview System (Week 1-2)
+**Priority**: High
+**Dependencies**: None
+
+**Deliverables:**
+- Markdown workflow parser
+- Basic interview system
+- MCP/Agent discovery engine
+- Simple execution plan generator
+
+**Acceptance Criteria:**
+- Parse sample SEO workflow definition
+- Conduct basic clarification interview
+- Generate execution plan with agent/MCP suggestions
+- Validate all components exist and are accessible
+
+### Phase 2: Execution Engine & Parallelization (Week 3-4)
+**Priority**: High  
+**Dependencies**: Phase 1
+
+**Deliverables:**
+- Multi-stage execution engine
+- Dependency resolution system
+- Parallel execution optimizer
+- Basic error handling
+
+**Acceptance Criteria:**
+- Execute 3-stage workflow successfully
+- Achieve 50% time reduction through parallelization
+- Handle basic failure scenarios
+- Generate execution logs
+
+### Phase 3: Advanced Features & Polish (Week 5-6)
+**Priority**: Medium
+**Dependencies**: Phase 2
+
+**Deliverables:**
+- Advanced retry policies
+- Configuration management system
+- Output validation and formatting
+- Comprehensive error handling
+
+**Acceptance Criteria:**
+- Support complex retry scenarios
+- Handle environment-specific configurations
+- Validate and format all output types
+- Provide detailed error diagnostics
+
+### Phase 4: Integration & Testing (Week 7-8)
+**Priority**: High
+**Dependencies**: Phase 3
+
+**Deliverables:**
+- CCC system integration
+- Comprehensive test suite
+- Documentation and examples
+- Performance optimization
+
+**Acceptance Criteria:**
+- Seamless integration with existing CCC workflows
+- 95% test coverage for core functionality
+- Complete user documentation
+- Meet all performance requirements
+
+## Risk Assessment
+
+### High Risk Items
+1. **MCP Method Discovery Complexity**: Accurately determining available MCP methods and parameters
+   - **Mitigation**: Build comprehensive MCP registry with version tracking
+   - **Contingency**: Manual method specification as fallback
+
+2. **Parallelization Safety**: Ensuring parallel execution doesn't create race conditions
+   - **Mitigation**: Conservative dependency analysis and explicit stage ordering
+   - **Contingency**: Sequential execution mode as safe fallback
+
+3. **Configuration Complexity**: Managing multiple configuration layers and environments
+   - **Mitigation**: Start with simple key-value configuration, expand incrementally
+   - **Contingency**: Environment variables as minimal configuration approach
+
+### Medium Risk Items
+1. **User Interview Quality**: Ensuring interviews gather sufficient information
+2. **Output Standardization**: Maintaining consistent output formats across workflows
+3. **Error Recovery**: Gracefully handling partial workflow failures
+
+## Future Enhancements
+
+### Phase 2 Features (Post-MVP)
+- Visual workflow designer
+- Workflow performance analytics
+- Advanced scheduling and automation
+- Workflow marketplace/sharing system
+- Integration with external workflow engines
+
+### Long-term Vision
+- AI-powered workflow optimization
+- Predictive failure detection
+- Dynamic resource allocation
+- Cross-project workflow orchestration
+
+## Success Definition
+
+**MVP Success:**
+- Users can define and execute SEO audit workflows in under 10 minutes
+- 90% reduction in setup time for common workflows
+- Zero execution failures due to invalid component references
+- Consistent, reproducible outputs across workflow runs
+
+**Full Success:**
+- 20+ workflow templates covering major use cases
+- Integration with all CCC agents and available MCPs
+- Advanced parallelization achieving 60%+ time savings
+- Workflow sharing and collaboration features
+- Comprehensive error handling and recovery capabilities
+
+---
+
+**Next Steps:**
+1. Stakeholder review and approval of PRD
+2. Technical architecture deep-dive session  
+3. Phase 1 implementation planning and resource allocation
+4. MVP prototype development and testing

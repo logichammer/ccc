@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CCC Workflow System - Complete Guide</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+      max-width: 1200px;
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; font-size: 2.2em; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; font-size: 1.6em; }
+    h3 { color: #34495e; font-size: 1.3em; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 15px; 
+      border-radius: 4px; 
+      font-family: 'Consolas', 'Monaco', monospace; 
+      font-size: 14px;
+      overflow-x: auto;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    .code-inline { 
+      background: #f8f9fa; 
+      color: #e74c3c; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+      font-family: monospace;
+    }
+    .command-example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      border-left: 4px solid #3498db;
+    }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background: #f1f8e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .workflow-stages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .stage-card {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stage-card h4 {
+      color: #495057;
+      margin-top: 0;
+      border-bottom: 2px solid #6c757d;
+      padding-bottom: 8px;
+    }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul, ol { margin-left: 20px; }
+    li { margin-bottom: 8px; }
+    .toc {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .toc h3 {
+      margin-top: 0;
+      color: #495057;
+    }
+    .toc ul {
+      margin-left: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 CCC Workflow System - Complete Guide</h1>
+
+  <div class="toc">
+    <h3>📚 Table of Contents</h3>
+    <ul>
+      <li><a href="#overview">System Overview</a></li>
+      <li><a href="#architecture">Architecture & Components</a></li>
+      <li><a href="#quickstart">Quick Start Guide</a></li>
+      <li><a href="#commands">CLI Commands Reference</a></li>
+      <li><a href="#workflow-formats">Workflow Format Variations</a></li>
+      <li><a href="#json-config">JSON Configuration System</a></li>
+      <li><a href="#interview-system">Interview & Creation Process</a></li>
+      <li><a href="#execution">Workflow Execution</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+      <li><a href="#examples">Complete Examples</a></li>
+    </ul>
+  </div>
+
+  <h2 id="overview">🌟 System Overview</h2>
+  
+  <p>The CCC Workflow System is a sophisticated markdown-based workflow definition and execution engine that enables you to:</p>
+  
+  <ul>
+    <li><strong>Define Complex Workflows</strong> - Write workflows in markdown with variable substitution</li>
+    <li><strong>Multiple Format Styles</strong> - From conversational to enterprise-grade technical specifications</li>
+    <li><strong>JSON Configuration</strong> - Separate configuration from workflow logic</li>
+    <li><strong>Auto-Detection</strong> - Smart single-file processing with helpful error handling</li>
+    <li><strong>Interview-Driven Creation</strong> - Interactive refinement of workflows</li>
+    <li><strong>Mock Execution</strong> - Professional simulation with realistic outputs</li>
+    <li><strong>Agent Integration</strong> - Automatic agent and MCP recommendations</li>
+  </ul>
+
+  <div class="note">
+    <strong>🎯 Core Philosophy:</strong> One workflow draft at a time for clean development, with powerful auto-detection and zero-argument commands for simplicity.
+  </div>
+
+  <h2 id="architecture">🏗️ Architecture & Components</h2>
+
+  <h3>Directory Structure</h3>
+  <pre><code>/workflows/
+├── draft/              # Draft workflow definitions (.md files)
+│   ├── inputs/         # JSON configs and input files
+│   │   └── workflow-config.json
+│   └── my-workflow.md
+├── suggested/          # Interview-generated workflows
+├── active/             # Approved workflows ready for execution
+├── archive/            # Completed workflows
+└── configs/            # System-wide configuration files</code></pre>
+
+  <h3>Core Components</h3>
+  <div class="workflow-stages">
+    <div class="stage-card">
+      <h4>🔍 WorkflowParser</h4>
+      <ul>
+        <li>Parses markdown workflow files</li>
+        <li>Extracts variables ({{VARIABLE}})</li>
+        <li>Loads JSON configuration</li>
+        <li>Generates config templates</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>🎤 WorkflowInterview</h4>
+      <ul>
+        <li>Interactive workflow refinement</li>
+        <li>Chat-based requirement gathering</li>
+        <li>Agent and MCP recommendations</li>
+        <li>Suggested workflow generation</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>✅ WorkflowValidator</h4>
+      <ul>
+        <li>Technical feasibility checking</li>
+        <li>Agent capability analysis</li>
+        <li>MCP availability validation</li>
+        <li>Input file verification</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>⚡ WorkflowExecutor</h4>
+      <ul>
+        <li>Multi-stage execution</li>
+        <li>Mock output generation</li>
+        <li>Correlation discovery</li>
+        <li>Professional report creation</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 id="quickstart">🚀 Quick Start Guide</h2>
+
+  <h3>Basic Workflow Process</h3>
+  
+  <div class="command-example">
+    # 1. Create a draft workflow (markdown file)<br>
+    echo "# My SEO Audit" > workflows/draft/my-seo-audit.md<br>
+    <br>
+    # 2. Generate JSON config template (auto-detects single file)<br>
+    workflow-system config-template<br>
+    <br>
+    # 3. Edit the generated config with your values<br>
+    nano workflows/draft/inputs/workflow-config.json<br>
+    <br>
+    # 4. Create workflow through interactive interview<br>
+    workflow-system create<br>
+    <br>
+    # 5. Execute the workflow<br>
+    workflow-system execute my-seo-audit<br>
+  </div>
+
+  <div class="success">
+    <strong>✨ That's it!</strong> The system handles auto-detection, configuration loading, agent recommendations, and execution simulation automatically.
+  </div>
+
+  <h2 id="commands">🎮 CLI Commands Reference</h2>
+
+  <h3>Core Commands</h3>
+
+  <h4>workflow-system create</h4>
+  <p>Creates a workflow from draft files through interactive interview.</p>
+  <div class="command-example">
+    workflow-system create                    # Auto-detect single draft<br>
+    workflow-system create my-workflow        # Explicit workflow name<br>
+    workflow-system create --client acme      # Client-specific settings<br>
+  </div>
+
+  <h4>workflow-system config-template</h4>
+  <p>Generates JSON configuration templates for workflows.</p>
+  <div class="command-example">
+    workflow-system config-template           # Auto-detect single draft<br>
+    workflow-system config-template my-draft  # Explicit workflow name<br>
+  </div>
+
+  <h4>workflow-system validate</h4>
+  <p>Validates technical feasibility and requirements.</p>
+  <div class="command-example">
+    workflow-system validate my-workflow      # Check if workflow is executable<br>
+    workflow-system validate --verbose        # Detailed validation output<br>
+  </div>
+
+  <h4>workflow-system execute</h4>
+  <p>Executes workflows with professional simulation.</p>
+  <div class="command-example">
+    workflow-system execute my-workflow       # Full execution<br>
+    workflow-system execute my-workflow --dry-run  # Preview only<br>
+  </div>
+
+  <h4>workflow-system list</h4>
+  <p>Lists all workflows across all stages.</p>
+  <div class="command-example">
+    workflow-system list                      # Show all workflows with status<br>
+  </div>
+
+  <h4>workflow-system archive</h4>
+  <p>Archives completed workflows.</p>
+  <div class="command-example">
+    workflow-system archive my-workflow       # Move to archive<br>
+  </div>
+
+  <h4>workflow-system status</h4>
+  <p>Shows system status and configuration.</p>
+  <div class="command-example">
+    workflow-system status                    # System overview<br>
+  </div>
+
+  <h3>Auto-Detection Rules</h3>
+
+  <div class="note">
+    <strong>📋 Single File Rule:</strong> Commands like <code class="code-inline">create</code> and <code class="code-inline">config-template</code> auto-detect when exactly one draft file exists.
+  </div>
+
+  <ul>
+    <li><strong>✅ One Draft File:</strong> Auto-detects and processes</li>
+    <li><strong>❌ Multiple Draft Files:</strong> Lists options and requires explicit name</li>
+    <li><strong>❌ No Draft Files:</strong> Helpful error with guidance</li>
+  </ul>
+
+  <h2 id="workflow-formats">📝 Workflow Format Variations</h2>
+
+  <p>The system supports multiple workflow format styles, from simple conversational to enterprise-grade technical specifications:</p>
+
+  <h3>Format Categories</h3>
+
+  <h4>🗣️ Conversational Formats</h4>
+  <ul>
+    <li><strong>Minimal Request</strong> - Ultra-simple, just provide URL and keyword</li>
+    <li><strong>Conversational</strong> - Natural language descriptions</li>
+    <li><strong>Narrative Story</strong> - Engaging detective-style presentation</li>
+  </ul>
+
+  <h4>🔧 Technical Formats</h4>
+  <ul>
+    <li><strong>Technical Brief</strong> - YAML configs with tool specifications</li>
+    <li><strong>Detailed Spec</strong> - JSON schemas and comprehensive parameters</li>
+    <li><strong>Code Style</strong> - Programming syntax with function definitions</li>
+  </ul>
+
+  <h4>🏢 Enterprise Formats</h4>
+  <ul>
+    <li><strong>Enterprise Spec</strong> - Full compliance, SLAs, quality assurance</li>
+    <li><strong>Scientific Method</strong> - Research protocols with statistical validation</li>
+  </ul>
+
+  <div class="note">
+    <strong>💡 Key Insight:</strong> All formats deliver the same high-quality results - they differ only in presentation complexity and initial request style.
+  </div>
+
+  <h3>Variable System</h3>
+  <p>All formats support variable substitution using <code class="code-inline">{{VARIABLE_NAME}}</code> syntax:</p>
+  <ul>
+    <li><code class="code-inline">{{SITE_URL}}</code> - Target website</li>
+    <li><code class="code-inline">{{MAIN_KEYWORD}}</code> - Primary keyword</li>
+    <li><code class="code-inline">{{ANALYSIS_DEPTH}}</code> - Complexity level</li>
+    <li><code class="code-inline">{{COMPETITOR_COUNT}}</code> - Number of competitors</li>
+  </ul>
+
+  <h2 id="json-config">⚙️ JSON Configuration System</h2>
+
+  <h3>Configuration Structure</h3>
+  <pre><code>{
+  "workflow_name": "my-seo-audit",
+  "variables": {
+    "SITE_URL": "https://example.com",
+    "MAIN_KEYWORD": "best accounting software",
+    "ANALYSIS_DEPTH": "comprehensive",
+    "COMPETITOR_COUNT": 10
+  },
+  "client_settings": {
+    "client_slug": "acme-corp",
+    "output_directory": "/home/loki/seo-projects/acme-corp/",
+    "archive_previous": true
+  }
+}</code></pre>
+
+  <h3>Automatic Detection</h3>
+  <p>The system automatically looks for <code class="code-inline">inputs/workflow-config.json</code> and applies it during workflow processing.</p>
+
+  <h3>Input File Specifications</h3>
+  <p>Workflows can specify optional input files with detailed requirements:</p>
+  <pre><code># Search Console Data
+inputs/search_console_data.csv
+Columns: query, impressions, clicks, position, ctr
+Focus on: high-impression queries, position changes
+Exclude: branded queries</code></pre>
+
+  <div class="note">
+    <strong>📖 Detailed Guide:</strong> See <a href="../workflow-json-config.html">JSON Configuration Guide</a> for complete documentation.
+  </div>
+
+  <h2 id="interview-system">🎤 Interview & Creation Process</h2>
+
+  <h3>Interview Flow</h3>
+  <div class="workflow-stages">
+    <div class="stage-card">
+      <h4>1. Project Context</h4>
+      <ul>
+        <li>Project type identification</li>
+        <li>Timeline requirements</li>
+        <li>Resource availability</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>2. Requirements Gathering</h4>
+      <ul>
+        <li>Input file analysis</li>
+        <li>Data source validation</li>
+        <li>Special requirements</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>3. Agent Recommendations</h4>
+      <ul>
+        <li>Capability analysis</li>
+        <li>MCP availability check</li>
+        <li>Tool integration planning</li>
+      </ul>
+    </div>
+    
+    <div class="stage-card">
+      <h4>4. Workflow Generation</h4>
+      <ul>
+        <li>Structured workflow creation</li>
+        <li>Stage dependency mapping</li>
+        <li>Success criteria definition</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Chat-Based Interface</h3>
+  <p>The interview system uses natural language questions to refine workflow requirements:</p>
+  <div class="command-example">
+    📋 PROJECT CONTEXT<br>
+    ========================================<br>
+    Project type: seo<br>
+    <br>
+    3. Timeline:<br>
+       1. immediate (complete within 1 hour)<br>
+       2. standard (complete within 4 hours)<br>
+       3. comprehensive (complete within 8+ hours)<br>
+    Select timeline (1-3) [default: 2]:<br>
+  </div>
+
+  <h2 id="execution">⚡ Workflow Execution</h2>
+
+  <h3>Execution Pipeline</h3>
+  <ol>
+    <li><strong>Pre-validation</strong> - Technical feasibility check</li>
+    <li><strong>Stage Execution</strong> - Multi-stage processing with dependencies</li>
+    <li><strong>Mock Generation</strong> - Professional simulation with realistic data</li>
+    <li><strong>Correlation Discovery</strong> - Automated pattern recognition</li>
+    <li><strong>Report Generation</strong> - Interactive dashboards and action plans</li>
+  </ol>
+
+  <h3>Mock Execution Features</h3>
+  <ul>
+    <li><strong>Realistic Data Generation</strong> - Professional-quality mock results</li>
+    <li><strong>Statistical Correlations</strong> - Simulated insight discovery</li>
+    <li><strong>Multi-format Output</strong> - HTML dashboards, Excel reports, PDFs</li>
+    <li><strong>Client-specific Organization</strong> - Organized by client slug</li>
+  </ul>
+
+  <h3>Output Structure</h3>
+  <pre><code>/home/loki/seo-projects/{slug}/reports/
+├── workflow-{timestamp}/
+│   ├── dashboard.html          # Interactive performance overview
+│   ├── action-plan.xlsx        # Prioritized recommendations
+│   ├── technical-report.pdf    # Detailed findings
+│   └── raw-data/              # Supporting data files
+│       ├── site-analysis.json
+│       ├── competitor-data.csv
+│       └── correlations.json</code></pre>
+
+  <h2 id="troubleshooting">🔧 Troubleshooting</h2>
+
+  <h3>Common Issues</h3>
+
+  <div class="warning">
+    <strong>❌ Multiple draft files found</strong><br>
+    <strong>Solution:</strong> Either specify explicit workflow name or keep only one draft file at a time for auto-detection.
+  </div>
+
+  <div class="warning">
+    <strong>❌ No draft workflow files found</strong><br>
+    <strong>Solution:</strong> Create a markdown workflow file in <code class="code-inline">workflows/draft/</code> directory.
+  </div>
+
+  <div class="warning">
+    <strong>❌ Config template variables not detected</strong><br>
+    <strong>Solution:</strong> Ensure variables use <code class="code-inline">{{VARIABLE_NAME}}</code> format in markdown.
+  </div>
+
+  <h3>Debug Commands</h3>
+  <div class="command-example">
+    workflow-system status --verbose          # Detailed system status<br>
+    workflow-system validate workflow --verbose  # Detailed validation<br>
+    workflow-system execute workflow --dry-run   # Preview execution<br>
+  </div>
+
+  <h2 id="examples">📋 Complete Examples</h2>
+
+  <h3>SEO Audit Workflow Example</h3>
+
+  <h4>1. Draft Workflow (workflows/draft/seo-audit.md)</h4>
+  <pre><code># SEO Audit Workflow
+
+## Goal
+Complete SEO analysis for {{SITE_URL}} targeting "{{MAIN_KEYWORD}}"
+
+## Process
+- Site crawl and technical analysis
+- Competitor research ({{COMPETITOR_COUNT}} competitors)
+- Performance benchmarking
+- Gap analysis and recommendations
+
+## Expected Output
+- Interactive dashboard comparing site vs competitors
+- Prioritized action plan with implementation guidance
+- Technical report with specific fixes</code></pre>
+
+  <h4>2. Generated Config Template</h4>
+  <div class="command-example">
+    workflow-system config-template<br>
+    # Auto-detects seo-audit.md and generates workflow-config.json<br>
+  </div>
+
+  <h4>3. Configured JSON (inputs/workflow-config.json)</h4>
+  <pre><code>{
+  "workflow_name": "client-seo-audit",
+  "variables": {
+    "SITE_URL": "https://client-website.com",
+    "MAIN_KEYWORD": "enterprise software solutions",
+    "COMPETITOR_COUNT": 8
+  },
+  "client_settings": {
+    "client_slug": "enterprise-client",
+    "output_directory": "/home/loki/seo-projects/enterprise/",
+    "archive_previous": true
+  }
+}</code></pre>
+
+  <h4>4. Complete Execution</h4>
+  <div class="command-example">
+    # Create through interview<br>
+    workflow-system create<br>
+    <br>
+    # Execute with professional simulation<br>
+    workflow-system execute seo-audit<br>
+    <br>
+    # Results saved to /home/loki/seo-projects/enterprise/reports/<br>
+  </div>
+
+  <div class="success">
+    <strong>🎉 Result:</strong> Professional SEO audit with interactive dashboard, Excel action plan, and PDF technical report - all generated through sophisticated mock execution that demonstrates real-world quality deliverables.
+  </div>
+
+  <h2>📚 Additional Documentation</h2>
+  <ul>
+    <li><a href="workflow-formats.html">Workflow Format Gallery</a> - Complete format examples</li>
+    <li><a href="cli-reference.html">CLI Reference Guide</a> - Detailed command documentation</li>
+    <li><a href="json-config-advanced.html">Advanced JSON Configuration</a> - Complex configuration patterns</li>
+    <li><a href="interview-system-guide.html">Interview System Guide</a> - Deep dive into workflow creation</li>
+    <li><a href="../workflow-json-config.html">JSON Configuration Basics</a> - Getting started with configs</li>
+  </ul>
+
+  <div class="note">
+    <strong>💬 Need Help?</strong> The workflow system includes extensive error messages and guidance. Use <code class="code-inline">--verbose</code> flag for detailed troubleshooting information.
+  </div>
+
+</body>
+</html>

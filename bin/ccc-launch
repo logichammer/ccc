@@ -49,10 +49,28 @@ check_ccc_system() {
     fi
 }
 
+is_main_ccc_directory() {
+    local current_dir=$(pwd)
+    local resolved_ccc_dir=$(realpath "$CCC_DIR" 2>/dev/null || echo "$CCC_DIR")
+    local resolved_current_dir=$(realpath "$current_dir" 2>/dev/null || echo "$current_dir")
+    
+    if [ "$resolved_current_dir" = "$resolved_ccc_dir" ]; then
+        return 0  # True - we're in the main CCC directory
+    else
+        return 1  # False - we're in an external project
+    fi
+}
+
 setup_ccc_if_needed() {
     local current_dir=$(pwd)
     
     print_step "Checking CCC setup in current directory..."
+    
+    # Check if we're in the main CCC system directory
+    if is_main_ccc_directory; then
+        print_success "Running from main CCC system directory - no .claude/ setup needed"
+        return 0
+    fi
     
     if [ ! -d ".claude" ]; then
         print_warning "CCC toolkit not found - setting up automatically..."
@@ -168,19 +186,28 @@ create_launch_message() {
     local project_type="$1"
     local current_dir=$(basename "$(pwd)")
     
-    # Detect which CLAUDE.md is being used
+    # Detect which CLAUDE.md is being used and CCC status
     local claude_md_info=""
-    if [ -f "CLAUDE.md" ]; then
+    local ccc_status=""
+    
+    if is_main_ccc_directory; then
+        # We're in the main CCC system directory
+        claude_md_info="🏗️ **Main CCC System CLAUDE.md** (Full System Access)"
+        ccc_status="✅ Main CCC System Directory (Direct Access)"
+    elif [ -f "CLAUDE.md" ]; then
         # Check if it's a CCC-enhanced version
         if grep -q "LINE ENDINGS RULE.*TOP PRIORITY" "CLAUDE.md" 2>/dev/null; then
             claude_md_info="🎯 **CCC Enhanced CLAUDE.md** (Beast Mode Active)"
         else
             claude_md_info="📄 **Standard CLAUDE.md** (Basic Version)"
         fi
+        ccc_status="✅ Active (toolkit in .claude/ directory)"
     elif [ -f ".claude/CLAUDE.md" ]; then
         claude_md_info="📁 **CCC Toolkit CLAUDE.md** (.claude/ directory)"
+        ccc_status="✅ Active (toolkit in .claude/ directory)"
     else
         claude_md_info="❓ **No CLAUDE.md detected**"
+        ccc_status="⚠️ Limited (no CLAUDE.md found)"
     fi
     
     cat > /tmp/ccc_launch_message.md << EOF
@@ -189,7 +216,7 @@ create_launch_message() {
 ## 📍 Project Context
 - **Directory**: \`$(pwd)\`
 - **Project Type**: \`${project_type}\`
-- **CCC Status**: ✅ Active (toolkit in .claude/ directory)
+- **CCC Status**: ${ccc_status}
 - **CLAUDE.md**: ${claude_md_info}
 
 ## 🤖 Available Agents
@@ -231,7 +258,25 @@ EOF
 EOF
     fi
 
-    cat >> /tmp/ccc_launch_message.md << EOF
+    if is_main_ccc_directory; then
+        cat >> /tmp/ccc_launch_message.md << EOF
+## 📋 Available Commands
+Access 70+ curated commands in \`commands/\`:
+- **Shared commands**: Universal project tools in \`commands/shared/\`
+- **Type-specific commands**: Optimized tools in \`commands/${project_type}/\`
+
+## 📖 Documentation
+- **CLAUDE.md**: Agent orchestration guide (current directory)
+- **Complete docs**: \`docs/index.html\`
+
+## 🏗️ System Status
+Operating from main CCC system directory - full system access enabled.
+
+---
+*CCC Beast Mode Activated - Main System Ready!*
+EOF
+    else
+        cat >> /tmp/ccc_launch_message.md << EOF
 ## 📋 Available Commands
 Access 70+ curated commands in \`.claude/commands/\`:
 - **Shared commands**: Universal project tools
@@ -247,6 +292,7 @@ When done: \`ccc-work --cleanup\` or \`ccc-clean\`
 ---
 *CCC Beast Mode Activated - Ready for autonomous development!*
 EOF
+    fi
 }
 
 launch_claude_with_analysis() {
@@ -280,7 +326,11 @@ launch_claude_with_analysis() {
     local claude_md_path=""
     local claude_md_prompt=""
     
-    if [ -f "./.claude/CLAUDE.md" ]; then
+    if is_main_ccc_directory; then
+        # We're in the main CCC system directory - use root CLAUDE.md
+        claude_md_path="$(pwd)/CLAUDE.md"
+        claude_md_prompt="CCC System Active: Read and follow all instructions from CLAUDE.md file at ${claude_md_path}. You are operating from the main CCC system directory with full access to all system components, agents, and workflows. Report the CLAUDE.md file path you are using at startup."
+    elif [ -f "./.claude/CLAUDE.md" ]; then
         claude_md_path="$(pwd)/.claude/CLAUDE.md"
         claude_md_prompt="CCC System Active: Read and follow all instructions from CLAUDE.md file at ${claude_md_path}. You are operating with the full CCC toolkit including 25+ specialized agents, autonomous mode, and enhanced workflows. Report the CLAUDE.md file path you are using at startup."
     elif [ -f "./CLAUDE.md" ]; then
@@ -291,11 +341,20 @@ launch_claude_with_analysis() {
     fi
     
     # Launch Claude with CCC integration parameters
-    exec claude --dangerously-skip-permissions \
-                --append-system-prompt "$claude_md_prompt" \
-                --add-dir "./.claude" \
-                --permission-mode bypassPermissions \
-                "$@"
+    if is_main_ccc_directory; then
+        # We're in the main CCC directory - don't add .claude directory since it doesn't exist
+        exec claude --dangerously-skip-permissions \
+                    --append-system-prompt "$claude_md_prompt" \
+                    --permission-mode bypassPermissions \
+                    "$@"
+    else
+        # External project - add .claude directory
+        exec claude --dangerously-skip-permissions \
+                    --append-system-prompt "$claude_md_prompt" \
+                    --add-dir "./.claude" \
+                    --permission-mode bypassPermissions \
+                    "$@"
+    fi
 }
 
 main() {

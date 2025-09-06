@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CLI Reference Guide - CCC Workflow System</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 15px; 
+      border-radius: 4px; 
+      font-family: monospace; 
+      font-size: 14px;
+      overflow-x: auto;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      max-width: 100%;
+    }
+    .code-inline { 
+      background: #f8f9fa; 
+      color: #e74c3c; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+    }
+    .command-card {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .command-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .command-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .command-type {
+      background: #3498db;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8em;
+    }
+    .example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 10px 0;
+      border-left: 4px solid #3498db;
+    }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .warning {
+      background: #fff8e1;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background: #f1f8e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin-left: 20px; }
+    li { margin-bottom: 8px; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #dee2e6;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 CLI Reference Guide</h1>
+
+  <div class="note">
+    <strong>📖 Quick Navigation:</strong> <a href="index.html">← Back to Main Guide</a> | 
+    <a href="workflow-formats.html">Workflow Formats →</a>
+  </div>
+
+  <h2>🚀 Command Overview</h2>
+
+  <p>The CCC Workflow System provides a unified CLI interface for managing workflows from creation to execution. All commands follow the pattern:</p>
+
+  <div class="example">
+    workflow-system &lt;command&gt; [workflow-name] [options]<br>
+  </div>
+
+  <h2>📋 Command Reference</h2>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system create</div>
+      <div class="command-type">Core</div>
+    </div>
+    <p><strong>Purpose:</strong> Creates workflows from draft files through interactive interview process.</p>
+    
+    <h4>Usage Patterns:</h4>
+    <div class="example">
+      # Auto-detect single draft file<br>
+      workflow-system create<br>
+      <br>
+      # Specify explicit workflow<br>
+      workflow-system create my-workflow<br>
+      <br>
+      # With client-specific settings<br>
+      workflow-system create --client acme-corp<br>
+      <br>
+      # With verbose output<br>
+      workflow-system create my-workflow --verbose<br>
+    </div>
+
+    <h4>Auto-Detection Logic:</h4>
+    <ul>
+      <li>✅ <strong>Single Draft File:</strong> Automatically processes the file</li>
+      <li>❌ <strong>Multiple Draft Files:</strong> Lists options and requires explicit name</li>
+      <li>❌ <strong>No Draft Files:</strong> Shows helpful error message</li>
+    </ul>
+
+    <h4>Interview Process:</h4>
+    <ol>
+      <li>Analyzes draft workflow and JSON config (if present)</li>
+      <li>Conducts interactive interview for requirements</li>
+      <li>Recommends agents and MCPs based on workflow needs</li>
+      <li>Generates structured workflow in <code class="code-inline">workflows/suggested/</code></li>
+      <li>Validates technical feasibility</li>
+      <li>Moves to <code class="code-inline">workflows/active/</code> when approved</li>
+    </ol>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system config-template</div>
+      <div class="command-type">Config</div>
+    </div>
+    <p><strong>Purpose:</strong> Generates JSON configuration templates for workflow variables.</p>
+    
+    <h4>Usage Patterns:</h4>
+    <div class="example">
+      # Auto-detect single draft file<br>
+      workflow-system config-template<br>
+      <br>
+      # Specify explicit draft workflow<br>
+      workflow-system config-template my-draft<br>
+    </div>
+
+    <h4>Generated Output:</h4>
+    <ul>
+      <li><strong>Location:</strong> <code class="code-inline">workflows/draft/inputs/workflow-config.json</code></li>
+      <li><strong>Content:</strong> Template with detected variables and example values</li>
+      <li><strong>Auto-Detection:</strong> Extracts all <code class="code-inline">{{VARIABLE}}</code> patterns from markdown</li>
+    </ul>
+
+    <h4>Variable Detection:</h4>
+    <ul>
+      <li><code class="code-inline">{{SITE_URL}}</code> → <code class="code-inline">"https://example.com"</code></li>
+      <li><code class="code-inline">{{MAIN_KEYWORD}}</code> → <code class="code-inline">"target keyword phrase"</code></li>
+      <li><code class="code-inline">{{ANALYSIS_DEPTH}}</code> → <code class="code-inline">"standard"</code></li>
+      <li>Custom variables → <code class="code-inline">"value_for_{variable_name}"</code></li>
+    </ul>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system validate</div>
+      <div class="command-type">Quality</div>
+    </div>
+    <p><strong>Purpose:</strong> Validates workflow technical feasibility and requirements.</p>
+    
+    <h4>Usage Patterns:</h4>
+    <div class="example">
+      # Basic validation<br>
+      workflow-system validate my-workflow<br>
+      <br>
+      # Detailed validation output<br>
+      workflow-system validate my-workflow --verbose<br>
+    </div>
+
+    <h4>Validation Checks:</h4>
+    <ul>
+      <li><strong>Agent Availability:</strong> Verifies recommended agents exist</li>
+      <li><strong>MCP Integration:</strong> Checks MCP server accessibility</li>
+      <li><strong>Input File Requirements:</strong> Validates file specifications</li>
+      <li><strong>Dependency Resolution:</strong> Ensures stage dependencies are valid</li>
+      <li><strong>Resource Requirements:</strong> Checks system capability</li>
+    </ul>
+
+    <h4>Validation Output:</h4>
+    <div class="example">
+      ✅ Validation Results for: my-workflow<br>
+      ==========================================<br>
+      🤖 Agent Analysis: 5/5 agents available<br>
+      🔗 MCP Integration: All required MCPs accessible<br>
+      📁 Input Files: 3 optional files specified<br>
+      ⏱️  Estimated Duration: 20-25 minutes<br>
+      🎯 Success Probability: 95%<br>
+    </div>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system execute</div>
+      <div class="command-type">Core</div>
+    </div>
+    <p><strong>Purpose:</strong> Executes workflows with professional simulation and report generation.</p>
+    
+    <h4>Usage Patterns:</h4>
+    <div class="example">
+      # Full execution<br>
+      workflow-system execute my-workflow<br>
+      <br>
+      # Preview mode (dry run)<br>
+      workflow-system execute my-workflow --dry-run<br>
+      <br>
+      # With verbose logging<br>
+      workflow-system execute my-workflow --verbose<br>
+    </div>
+
+    <h4>Execution Pipeline:</h4>
+    <ol>
+      <li><strong>Pre-validation:</strong> Technical feasibility check</li>
+      <li><strong>Stage Processing:</strong> Multi-stage execution with dependencies</li>
+      <li><strong>Mock Generation:</strong> Professional simulation with realistic data</li>
+      <li><strong>Correlation Discovery:</strong> Automated pattern recognition</li>
+      <li><strong>Report Generation:</strong> Interactive dashboards and action plans</li>
+    </ol>
+
+    <h4>Output Structure:</h4>
+    <div class="example">
+      /home/loki/seo-projects/{slug}/reports/{workflow-name}_{timestamp}/<br>
+      ├── dashboard.html          # Interactive overview<br>
+      ├── action-plan.xlsx        # Prioritized tasks<br>
+      ├── technical-report.pdf    # Detailed findings<br>
+      └── raw-data/              # Supporting files<br>
+    </div>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system list</div>
+      <div class="command-type">Info</div>
+    </div>
+    <p><strong>Purpose:</strong> Lists all workflows across all stages with status information.</p>
+    
+    <h4>Usage:</h4>
+    <div class="example">
+      workflow-system list<br>
+    </div>
+
+    <h4>Output Format:</h4>
+    <div class="example">
+      CCC Workflow System - Workflow List<br>
+      ===================================<br>
+      <br>
+      📝 DRAFT (2 workflows)<br>
+      • format-v4-enhanced        (modified: 2 hours ago)<br>
+      • seo-competitive-analysis  (modified: 1 day ago)<br>
+      <br>
+      ✅ SUGGESTED (1 workflow)<br>
+      • my-seo-audit             (created: 30 minutes ago)<br>
+      <br>
+      🚀 ACTIVE (1 workflow)<br>
+      • client-website-audit     (approved: 1 hour ago)<br>
+      <br>
+      📦 ARCHIVE (3 workflows)<br>
+      • completed-audit-v1       (archived: 2 days ago)<br>
+      • old-seo-analysis        (archived: 1 week ago)<br>
+      • test-workflow           (archived: 1 week ago)<br>
+    </div>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system archive</div>
+      <div class="command-type">Management</div>
+    </div>
+    <p><strong>Purpose:</strong> Archives completed workflows for organization and cleanup.</p>
+    
+    <h4>Usage:</h4>
+    <div class="example">
+      workflow-system archive my-workflow<br>
+    </div>
+
+    <h4>Archival Process:</h4>
+    <ul>
+      <li>Moves workflow from <code class="code-inline">active/</code> to <code class="code-inline">archive/</code></li>
+      <li>Preserves all execution results and reports</li>
+      <li>Maintains workflow history and metadata</li>
+      <li>Adds archive timestamp to workflow record</li>
+    </ul>
+  </div>
+
+  <div class="command-card">
+    <div class="command-header">
+      <div class="command-name">workflow-system status</div>
+      <div class="command-type">Info</div>
+    </div>
+    <p><strong>Purpose:</strong> Shows comprehensive system status and configuration information.</p>
+    
+    <h4>Usage:</h4>
+    <div class="example">
+      workflow-system status<br>
+    </div>
+
+    <h4>Status Information:</h4>
+    <div class="example">
+      CCC Workflow Definition & Execution System<br>
+      ==================================================<br>
+      🏠 CCC Root: /home/user/ccc<br>
+      📁 Workflows: /home/user/ccc/workflows<br>
+      👤 Client: acme-corp<br>
+      🔧 Verbose: false<br>
+      <br>
+      📊 Draft: 2 workflows<br>
+      📊 Suggested: 1 workflows<br>
+      📊 Active: 1 workflows<br>
+      📊 Archive: 3 workflows<br>
+      <br>
+      🔧 Configuration Status:<br>
+        • Global config: loaded<br>
+        • Client config: acme-corp.yaml<br>
+        • Available agents: 23<br>
+        • Available MCPs: 10<br>
+    </div>
+  </div>
+
+  <h2>🚩 Global Options</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Short</th>
+        <th>Description</th>
+        <th>Commands</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--verbose</code></td>
+        <td><code>-v</code></td>
+        <td>Enable detailed output and debugging information</td>
+        <td>All commands</td>
+      </tr>
+      <tr>
+        <td><code>--client</code></td>
+        <td></td>
+        <td>Specify client slug for client-specific settings</td>
+        <td>create, execute</td>
+      </tr>
+      <tr>
+        <td><code>--config</code></td>
+        <td><code>-c</code></td>
+        <td>Override default configuration file</td>
+        <td>All commands</td>
+      </tr>
+      <tr>
+        <td><code>--dry-run</code></td>
+        <td></td>
+        <td>Preview execution without generating outputs</td>
+        <td>execute</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🔄 Workflow Lifecycle</h2>
+
+  <div class="note">
+    <strong>📋 Stage Progression:</strong> Workflows move through stages as they mature from initial ideas to completed executions.
+  </div>
+
+  <h3>Stage Descriptions</h3>
+  <ul>
+    <li><strong>📝 Draft:</strong> Initial markdown workflow definitions with variables</li>
+    <li><strong>✅ Suggested:</strong> Interview-refined workflows with detailed specifications</li>
+    <li><strong>🚀 Active:</strong> Validated workflows ready for execution</li>
+    <li><strong>📦 Archive:</strong> Completed workflows preserved for reference</li>
+  </ul>
+
+  <h3>Typical Workflow Commands Sequence</h3>
+  <div class="example">
+    # 1. Create draft workflow file<br>
+    echo "# My Workflow" > workflows/draft/my-workflow.md<br>
+    <br>
+    # 2. Generate config template<br>
+    workflow-system config-template<br>
+    <br>
+    # 3. Edit generated config with real values<br>
+    nano workflows/draft/inputs/workflow-config.json<br>
+    <br>
+    # 4. Create workflow through interview<br>
+    workflow-system create<br>
+    <br>
+    # 5. Validate before execution<br>
+    workflow-system validate my-workflow<br>
+    <br>
+    # 6. Execute workflow<br>
+    workflow-system execute my-workflow<br>
+    <br>
+    # 7. Archive when complete<br>
+    workflow-system archive my-workflow<br>
+  </div>
+
+  <h2>⚠️ Error Handling</h2>
+
+  <h3>Common Error Messages</h3>
+
+  <div class="warning">
+    <strong>❌ Multiple draft files found - please specify which one:</strong><br>
+    <strong>Cause:</strong> Auto-detection requires exactly one draft file<br>
+    <strong>Solution:</strong> Use explicit workflow name or keep one draft file at a time
+  </div>
+
+  <div class="warning">
+    <strong>❌ No draft workflow files found in workflows/draft/</strong><br>
+    <strong>Cause:</strong> No .md files in draft directory<br>
+    <strong>Solution:</strong> Create a markdown workflow file first
+  </div>
+
+  <div class="warning">
+    <strong>❌ Workflow not found in active stage</strong><br>
+    <strong>Cause:</strong> Trying to execute workflow that hasn't been created yet<br>
+    <strong>Solution:</strong> Run <code class="code-inline">workflow-system create</code> first
+  </div>
+
+  <div class="warning">
+    <strong>❌ Config file contains invalid JSON</strong><br>
+    <strong>Cause:</strong> Syntax error in workflow-config.json<br>
+    <strong>Solution:</strong> Validate JSON syntax and fix formatting
+  </div>
+
+  <h3>Debug Commands</h3>
+  <div class="example">
+    # Show detailed system information<br>
+    workflow-system status --verbose<br>
+    <br>
+    # Detailed validation with specific errors<br>
+    workflow-system validate my-workflow --verbose<br>
+    <br>
+    # Preview execution without changes<br>
+    workflow-system execute my-workflow --dry-run --verbose<br>
+  </div>
+
+  <h2>🎯 Best Practices</h2>
+
+  <ul>
+    <li><strong>One Draft Rule:</strong> Keep only one draft file at a time for clean auto-detection</li>
+    <li><strong>Always Generate Config:</strong> Use <code class="code-inline">config-template</code> to ensure all variables are captured</li>
+    <li><strong>Validate Before Execute:</strong> Run validation to catch issues early</li>
+    <li><strong>Use Dry Run:</strong> Preview execution with <code class="code-inline">--dry-run</code> before full execution</li>
+    <li><strong>Archive Completed Work:</strong> Keep system organized by archiving finished workflows</li>
+    <li><strong>Verbose for Debugging:</strong> Use <code class="code-inline">--verbose</code> when troubleshooting issues</li>
+  </ul>
+
+  <div class="success">
+    <strong>💡 Pro Tip:</strong> The auto-detection system is designed to make common operations simple while providing explicit control when needed. Start with auto-detection and use explicit names only when managing multiple workflows.
+  </div>
+
+  <div class="note">
+    <strong>📖 Next Steps:</strong> 
+    <ul>
+      <li><a href="workflow-formats.html">Explore Workflow Formats</a> - See all available format styles</li>
+      <li><a href="interview-system-guide.html">Interview System Guide</a> - Deep dive into workflow creation</li>
+      <li><a href="json-config-advanced.html">Advanced JSON Configuration</a> - Complex configuration patterns</li>
+      <li><a href="index.html">← Back to Main Guide</a></li>
+    </ul>
+  </div>
+
+</body>
+</html>

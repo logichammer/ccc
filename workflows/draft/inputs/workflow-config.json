@@ -1,0 +1,12 @@
+{
+  "workflow_name": "format-v4-enhanced",
+  "variables": {
+    "MAIN_KEYWORD": "target keyword phrase",
+    "SITE_URL": "https://example.com"
+  },
+  "client_settings": {
+    "client_slug": "example-client",
+    "output_directory": "reports/client-example/",
+    "archive_previous": true
+  }
+}

@@ -1,0 +1,7 @@
+2025-09-05 19:49:05,272 - data-explorer-mcp-file-mode - INFO - Data Explorer MCP Server Started
+2025-09-05 19:49:05,272 - data-explorer-mcp-file-mode - INFO - 📖 FILE ACCESS GUIDE:
+2025-09-05 19:49:05,272 - data-explorer-mcp-file-mode - INFO -   - Uploaded files: Use window.fs.readFile in Claude first
+2025-09-05 19:49:05,272 - data-explorer-mcp-file-mode - INFO -   - Disk files: Use csv_content parameter
+2025-09-05 19:49:05,272 - data-explorer-mcp-file-mode - INFO -   - window.fs.readFile is Claude's API, not browser JavaScript
+2025-09-05 19:49:05,273 - data-explorer-mcp-file-mode - INFO - Starting Data Explorer MCP Server with File Mode
+2025-09-05 19:49:05,277 - data-explorer-mcp-file-mode - INFO - Server streams initialized

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Workflow JSON Configuration Guide</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 40px; 
+      line-height: 1.6; 
+      color: #222; 
+      background: #fff; 
+    }
+    h1, h2, h3 { font-weight: bold; margin-top: 1.5em; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    h2 { color: #34495e; border-bottom: 1px solid #ecf0f1; padding-bottom: 5px; }
+    pre, code { 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      padding: 12px; 
+      border-radius: 4px; 
+      font-family: monospace; 
+      font-size: 14px;
+    }
+    .code-inline { 
+      background: #f8f9fa; 
+      color: #e74c3c; 
+      padding: 2px 4px; 
+      border-radius: 3px; 
+    }
+    .command-example {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+      border-left: 4px solid #3498db;
+    }
+    .note {
+      background: #f0f7ff;
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .variable { background: #fff3cd; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin-left: 20px; }
+    li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Workflow JSON Configuration Guide</h1>
+
+  <h2>Overview</h2>
+  <p>The CCC Workflow System supports JSON configuration files to provide variable values and client settings for workflow execution. This eliminates the need to manually edit markdown files and enables automated workflow processing.</p>
+
+  <h2>How It Works</h2>
+  
+  <h3>Variable Substitution</h3>
+  <p>Workflow markdown files contain variables in the format <span class="variable">{{VARIABLE_NAME}}</span>. When you provide a JSON config file, the system automatically substitutes these variables with your actual values.</p>
+
+  <p><strong>Example Workflow Variables:</strong></p>
+  <ul>
+    <li><span class="variable">{{SITE_URL}}</span> - Target website URL</li>
+    <li><span class="variable">{{MAIN_KEYWORD}}</span> - Primary keyword to analyze</li>
+    <li><span class="variable">{{ANALYSIS_DEPTH}}</span> - Analysis complexity level</li>
+    <li><span class="variable">{{COMPETITOR_COUNT}}</span> - Number of competitors to analyze</li>
+  </ul>
+
+  <h3>Automatic Detection</h3>
+  <p>The system automatically looks for <code class="code-inline">inputs/workflow-config.json</code> in the workflow directory. If found, it applies the configuration automatically - no additional setup required.</p>
+
+  <h2>Configuration File Structure</h2>
+
+  <h3>Basic JSON Config Format</h3>
+  <pre><code>{
+  "workflow_name": "my-seo-audit",
+  "variables": {
+    "SITE_URL": "https://mywebsite.com",
+    "MAIN_KEYWORD": "best accounting software",
+    "ANALYSIS_DEPTH": "comprehensive",
+    "COMPETITOR_COUNT": 10
+  },
+  "client_settings": {
+    "client_slug": "acme-corp",
+    "output_directory": "reports/client-acme-corp/",
+    "archive_previous": true
+  }
+}</code></pre>
+
+  <h3>Configuration Sections</h3>
+
+  <h4>Variables Section</h4>
+  <p>Maps workflow variables to actual values:</p>
+  <ul>
+    <li><strong>Required Variables</strong>: Usually <code class="code-inline">SITE_URL</code> and <code class="code-inline">MAIN_KEYWORD</code></li>
+    <li><strong>Optional Variables</strong>: Analysis settings, limits, modes</li>
+    <li><strong>Data Types</strong>: Strings, numbers, booleans as appropriate</li>
+  </ul>
+
+  <h4>Client Settings Section</h4>
+  <ul>
+    <li><code class="code-inline">client_slug</code> - Unique identifier for client</li>
+    <li><code class="code-inline">output_directory</code> - Where to save results</li>
+    <li><code class="code-inline">archive_previous</code> - Whether to backup old results</li>
+  </ul>
+
+  <h2>Generating Config Templates</h2>
+
+  <p>The system can automatically generate JSON config templates for any workflow:</p>
+
+  <div class="command-example">
+    # Generate config template for a draft workflow<br>
+    workflow-system config-template my-workflow<br>
+    <br>
+    # Output shows generated template location and required variables<br>
+    ✅ Config template generated!<br>
+    📁 Location: /workflows/draft/inputs/workflow-config.json<br>
+    📝 Edit this file to provide actual values for:<br>
+      • SITE_URL: https://example.com<br>
+      • MAIN_KEYWORD: target keyword phrase<br>
+  </div>
+
+  <h2>Input File Configuration</h2>
+
+  <p>Many workflows support optional input files for enhanced analysis. You can specify column details and focus areas:</p>
+
+  <h3>Input File Examples</h3>
+  <pre><code># Search Console Data
+inputs/search_console_data.csv
+Columns: query, impressions, clicks, position, ctr
+Focus on: high-impression queries, position changes
+Exclude: branded queries
+
+# Competitor Analysis  
+inputs/competitor_list.txt
+Format: Domain names, one per line
+Focus on: direct business competitors
+
+# Content Performance
+inputs/content_performance.csv
+Columns: page_url, organic_traffic, conversions, publish_date
+Join with: current performance metrics
+Focus on: top-performing content patterns</code></pre>
+
+  <h3>Column Specifications</h3>
+  <p>You can provide additional instructions in your input files:</p>
+  <ul>
+    <li><strong>Focus on</strong>: Which data to prioritize in analysis</li>
+    <li><strong>Exclude</strong>: Data to filter out</li>
+    <li><strong>Join with</strong>: How to combine with other data sources</li>
+  </ul>
+
+  <h2>Complete Workflow Process</h2>
+
+  <h3>Step 1: Generate Config Template</h3>
+  <div class="command-example">
+    workflow-system config-template format-v4-enhanced
+  </div>
+
+  <h3>Step 2: Edit Configuration</h3>
+  <p>Edit <code class="code-inline">inputs/workflow-config.json</code> with your actual values:</p>
+  <pre><code>{
+  "workflow_name": "client-seo-audit",
+  "variables": {
+    "SITE_URL": "https://client-website.com",
+    "MAIN_KEYWORD": "enterprise software solutions"
+  },
+  "client_settings": {
+    "client_slug": "enterprise-client",
+    "output_directory": "reports/client-enterprise/",
+    "archive_previous": true
+  }
+}</code></pre>
+
+  <h3>Step 3: Add Optional Input Files</h3>
+  <p>Place data files in the <code class="code-inline">inputs/</code> directory as specified by the workflow.</p>
+
+  <h3>Step 4: Create and Execute Workflow</h3>
+  <div class="command-example">
+    # Create workflow from draft (applies JSON config automatically)<br>
+    workflow-system create format-v4-enhanced<br>
+    <br>
+    # Execute the configured workflow<br>
+    workflow-system execute format-v4-enhanced<br>
+  </div>
+
+  <h2>Advanced Configuration</h2>
+
+  <h3>Multiple Client Support</h3>
+  <p>Create different config files for different clients:</p>
+  <ul>
+    <li><code class="code-inline">inputs/workflow-config-client1.json</code></li>
+    <li><code class="code-inline">inputs/workflow-config-client2.json</code></li>
+  </ul>
+
+  <p>Use the <code class="code-inline">--client</code> flag to specify which config to use:</p>
+  <div class="command-example">
+    workflow-system create my-workflow --client client1<br>
+    workflow-system execute my-workflow --client client1<br>
+  </div>
+
+  <h3>Environment-Specific Settings</h3>
+  <p>Configure different analysis depths for different purposes:</p>
+  <pre><code># Quick analysis config
+{
+  "variables": {
+    "ANALYSIS_DEPTH": "quick",
+    "COMPETITOR_COUNT": 3
+  }
+}
+
+# Comprehensive analysis config  
+{
+  "variables": {
+    "ANALYSIS_DEPTH": "comprehensive", 
+    "COMPETITOR_COUNT": 15
+  }
+}</code></pre>
+
+  <div class="note">
+    <strong>💡 Pro Tip:</strong> The system automatically detects <code class="code-inline">workflow-config.json</code> in the inputs directory. No additional setup required - just create the file and run your workflow!
+  </div>
+
+  <h2>Workflow Format Compatibility</h2>
+
+  <p>JSON configuration works with all workflow formats:</p>
+  <ul>
+    <li><strong>Simple Formats</strong> - Conversational, minimal request styles</li>
+    <li><strong>Technical Formats</strong> - Detailed specifications, code-like syntax</li>
+    <li><strong>Enterprise Formats</strong> - Full compliance and documentation</li>
+  </ul>
+
+  <p>The same JSON config approach works regardless of how complex or simple your workflow markdown format is.</p>
+
+</body>
+</html>

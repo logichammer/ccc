@@ -24,6 +24,15 @@ def load_config():
     
     return toml.load(config_path)
 
+def is_main_ccc_directory(project_dir):
+    """Check if the project directory is the main CCC system directory"""
+    config = load_config()
+    toolkit_path = Path(config["directories"]["toolkit_path"])
+    project_path = Path(project_dir).resolve()
+    
+    # Compare resolved paths
+    return project_path == toolkit_path.resolve()
+
 def detect_project_type(project_dir):
     """Auto-detect project type based on files present"""
     project_path = Path(project_dir)
@@ -516,6 +525,18 @@ What it doesn't do:
     if not project_dir.is_dir():
         print(f"❌ Path is not a directory: {project_dir}")
         sys.exit(1)
+    
+    # Check if we're in the main CCC system directory
+    if is_main_ccc_directory(project_dir):
+        print("🏗️ Detected main CCC system directory")
+        print("✅ Running from CCC system - no external project setup needed")
+        print("💡 All agents and commands are available directly from the root system")
+        print(f"📍 CCC Directory: {project_dir}")
+        print(f"📋 CLAUDE.md: Available at root level")
+        if not args.cleanup:
+            print("\n🚀 Ready to launch Claude Code from this directory!")
+            print("   Use 'ccc-launch' to start Claude with full CCC integration")
+        sys.exit(0)
     
     # Handle cleanup mode
     if args.cleanup:

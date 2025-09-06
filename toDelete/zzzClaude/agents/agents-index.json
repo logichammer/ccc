@@ -1,0 +1,146 @@
+{
+  "agents": {
+    "SystemArchitectAgent": {
+      "file": "SystemArchitectAgent.json",
+      "role": "Primary orchestrator for system design and architecture decisions",
+      "triggers": ["architecture", "system", "design", "orchestrate"],
+      "handoffs_to": ["FeatureDeveloperAgent", "QualityTesterAgent", "PerformanceProfilerAgent"]
+    },
+    "FeatureDeveloperAgent": {
+      "file": "FeatureDeveloperAgent.json", 
+      "role": "Code implementation and feature development",
+      "triggers": ["implement", "code", "develop", "build"],
+      "handoffs_to": ["QualityTesterAgent", "SystemArchitectAgent"]
+    },
+    "BenchmarkResearchAgent": {
+      "file": "BenchmarkResearchAgent.json",
+      "role": "Competitive analysis and market research",
+      "triggers": ["research", "benchmark", "competitive", "analysis"],
+      "handoffs_to": ["TechnicalSEOAgent", "ConversionOptimizerAgent"]
+    },
+    "CodebaseAnalyzerAgent": {
+      "file": "CodebaseAnalyzerAgent.json",
+      "role": "Code review and codebase analysis",
+      "triggers": ["analyze", "review", "codebase", "audit"],
+      "handoffs_to": ["FeatureDeveloperAgent", "SecurityAuditorAgent"]
+    },
+    "ConversionOptimizerAgent": {
+      "file": "ConversionOptimizerAgent.json",
+      "role": "CRO and conversion analysis",
+      "triggers": ["conversion", "optimize", "CRO", "funnel"],
+      "handoffs_to": ["FrontendImplementerAgent", "MetricsReporterAgent"]
+    },
+    "DataPipelineAgent": {
+      "file": "DataPipelineAgent.json",
+      "role": "Data processing and ETL operations", 
+      "triggers": ["data", "pipeline", "ETL", "processing"],
+      "handoffs_to": ["DatabaseOptimizerAgent", "MetricsReporterAgent"]
+    },
+    "DatabaseOptimizerAgent": {
+      "file": "DatabaseOptimizerAgent.json",
+      "role": "Database performance and optimization",
+      "triggers": ["database", "optimize", "performance", "SQL"],
+      "handoffs_to": ["PerformanceProfilerAgent", "DataPipelineAgent"]
+    },
+    "DeliveryVerifierAgent": {
+      "file": "DeliveryVerifierAgent.json",
+      "role": "Verification and validation of deliverables",
+      "triggers": ["verify", "validate", "confirm", "delivery"],
+      "handoffs_to": ["QualityTesterAgent", "SystemArchitectAgent"]
+    },
+    "ElementorSpecialistAgent": {
+      "file": "ElementorSpecialistAgent.json",
+      "role": "Elementor widget and template development",
+      "triggers": ["elementor", "widget", "wordpress"],
+      "handoffs_to": ["WordPressBuilderAgent", "FrontendImplementerAgent"]
+    },
+    "FrontendBuilderAgent": {
+      "file": "FrontendBuilderAgent.json",
+      "role": "Frontend architecture and building",
+      "triggers": ["frontend", "UI", "build"],
+      "handoffs_to": ["FrontendImplementerAgent", "ResponsiveAdapterAgent"]
+    },
+    "FrontendImplementerAgent": {
+      "file": "FrontendImplementerAgent.json",
+      "role": "Frontend implementation and coding",
+      "triggers": ["implement", "frontend", "interface"],
+      "handoffs_to": ["ResponsiveAdapterAgent", "InteractionEnhancerAgent"]
+    },
+    "InteractionEnhancerAgent": {
+      "file": "InteractionEnhancerAgent.json",
+      "role": "User experience and interaction improvements",
+      "triggers": ["UX", "interaction", "enhance", "usability"],
+      "handoffs_to": ["FrontendImplementerAgent", "ConversionOptimizerAgent"]
+    },
+    "InterfaceDesignerAgent": {
+      "file": "InterfaceDesignerAgent.json",
+      "role": "Interface design and UX planning",
+      "triggers": ["design", "interface", "UX"],
+      "handoffs_to": ["FrontendBuilderAgent", "FrontendImplementerAgent"]
+    },
+    "KeywordStrategyAgent": {
+      "file": "KeywordStrategyAgent.json",
+      "role": "SEO keyword strategy and research",
+      "triggers": ["keywords", "SEO", "strategy"],
+      "handoffs_to": ["TechnicalSEOAgent", "BenchmarkResearchAgent"]
+    },
+    "MetricsReporterAgent": {
+      "file": "MetricsReporterAgent.json",
+      "role": "Analytics and metrics reporting",
+      "triggers": ["metrics", "analytics", "report", "dashboard"],
+      "handoffs_to": ["ConversionOptimizerAgent", "PerformanceProfilerAgent"]
+    },
+    "PerformanceProfilerAgent": {
+      "file": "PerformanceProfilerAgent.json",
+      "role": "Performance analysis and optimization",
+      "triggers": ["performance", "optimize", "speed", "profile"],
+      "handoffs_to": ["DatabaseOptimizerAgent", "TechnicalSEOAgent"]
+    },
+    "QualityTesterAgent": {
+      "file": "QualityTesterAgent.json",
+      "role": "Testing and quality assurance",
+      "triggers": ["test", "QA", "quality", "testing"],
+      "handoffs_to": ["FeatureDeveloperAgent", "DeliveryVerifierAgent"]
+    },
+    "ResponsiveAdapterAgent": {
+      "file": "ResponsiveAdapterAgent.json",
+      "role": "Mobile and responsive optimization",
+      "triggers": ["responsive", "mobile", "tablet"],
+      "handoffs_to": ["FrontendImplementerAgent", "PerformanceProfilerAgent"]
+    },
+    "SecurityAuditorAgent": {
+      "file": "SecurityAuditorAgent.json",
+      "role": "Security analysis and vulnerability assessment",
+      "triggers": ["security", "vulnerability", "audit"],
+      "handoffs_to": ["CodebaseAnalyzerAgent", "DeliveryVerifierAgent"]
+    },
+    "TechnicalSEOAgent": {
+      "file": "TechnicalSEOAgent.json",
+      "role": "Technical SEO and site optimization",
+      "triggers": ["technical", "SEO", "site", "optimization"],
+      "handoffs_to": ["PerformanceProfilerAgent", "KeywordStrategyAgent"]
+    },
+    "WordPressBuilderAgent": {
+      "file": "WordPressBuilderAgent.json",
+      "role": "WordPress development and customization",
+      "triggers": ["wordpress", "wp", "theme", "plugin"],
+      "handoffs_to": ["ElementorSpecialistAgent", "TechnicalSEOAgent"]
+    },
+    "WorkflowOrchestratorAgent": {
+      "file": "WorkflowOrchestratorAgent.json",
+      "role": "Complex workflow automation and orchestration",
+      "triggers": ["workflow", "orchestrate", "automate"],
+      "handoffs_to": ["SystemArchitectAgent", "multiple_agents"]
+    }
+  },
+  "project_type_defaults": {
+    "python": "SystemArchitectAgent",
+    "seo": "TechnicalSEOAgent", 
+    "wordpress": "WordPressBuilderAgent"
+  },
+  "orchestration_patterns": {
+    "development": ["SystemArchitectAgent", "FeatureDeveloperAgent", "QualityTesterAgent"],
+    "research": ["BenchmarkResearchAgent", "TechnicalSEOAgent", "KeywordStrategyAgent"],
+    "optimization": ["PerformanceProfilerAgent", "ConversionOptimizerAgent", "TechnicalSEOAgent"]
+  }
+}

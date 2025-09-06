@@ -34,6 +34,8 @@
             font-family: 'Courier New', monospace; 
             font-size: 14px;
             overflow-x: auto;
+            word-wrap: break-word;
+            max-width: 100%;
             margin: 15px 0;
         }
         .feature-list {
@@ -79,13 +81,23 @@
 
     <h2>🛠️ Installation</h2>
     <h3>Quick Start</h3>
-    <div class="code-block"># Clone the repository<br>
-git clone &lt;repository-url&gt;<br>
-cd <br><br># Install dependencies</div>
+    <div class="code-block"># Clone the repository
+git clone &lt;repository-url&gt;
+cd project-directory
 
-    <h2>🚦 Usage</h2><h2>🔧 Development</h2>
+# Install dependencies
+pip install -r requirements.txt</div>
+
+    <h2>🚦 Usage</h2>
+    <p>Basic usage instructions will be added here.</p>
+
+    <h2>🔧 Development</h2>
     <h3>Setting up Development Environment</h3>
-    <div class="code-block"></div>
+    <div class="code-block"># Set up development environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+pip install -r requirements-dev.txt</div>
 
     <h3>Project Structure</h3>
     <div class="code-block">/<br>
@@ -109,7 +121,8 @@ cd <br><br># Install dependencies</div>
     <h2>🙏 Acknowledgments</h2>
     <ul>
         <li>Built with modern development practices</li>
-        <li>Follows industry standard conventions</li><li>Generated with CCC Auto-Documentation System</li>
+        <li>Follows industry standard conventions</li>
+        <li>Generated with CCC Auto-Documentation System</li>
     </ul>
 
     <hr>
